@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#info_table{
+	position:absolute;
+	top:170px;
+	left:50px;
+}
+.update_config_input{
+	width:300px;
+	font-size:15px;
+}
+#submit_button{
+	position:absolute;
+	left:500px;
+	top:450px;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#waiting{
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:50%;
+	left:50%;
+	background:url(../images/loader-small.gif) no-repeat;
+}

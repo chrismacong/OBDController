@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#send_agps_data{
+	position:absolute;
+	width:150px;
+	height:40px;
+	background-color: #dce9f9;
+	top:200px;
+	left:250px;
+}
+#check_agps_time{
+	position:absolute;
+	width:200px;
+	height:40px;
+	background-color: #dce9f9;
+	top:200px;
+	left:550px;
+}

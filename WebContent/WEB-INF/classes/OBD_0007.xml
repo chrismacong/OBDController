@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ODBTable>
+	<Parameter id="0">
+		<name>行程结束</name>
+		<length>6</length>
+		<decode>TimeByteDecoder</decode>
+		<introduction>表示行程结束的时间</introduction>
+	</Parameter>
+	<Parameter id="1">
+		<name>行程开始</name>
+		<length>6</length>
+		<decode>TimeByteDecoder</decode>
+		<introduction>表示行程开始的时间</introduction>
+	</Parameter>
+	<Parameter id="2">
+		<name>距离</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>本次行程行驶距离</introduction>
+	</Parameter>
+	<Parameter id="3">
+		<name>最大速度</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>km/h</introduction>
+	</Parameter>
+	<Parameter id="4">
+		<name>超时时长</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>秒</introduction>
+	</Parameter>
+	<Parameter id="5">
+		<name>急刹车次数</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>次</introduction>
+	</Parameter>
+	<Parameter id="6">
+		<name>紧急刹车次数</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>次</introduction>
+	</Parameter>
+	<Parameter id="7">
+		<name>急加速次数</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>次</introduction>
+	</Parameter>
+	<Parameter id="8">
+		<name>紧急加速次数</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>次</introduction>
+	</Parameter>
+	<Parameter id="9">
+		<name>平均速度</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>km/h</introduction>
+	</Parameter>
+	<Parameter id="10">
+		<name>发动机最高水温</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>摄氏度</introduction>
+	</Parameter>
+	<Parameter id="11">
+		<name>发动机最高转速</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>转/分</introduction>
+	</Parameter>
+	<Parameter id="12">
+		<name>电压值</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>0.1V</introduction>
+	</Parameter>
+	<Parameter id="13">
+		<name>总油耗</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>0.01升</introduction>
+	</Parameter>
+	<Parameter id="14">
+		<name>平均油耗</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>0.01百公里升</introduction>
+	</Parameter>
+	<Parameter id="15">
+		<name>疲劳驾驶时长</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>min</introduction>
+	</Parameter>
+	<Parameter id="16">
+		<name>行程序号</name>
+		<length>1</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>0-19循环</introduction>
+	</Parameter>
+</ODBTable>

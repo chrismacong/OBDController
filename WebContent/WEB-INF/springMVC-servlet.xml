@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/mvc      
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd  
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<context:component-scan base-package="com.fix.obd" />
+
+	<context:property-placeholder location="classpath:db.properties" />
+	<mvc:annotation-driven />  
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		
+		<property name="annotatedClasses">
+			<list>
+			    <value>com.fix.obd.web.model.OBDLogs</value>
+			    <value>com.fix.obd.web.model.OnLineTerminal</value>
+			    <value>com.fix.obd.web.model.OBDData</value>
+			    <value>com.fix.obd.web.model.PositionData</value>
+			    <value>com.fix.obd.web.model.OBDTerminalInfo</value>
+			    <value>com.fix.obd.web.model.ParameterResponse</value>
+			    <value>com.fix.obd.web.model.DTCDefect</value>
+			    <value>com.fix.obd.web.model.OBDDefect</value>
+			    <value>com.fix.obd.web.model.TravelInfo</value>
+			</list>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>		
+				<prop key="hibernate.hbm2ddl.auto">update</prop>		
+			</props>
+		</property>
+	</bean>
+	<bean id="urlMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="init2" class="com.fix.obd.web.util.DBInitializing" init-method="tcpInit"/>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="thtApplicationContext" class="com.fix.obd.web.util.ThtApplicationContext"></bean>
+</beans>

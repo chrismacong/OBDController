@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OBDTable>
+	<Parameter id="01">
+		<name>管理员电话号码</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice>国家代码+电话号码</notice>
+	</Parameter>
+	<Parameter id="02">
+		<name>用户号码1</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice>国家代码+电话号码</notice>
+	</Parameter>
+	<Parameter id="03">
+		<name>用户号码2</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice>国家代码+电话号码</notice>
+	</Parameter>
+	<Parameter id="04">
+		<name>电子围栏</name>
+		<length>18</length>
+		<decode>RailDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="05">
+		<name>超速报警阈值</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>超过该阈值超速报警（单位km/h）</notice>
+	</Parameter>
+	<Parameter id="06">
+		<name>进入休眠模式的时间</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>若为0则关闭休眠功能</notice>
+	</Parameter>
+	<Parameter id="07">
+		<name>ACC开时候存储位置信息的时间间隔</name>
+		<length>4</length>
+		<decode>ACCTimeDecode</decode>
+		<notice>若后面两位为0xffff表示以间隔时间连续存储位置信息</notice>
+	</Parameter>
+	<Parameter id="08">
+		<name>没有休眠时候的心跳时间间隔+休眠时候的心跳时间间隔</name>
+		<length>4</length>
+		<decode>SleepTimeDecode</decode>
+		<notice>默认60秒</notice>
+	</Parameter>
+	<Parameter id="09">
+		<name>休眠时候存储位置信息的间隔</name>
+		<length>4</length>
+		<decode>ACCTimeDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="0a">
+		<name>位置信息策略</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:关闭实时上传位置信息，按里程间隔保存位置信息（永远有效）;01:关闭实时上传位置信息，按时间间隔保存位置信息（永远有效）;02:按里程间隔上报位置信息（当次旅程有效）;03:按时间间隔上报位置信息（当次旅程有效）;04:按里程间隔上报位置信息（永远有效）;05:按时间间隔上报位置信息（永远有效）</notice>
+	</Parameter>
+	<Parameter id="0c">
+		<name>服务器信息</name>
+		<length>Len</length>
+		<decode>ServerInfoDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="0d">
+		<name>APN</name>
+		<length>Len</length>
+		<decode>ASCIIDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="0e">
+		<name>设置时区</name>
+		<length>2</length>
+		<decode>GMTTimeDecode</decode>
+		<notice>在格林威治时间的基础上加上</notice>
+	</Parameter>
+	<Parameter id="0f">
+		<name>电压值</name>
+		<length>1</length>
+		<decode>VoltageDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="10">
+		<name>GSM信号强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="11">
+		<name>终端版本号</name>
+		<length>1</length>
+		<decode>StringDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="12">
+		<name>欠压报警阈值</name>
+		<length>1</length>
+		<decode>VoltageDecode</decode>
+		<notice>低于该电压值报警</notice>
+	</Parameter>
+	<Parameter id="13">
+		<name>高压报警阈值</name>
+		<length>1</length>
+		<decode>VoltageDecode</decode>
+		<notice>高于该电压值报警</notice>
+	</Parameter>
+	<Parameter id="14">
+		<name>疲劳驾驶时间阈值</name>
+		<length>1</length>
+		<decode>TenMinTimeDecode</decode>
+		<notice>驾驶超过该时间进入疲劳驾驶状态</notice>
+	</Parameter>
+	<Parameter id="15">
+		<name>接触疲劳驾驶时间阈值</name>
+		<length>1</length>
+		<decode>TenMinTimeDecode</decode>
+		<notice>休息超过该时间解除疲劳驾驶状态</notice>
+	</Parameter>
+	<Parameter id="16">
+		<name>水温高报警阈值</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>水温高于该设施度数报警</notice>
+	</Parameter>
+	<Parameter id="17">
+		<name>车辆识别号VIN</name>
+		<length>Len</length>
+		<decode>StringDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="18">
+		<name>设置用户Id</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="19">
+		<name>当前里程+保养里程间隔+下次保养的里程</name>
+		<length>12</length>
+		<decode>DistanceDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="1a">
+	    <name>上报位置信息里程间隔</name>
+		<length>4</length>
+		<decode>UploadPositionDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="1b">
+	    <name>设置查询油耗信息</name>
+		<length>3</length>
+		<decode>ConfigOilInfoDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="1d">
+	    <name>布防号码</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="1e">
+	    <name>急刹车系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="1f">
+	    <name>紧急刹车系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="21">
+	    <name>急加速系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="22">
+	    <name>紧急加速系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="23">
+	    <name>碰撞报警系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="24">
+	    <name>布防时震动报警系数强度</name>
+		<length>1</length>
+		<decode>SimpleDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="25">
+	    <name>短信息中心号码</name>
+		<length>11</length>
+		<decode>CountAndReverseDecode</decode>
+		<notice>范围1~8</notice>
+	</Parameter>
+	<Parameter id="26">
+	    <name>短信息提醒时间间隔</name>
+		<length>2</length>
+		<decode>SimpleDecode</decode>
+		<notice>单位分钟</notice>
+	</Parameter>
+	<Parameter id="27">
+	    <name>速度提醒开关配置</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:关闭速度提醒;01:开启速度提醒</notice>
+	</Parameter>
+	<Parameter id="28">
+	    <name>IMEI只读</name>
+		<length>9</length>
+		<decode>StringDecode</decode>
+		<notice>Bcd码</notice>
+	</Parameter>
+	<Parameter id="29">
+	    <name>网络鉴权模式</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:PAP空密码（默认）;01:PAP带密码和账号;02:CHAP带密码和账号</notice>
+	</Parameter>
+	<Parameter id="2a">
+	    <name>网络鉴权用户名</name>
+		<length>Len</length>
+		<decode>ASCIIDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="2b">
+	    <name>网络鉴权密码</name>
+		<length>Len</length>
+		<decode>ASCIIDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="2c">
+	    <name>OBD数据汇报策略</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:速度为20的倍数上传所有数据（默认）;01:时间间隔上传有效数据;02:速度为20的倍数上传有效数据</notice>
+	</Parameter>
+	<Parameter id="2d">
+	    <name>上传附加位置信息1</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:不上传（默认）;01:上传</notice>
+	</Parameter>
+	<Parameter id="2e">
+	    <name>基站定位时GSM基站信息内容</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:上传7个cellid（默认）;01:为一个cellid1个LAC</notice>
+	</Parameter>
+	<Parameter id="2f">
+	    <name>油耗参数</name>
+		<length>2</length>
+		<decode>OilCharacterDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="30">
+	    <name>OBD数据汇报间隔</name>
+		<length>2</length>
+		<decode>SimpleDecode</decode>
+		<notice>单位秒</notice>
+	</Parameter>
+	<Parameter id="32">
+	    <name>GPS模块类型</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:JN3;01:SE880</notice>
+	</Parameter>
+	<Parameter id="33">
+	    <name>是否使用网络鉴权</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:不适用（默认）;01:使用</notice>
+	</Parameter>
+	<Parameter id="34">
+	    <name>车辆装车后的里程</name>
+		<length>4</length>
+		<decode>SimpleDecode</decode>
+		<notice>单位公里</notice>
+	</Parameter>
+	<Parameter id="35">
+	    <name>OBD数据流中是否上传装车后的里程</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:不上传;01:上传</notice>
+	</Parameter>
+	<Parameter id="36">
+	    <name>是否上传GSM经纬度定位（慎用）</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:不使用;01:使用</notice>
+	</Parameter>
+	<Parameter id="37">
+	    <name>行程记录内容配置</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:行程记录的结束时间的秒为行程序号（默认）;01:行程记录最后增加一个字节作为行程序号</notice>
+	</Parameter>
+	<Parameter id="38">
+	    <name>时间查询设置</name>
+		<length>6</length>
+		<decode>TimeDecode</decode>
+		<notice></notice>
+	</Parameter>
+	<Parameter id="39">
+	    <name>蜂鸣器设置查询</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:报警响（默认）;01:报警不响</notice>
+	</Parameter>
+	<Parameter id="3a">
+	    <name>上传行程信息、OBD状态数据时里程的单位</name>
+		<length>1</length>
+		<decode>SwitchDecode</decode>
+		<notice>00:公里（默认）;01:米</notice>
+	</Parameter>
+</OBDTable>

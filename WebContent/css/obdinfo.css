@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#obd_info_table{
+	font-size:15px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+	position:absolute;
+	top:90px;
+	left:50px;
+}
+#OBD_date_div{
+	position:absolute;
+	top:60px;
+	left:70px;
+}
+#refresh_button{
+	position:absolute;
+	left:490px;
+	top:20px;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#get_one_more_obd_button{
+	position:absolute;
+	left:630px;
+	top:20px;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+}

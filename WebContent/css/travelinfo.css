@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#travel_info_table{
+	font-size:15px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+	position:absolute;
+	top:90px;
+	left:50px;
+}
+#refresh_button{
+	position:absolute;
+	left:420px;
+	top:20px;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#get_travel_info_button{
+	position:absolute;
+	left:560px;
+	top:20px;
+	width:150px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#get_which_travel_info_button{
+	position:absolute;
+	left:750px;
+	top:20px;
+	width:150px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#travel_info_select{
+	position:absolute;
+	left:900px;
+	top:20px;
+	height:40px;
+}
