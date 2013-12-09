@@ -16,6 +16,7 @@ body,html,#allmap {
 </style>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=15cf002106718ce6a60a7841ea39f127"></script>
+<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
 <title>添加普通标注点</title>
 </head>
 <body>
@@ -23,33 +24,77 @@ body,html,#allmap {
 </body>
 </html>
 <script type="text/javascript">
-
+var result = "";
 // 百度地图API功能
-var latitude_list = "${latitude_list}".split(",");
-var longitute_list = "${longitute_list}".split(",");
+var gps_latitude_list = "${latitude_list}".split(",");
+var gps_longitute_list = "${longitute_list}".split(",");
+//1
 var date_list = "${date_list}".split(",");
+var points = new Array(date_list.length);
+var geocoders = new Array(date_list.length);
+var infoWindow_list = new Array(date_list.length);
+var latitude_list = new Array(date_list.length);
+var longitute_list = new Array(date_list.length);
 var map = new BMap.Map("allmap");
 map.enableScrollWheelZoom();
 map.addControl(new BMap.NavigationControl());
-if(latitude_list.length>0){
-	map.centerAndZoom(new BMap.Point(longitute_list[0], latitude_list[0]), 16);
-	var marker = new BMap.Marker(new BMap.Point(longitute_list[0], latitude_list[0]));
-	var infoWindow = new BMap.InfoWindow(date_list[0]);
-	map.addOverlay(marker);
-	marker.addEventListener("click", function(){this.openInfoWindow(infoWindow);});
-	for(var i=0;i<latitude_list.length-1;i++){
-		var polyline = new BMap.Polyline([
-			new BMap.Point(longitute_list[i], latitude_list[i]),
-			new BMap.Point(longitute_list[i+1], latitude_list[i+1])
-		], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
-		map.addOverlay(polyline)
-		addArrow(polyline,10,Math.PI/7); 
-		var marker1 = new BMap.Marker(new BMap.Point(longitute_list[i+1], latitude_list[i+1]));
-		map.addOverlay(marker1);
-		var infoWindow1 = new BMap.InfoWindow(date_list[i]);
-		marker1.addEventListener("click", function(){this.openInfoWindow(infoWindow1);});
-	}
+//
+var myGeo = new BMap.Geocoder();
+for(var i=0;i<points.length;i++){
+	points[i] = new BMap.Point(gps_longitute_list[i], gps_latitude_list[i])
 }
+function getGeocoder(){
+	
+}
+function callback(xyResults){
+	var xyResult = null;
+	for(var index in xyResults){
+		xyResult = xyResults[index];
+	  	if(xyResult.error != 0){continue;}//出错就直接返回;
+	  	longitute_list[index] = xyResult.x;
+	  	latitude_list[index] = xyResult.y;
+	}
+	/* for(var i=0;i<geocoders.length;i++){
+		myGeo.getLocation(new BMap.Point(base64decode(longitute_list[0]), base64decode(latitude_list[0])),function(result){
+			if(result){
+				geocoders[i] = result.address;
+			}
+			else
+				geocoders[i] = "Nil";
+		});
+	} */
+	if(latitude_list.length>0){
+  		map.centerAndZoom(new BMap.Point(longitute_list[0], latitude_list[0]), 16);
+  		var marker = new BMap.Marker(new BMap.Point(longitute_list[0], latitude_list[0]));
+  		myGeo.getLocation(new BMap.Point(base64decode(longitute_list[0]), base64decode(latitude_list[0])),function(result){
+  			var geocoder0 = result.address;
+  			var infoWindow = new BMap.InfoWindow(date_list[0] + "<br/>" + base64decode(longitute_list[0]) + "<br/>" + base64decode(latitude_list[0]) + "<br/>" + geocoder0);
+  	  		map.addOverlay(marker);
+  	  		marker.addEventListener("click", function(){this.openInfoWindow(infoWindow);});
+  	  		for(var i=0;i<latitude_list.length-1;i++){
+  	  			var polyline = new BMap.Polyline([
+  	  				new BMap.Point(longitute_list[i], latitude_list[i]),
+  	  				new BMap.Point(longitute_list[i+1], latitude_list[i+1])
+  	  			], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
+  	  			map.addOverlay(polyline)
+  	  			addArrow(polyline,5,Math.PI/7); 
+  	  			var marker1 = new BMap.Marker(new BMap.Point(longitute_list[i+1], latitude_list[i+1]));
+  	  			marker1.zIndex = i+1;
+  	  			map.addOverlay(marker1);
+  	  			(function(x,thismarker){
+  	  				myGeo.getLocation(new BMap.Point(base64decode(longitute_list[x+1]), base64decode(latitude_list[x+1])),function(singleresult){
+  	  					var geocoder = singleresult.address;
+  	  	  				infoWindow_list[x+1] = new BMap.InfoWindow(date_list[x+1] + "<br/>" + base64decode(longitute_list[x+1]) + "<br/>" + base64decode(latitude_list[x+1]) + "<br/>" + geocoder);
+  	  	  				thismarker.addEventListener("click", function(){this.openInfoWindow(infoWindow_list[this.zIndex]);});
+  	  				});
+  	  			})(i,marker1);
+  	  		}
+  		});
+  	}
+}
+setTimeout(function(){
+    BMap.Convertor.transMore(points,0,callback);        //一秒之后开始进行坐标转换。参数2，表示是从GCJ-02坐标到百度坐标。参数0，表示是从GPS到百度坐标
+}, 1000)
 function addArrow(polyline,length,angleValue){ //绘制箭头的函数  
 	var linePoint=polyline.getPath();//线的坐标串  
 	var arrowCount=linePoint.length;  
@@ -111,4 +156,65 @@ function addArrow(polyline,length,angleValue){ //绘制箭头的函数
 	}  
 }
 window.setInterval("window.location.reload()", parseInt("${graph_refresh_minute}"));
+
+	var base64encodechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	var base64decodechars = new Array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62,
+			-1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1,
+			-1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1,
+			26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+			43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+	function base64decode(str) {
+		var c1, c2, c3, c4;
+		var i, len, out;
+
+		len = str.length;
+
+		i = 0;
+		out = "";
+		while (i < len) {
+
+			do {
+				c1 = base64decodechars[str.charCodeAt(i++) & 0xff];
+			} while (i < len && c1 == -1);
+			if (c1 == -1)
+				break;
+
+			do {
+				c2 = base64decodechars[str.charCodeAt(i++) & 0xff];
+			} while (i < len && c2 == -1);
+			if (c2 == -1)
+				break;
+
+			out += String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
+
+			do {
+				c3 = str.charCodeAt(i++) & 0xff;
+				if (c3 == 61)
+					return out;
+				c3 = base64decodechars[c3];
+			} while (i < len && c3 == -1);
+			if (c3 == -1)
+				break;
+
+			out += String.fromCharCode(((c2 & 0xf) << 4) | ((c3 & 0x3c) >> 2));
+
+			do {
+				c4 = str.charCodeAt(i++) & 0xff;
+				if (c4 == 61)
+					return out;
+				c4 = base64decodechars[c4];
+			} while (i < len && c4 == -1);
+			if (c4 == -1)
+				break;
+			out += String.fromCharCode(((c3 & 0x03) << 6) | c4);
+		}
+		return out;
+	}
+
+	function getGeocoder(lat,lon){
+		
+	}
 </script>

@@ -141,6 +141,9 @@ public class PositionInfoControl {
 				tempStr = tempStr.split(":")[1];
 				tempStr = tempStr.replaceAll("\\.", "");
 				tempStr = tempStr.replaceAll("бу", ".");
+				String tempStrPart = tempStr.split("\\.")[1];
+				int tempInt = Integer.parseInt(tempStrPart)/60*100;
+				tempStr = tempStr.split("\\.")[0] + "." + tempInt;
 				latitude_list += tempStr + ",";
 			}
 			latitude_list = latitude_list.substring(0,latitude_list.lastIndexOf(","));
@@ -150,6 +153,9 @@ public class PositionInfoControl {
 				tempStr = tempStr.split(":")[1];
 				tempStr = tempStr.replaceAll("\\.", "");
 				tempStr = tempStr.replaceAll("бу", ".");
+				String tempStrPart = "0." + tempStr.split("\\.")[1];
+				double tempD = Double.parseDouble(tempStrPart)/60*100;
+				tempStr = Integer.parseInt(tempStr.split("\\.")[0]) + tempD + "";
 				longitute_list += tempStr + ",";
 			}
 			longitute_list = longitute_list.substring(0,longitute_list.lastIndexOf(","));

@@ -1,7 +1,15 @@
 package com.fix.obd.protocol.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+
 import org.apache.log4j.Logger;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
+
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
 import com.fix.obd.util.MessageUtil;
@@ -25,16 +33,16 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		MessageUtil.printAndToDivContent("保存测试数据："+messageStr,true);
 		reader = new XMLReader("OBD_0008.xml");
 	}
-	
+
 	@Override
 	public boolean DBOperation(boolean DBif) {
 		// TODO Auto-generated method stub
 		this.clientId = this.getId();
 		this.bufferId = this.getBufferId();
-		
+
 		String realMessage = this.getRealMessage();		
 		String time = readTime(realMessage);
-		
+
 		boolean sign = true;
 		if(sign){
 			dbStr = readEffectiveParameter(realMessage);
@@ -46,13 +54,22 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		TerminalServerService t1 = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 		t1.addOBDData(clientId, dbStr,time);
 		String info = "收到OBD信息";
+		try {
+			this.sentByXML(dbStr);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(DBif){
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addOBDLog(clientId, info, messageStr);
 		}
 		return true;
 	}
-	
+
 	private boolean isTimeOdd(String time){
 		String oneChar = time.charAt(time.length()-1)+"";
 		int lastChar = Integer.parseInt(oneChar);
@@ -63,14 +80,14 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 			return true;
 		}
 	}
-	
+
 	//not use
 	private void readParameter(String message) {
 		// TODO Auto-generated method stub
 		int mapSize = reader.getMapSize();
 		int effIndex = 12;
 		StringBuilder resultBuilder = new StringBuilder();
-		
+
 		for(int index = 0 ; index < mapSize ; index++){
 			String name = reader.getElementName(index);
 			int length = reader.getElementLength(index);
@@ -81,7 +98,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				System.out.println(message.length()+"--"+effIndex+"--"+length*2);
 				String effString = message.substring(effIndex , effIndex+length*2);
 				effIndex += length*2;
-				
+
 				try {
 					Constructor con = Class.forName("com.fix.obd.util.obd."+handler).getConstructor();
 					ByteDecoder decoder = (ByteDecoder) con.newInstance();
@@ -91,8 +108,8 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 					resultBuilder.append(result);
 					resultBuilder.append(";");
 					resultBuilder.append(introduction);
-					
-//					logger.info("收到OBD信息-"+name+":"+result);
+
+					//					logger.info("收到OBD信息-"+name+":"+result);
 				}catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,16 +128,16 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				effString = message.substring(effIndex, effIndex+effInteger*2);
 				effIndex += effInteger*2;
 				String result = decoder.decode(effString, effInteger);
-				
+
 				resultBuilder.append(name);
 				resultBuilder.append(";");
 				resultBuilder.append(result);
 				resultBuilder.append(";");
 				resultBuilder.append(introduction);
 
-//				logger.info("收到OBD信息-"+name+":"+result);
+				//				logger.info("收到OBD信息-"+name+":"+result);
 			}
-			
+
 			resultBuilder.append("@");
 		}
 	}
@@ -132,7 +149,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		int index = 0;
 		int effIndex = 22;
 		StringBuilder resultBuilder = new StringBuilder();
-		
+
 		while(index < effBits.length){
 			if(effBits[index] == 1){
 				String name = reader.getElementName(index);
@@ -143,7 +160,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				if(length > 0){
 					String effString = message.substring(effIndex , effIndex+length*2);
 					effIndex += length*2;
-					
+
 					try {
 						Constructor con = Class.forName("com.fix.obd.util.obd."+handler).getConstructor();
 						ByteDecoder decoder = (ByteDecoder) con.newInstance();
@@ -154,7 +171,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 						resultBuilder.append(";");
 						resultBuilder.append(introduction);
 						strForDiv += MessageUtil.printAndToDivContent("收到OBD信息-"+name+":("+length+")"+result, false);
-//						logger.info("收到OBD信息-"+name+":("+length+")"+result);
+						//						logger.info("收到OBD信息-"+name+":("+length+")"+result);
 					}catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -163,7 +180,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				}
 				else if(length == -1 && handler.equals("ASCIIByteDecoder")){
 					ASCIIByteDecoder decoder = new ASCIIByteDecoder();
-					
+
 					String effString = message.substring(effIndex , effIndex+2);
 					effIndex += 2;
 					int effInteger = decoder.getStringValue(effString);
@@ -177,7 +194,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 						resultBuilder.append(";");
 						resultBuilder.append(introduction);
 						strForDiv += MessageUtil.printAndToDivContent("收到OBD信息-"+name+":("+effInteger+")"+result, false);
-//						logger.info("收到OBD信息-"+name+":("+effInteger+")"+result);
+						//						logger.info("收到OBD信息-"+name+":("+effInteger+")"+result);
 					}
 					else{
 						effString = message.substring(effIndex, message.length());
@@ -189,7 +206,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 						resultBuilder.append(";");
 						resultBuilder.append(introduction);
 						strForDiv += MessageUtil.printAndToDivContent("收到可能错误的OBD信息-"+name+":("+effInteger+")"+result, false);
-//						logger.info("收到可能错误的OBD信息-"+name+":("+effInteger+")"+result);
+						//						logger.info("收到可能错误的OBD信息-"+name+":("+effInteger+")"+result);
 					}
 				}
 			}
@@ -207,7 +224,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		strForDiv += MessageUtil.printAndToDivContent(timeMeg, false);
 		return timePart;
 	}
-	
+
 	private byte[] changeStringToBits(String eff) {
 		// TODO Auto-generated method stub
 		int length = eff.length();
@@ -227,7 +244,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 			result[revise] = result[result.length-1-revise];
 			result[result.length-1-revise] = temp;
 		}
-		
+
 		return result;
 	}
 
@@ -244,5 +261,28 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 	}
 	public String getStrForDiv(){
 		return this.strForDiv;
+	}
+	public void sentByXML(String str) throws FileNotFoundException, IOException{
+		Element root = new Element("obdxml");
+		Document Doc = new Document(root);
+		String[] characters = str.split("@");
+		for(int i=0;i<characters.length;i++){
+			Element elements = new Element("obd");
+			elements.setAttribute("id", "" + i);
+			String innerCharacters[] = characters[i].split(";");
+			if(innerCharacters.length>=3){
+				elements.addContent(new Element("name").setText(innerCharacters[0]));
+				elements.addContent(new Element("value").setText(innerCharacters[1]));
+				elements.addContent(new Element("extra").setText(innerCharacters[2]));
+			}
+			else{
+				elements.addContent(new Element("name").setText("Nil"));
+				elements.addContent(new Element("value").setText("Nil"));
+				elements.addContent(new Element("extra").setText("Nil"));
+			}
+			root.addContent(elements);  
+		}
+		XMLOutputter XMLOut = new XMLOutputter();  
+		XMLOut.output(Doc, new FileOutputStream("e://obd_to_apk.xml"));  
 	}
 }

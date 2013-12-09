@@ -1,8 +1,14 @@
 package com.fix.obd.protocol.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 import org.apache.log4j.Logger;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
@@ -37,6 +43,15 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 			t.updateTravelInfo(clientId, otherResult);
 		}
 		String info = "收到行程信息";
+		try {
+			this.sentByXML(otherResult);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(DBif){
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			System.out.println(clientId);
@@ -46,6 +61,7 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 	}
 	
 	private String readParameter(String message){
+		System.out.println(message.length());
 		int mapSize = xmlReader.getMapSize();
 		int effIndex = 0;
 		StringBuilder resultBuilder = new StringBuilder();
@@ -98,5 +114,27 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 		// TODO Auto-generated method stub
 		return this.strForDiv;
 	}
-
+	public void sentByXML(String str) throws FileNotFoundException, IOException{
+		Element root = new Element("travelinfoxml");
+		Document Doc = new Document(root);
+		String[] characters = str.split("@");
+		for(int i=0;i<characters.length;i++){
+			Element elements = new Element("travelinfo");
+			elements.setAttribute("id", "" + i);
+			String innerCharacters[] = characters[i].split(";");
+			if(innerCharacters.length>=3){
+				elements.addContent(new Element("name").setText(innerCharacters[0]));
+				elements.addContent(new Element("value").setText(innerCharacters[1]));
+				elements.addContent(new Element("extra").setText(innerCharacters[2]));
+			}
+			else{
+				elements.addContent(new Element("name").setText("Nil"));
+				elements.addContent(new Element("value").setText("Nil"));
+				elements.addContent(new Element("extra").setText("Nil"));
+			}
+			root.addContent(elements);  
+		}
+		XMLOutputter XMLOut = new XMLOutputter();  
+		XMLOut.output(Doc, new FileOutputStream("e://travelinfo_to_apk.xml"));  
+	}
 }

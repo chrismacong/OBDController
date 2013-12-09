@@ -1,6 +1,13 @@
 package com.fix.obd.protocol.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
@@ -109,7 +116,43 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 	//		PositionInfo p = new PositionInfo("0000000861825486344109001500040010100016100004410067c951d901cc00005fa3");
 	//		p.DBOperation();
 	//	}
-
+	public static void sentByXML(String alertStr, String dbStr) throws FileNotFoundException, IOException{
+		Element root = new Element("positionxml");
+		Document Doc = new Document(root);
+		String[] alertcharacters = alertStr.split(";");
+		String[] dbcharacters = dbStr.split(";");
+		for(int i=0;i<alertcharacters.length;i++){
+			Element elements = new Element("position");
+			elements.setAttribute("id", "" + i);
+			String innerCharacters[] = alertcharacters[i].split(":");
+			if(innerCharacters.length>=2){
+				elements.addContent(new Element("name").setText(innerCharacters[0]));
+				elements.addContent(new Element("value").setText(innerCharacters[1]));
+			}
+			else{
+				elements.addContent(new Element("name").setText("Nil"));
+				elements.addContent(new Element("value").setText("Nil"));
+			}
+			root.addContent(elements);  
+		}
+		for(int i=0;i<dbcharacters.length;i++){
+			Element elements = new Element("position");
+			int index = i + alertcharacters.length;
+			elements.setAttribute("id", "" + index);
+			String innerCharacters[] = dbcharacters[i].split(":");
+			if(innerCharacters.length>=2){
+				elements.addContent(new Element("name").setText(innerCharacters[0]));
+				elements.addContent(new Element("value").setText(innerCharacters[1]));
+			}
+			else{
+				elements.addContent(new Element("name").setText("Nil"));
+				elements.addContent(new Element("value").setText("Nil"));
+			}
+			root.addContent(elements);  
+		}
+		XMLOutputter XMLOut = new XMLOutputter();  
+		XMLOut.output(Doc, new FileOutputStream("e://position_to_apk.xml"));
+	}
 	private class GPSOrientate{
 		private String partOfStr;
 		private String dbStr;
@@ -174,6 +217,15 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			}
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addPositionData(clientId, dbStr,gpsDate,alertStr);
+			try {
+				PositionInfo.sentByXML(alertStr, dbStr);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 //	private class Celiid7Orientate{
@@ -261,6 +313,15 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			}
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addPositionData(clientId, dbStr, gpsDate,alertStr);
+			try {
+				PositionInfo.sentByXML(alertStr, dbStr);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
