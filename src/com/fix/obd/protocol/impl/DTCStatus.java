@@ -3,12 +3,15 @@ package com.fix.obd.protocol.impl;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
+import com.fix.obd.jpush.service.JPushClientExample;
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
 import com.fix.obd.util.MessageUtil;
@@ -45,19 +48,19 @@ public class DTCStatus extends ODBProtocolParser implements ODBProtocol{
 		}
 		String info = " ’µΩOBDπ ’œ◊¥Ã¨£∫"+messageInteger+"£¨"+message;
 		strForDiv += MessageUtil.printAndToDivContent(info, true);
-		try {
-			this.sentByXML(message);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if(DBif){
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addOBDLog(clientId, info, messageStr);
 			t.updateOBDDefect(clientId, message);
+			try {
+				this.sentByXML(message);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
@@ -77,13 +80,13 @@ public class DTCStatus extends ODBProtocolParser implements ODBProtocol{
 		return this.strForDiv;
 	}
 	public void sentByXML(String str) throws FileNotFoundException, IOException{
-		Element root = new Element("faultstatusxml");
-		Document Doc = new Document(root);
-		Element elements = new Element("faultstatus");
-		elements.setAttribute("id", "" + 0);
-		elements.addContent(new Element("status").setText(str));
-		root.addContent(elements);  
-		XMLOutputter XMLOut = new XMLOutputter();  
-		XMLOut.output(Doc, new FileOutputStream("e://faultstatus_to_apk.xml"));  
+		JPushClientExample jpush = new JPushClientExample();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = df.format(new Date());
+        StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
+		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
+		String operationId = p.getIdByProtocol(classname);
+	    jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", str);
 	}
 }

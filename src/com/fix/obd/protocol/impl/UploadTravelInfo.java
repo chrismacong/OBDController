@@ -4,12 +4,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
+import com.fix.obd.jpush.service.JPushClientExample;
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
 import com.fix.obd.util.MessageUtil;
@@ -43,19 +46,19 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 			t.updateTravelInfo(clientId, otherResult);
 		}
 		String info = "收到行程信息";
-		try {
-			this.sentByXML(otherResult);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if(DBif){
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			System.out.println(clientId);
 			t.addOBDLog(clientId, info, messageStr);
+			try {
+				this.sentByXML(otherResult);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
@@ -115,26 +118,20 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 		return this.strForDiv;
 	}
 	public void sentByXML(String str) throws FileNotFoundException, IOException{
-		Element root = new Element("travelinfoxml");
-		Document Doc = new Document(root);
 		String[] characters = str.split("@");
+		JPushClientExample jpush = new JPushClientExample();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = df.format(new Date());
+        StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
+		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
+		String operationId = p.getIdByProtocol(classname);
 		for(int i=0;i<characters.length;i++){
-			Element elements = new Element("travelinfo");
-			elements.setAttribute("id", "" + i);
-			String innerCharacters[] = characters[i].split(";");
-			if(innerCharacters.length>=3){
-				elements.addContent(new Element("name").setText(innerCharacters[0]));
-				elements.addContent(new Element("value").setText(innerCharacters[1]));
-				elements.addContent(new Element("extra").setText(innerCharacters[2]));
-			}
-			else{
-				elements.addContent(new Element("name").setText("Nil"));
-				elements.addContent(new Element("value").setText("Nil"));
-				elements.addContent(new Element("extra").setText("Nil"));
-			}
-			root.addContent(elements);  
+        	String character_sep[] = characters[i].split(";"); 
+        	System.out.println(characters[i]);
+        	if(character_sep.length>=3){
+        		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")");
+        	}
 		}
-		XMLOutputter XMLOut = new XMLOutputter();  
-		XMLOut.output(Doc, new FileOutputStream("e://travelinfo_to_apk.xml"));  
 	}
 }

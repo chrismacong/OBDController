@@ -4,222 +4,259 @@
 		<name>Obd速度</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction>单位km\H</introduction>
+		<introduction>km\H</introduction>
+		<extra>单位km\H</extra>
 	</Parameter>
 	<Parameter id="1">
 		<name>电池电压</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction>单位0.1v</introduction>
+		<introduction>0.1v</introduction>
+		<extra>单位0.1v</extra>
 	</Parameter>
 	<Parameter id="2">
 		<name>故障码个数</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>个</introduction>
+		<extra>个</extra>
 	</Parameter>
 	<Parameter id="3">
 		<name>故障灯状态</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction>状态:0x00正常,0x01警告,0x02严重</introduction>
+		<introduction>状态</introduction>
+		<extra>状态:0x00正常,0x01警告,0x02严重</extra>
 	</Parameter>
 	<Parameter id="4">
 		<name>发动机冷却液温度</name>
 		<length>1</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>摄氏度</introduction>
+		<extra>摄氏度</extra>
 	</Parameter>
 	<Parameter id="5">
 		<name>进气歧管绝对压力</name>
 		<length>1</length>
 		<decode>UnsignedByteDecoder</decode>
 		<introduction>千帕</introduction>
+		<extra>千帕</extra>
 	</Parameter>
 	<Parameter id="6">
 		<name>发动机转速</name>
 		<length>2</length>
 		<decode>UnsignedByteDecoder</decode>
 		<introduction>转每分</introduction>
+		<extra>转每分</extra>
 	</Parameter>
 	<Parameter id="7">
 		<name>1号气缸点火时提前角</name>
 		<length>2</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>0.1度</introduction>
+		<extra>0.1度</extra>
 	</Parameter>
 	<Parameter id="8">
 		<name>进气温度</name>
 		<length>1</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>摄氏度</introduction>
+		<extra>摄氏度</extra>
 	</Parameter>
 	<Parameter id="9">
 		<name>空气流量传感器的空气流量</name>
 		<length>2</length>
 		<decode>UnsignedByteDecoder</decode>
 		<introduction>0.01加仑/秒</introduction>
+		<extra>0.01加仑/秒</extra>
 	</Parameter>
 	<Parameter id="10">
 		<name>绝对节气门位置</name>
 		<length>1</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="11">
 		<name>二次空气状态指令</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction></introduction>
+		<introduction>指令</introduction>
+		<extra></extra>
 	</Parameter>
 	<Parameter id="12">
 		<name>氧传感器的位置</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction></introduction>
+		<introduction>位置</introduction>
+		<extra></extra>
 	</Parameter>
 	<Parameter id="13">
 		<name>自发动机起动的时间7d</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>秒</introduction>
+		<extra>秒</extra>
 	</Parameter>
 	<Parameter id="14">
 		<name>在故障指示灯激活状态下行驶的里程7e</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>千米</introduction>
+		<extra>千米</extra>
 	</Parameter>
 	<Parameter id="15">
 		<name>相对于歧管真空度的油轨压力7f</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>千帕</introduction>
+		<extra>千帕</extra>
 	</Parameter>
 	<Parameter id="16">
 		<name>相对于大气压力的油轨压力80</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>千帕</introduction>
+		<extra>千帕</extra>
 	</Parameter>
 	<Parameter id="17">
 		<name>废气再循环系统指令开度81</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="18">
 		<name>EGR开度误差 (实际开度 — 指令开度)/指令开度*100</name>
 		<length>1</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="19">
 		<name>蒸发冲洗控制指令</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="20">
 		<name>燃油液位输入</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="21">
 		<name>蒸发系统的蒸气压力</name>
 		<length>2</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>Pa</introduction>
+		<extra>Pa</extra>
 	</Parameter>
 	<Parameter id="22">
 		<name>大气压</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>Kpa</introduction>
+		<extra>Kpa</extra>
 	</Parameter>
 	<Parameter id="23">
 		<name>相对节气门位置</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="24">
 		<name>环境空气温度</name>
 		<length>1</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>℃</introduction>
+		<extra>℃</extra>
 	</Parameter>
 	<Parameter id="25">
 		<name>绝对节气门位置B</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="26">
 		<name>绝对节气门位置C  a9</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="27">
 		<name>加速踏板位置D  aa</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="28">
 		<name>加速踏板位置E  ab</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="29">
 		<name>加速踏板位置F   ac</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="30">
 		<name>节气门执行器控制指令  ad</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="31">
 		<name>故障指示灯处于激活状态下的发动机运转时间  ae</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>分钟</introduction>
+		<extra>分钟</extra>
 	</Parameter>
 	<Parameter id="32">
 		<name>油轨绝对压力 c1</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>Kpa</introduction>
+		<extra>Kpa</extra>
 	</Parameter>
 	<Parameter id="33">
 		<name>加速踏板相对位置  c2</name>
 		<length>1</length>
 		<decode>DecimalByteDecoder</decode>
 		<introduction>%</introduction>
+		<extra>%</extra>
 	</Parameter>
 	<Parameter id="34">
 		<name>发动机机油温度 c4</name>
 		<length>2</length>
 		<decode>SignedByteDecoder</decode>
 		<introduction>摄氏度</introduction>
+		<extra>摄氏度</extra>
 	</Parameter>
 	<Parameter id="35">
 		<name>冻结帧的故障码03</name>
 		<length>-1</length>
 		<decode>ASCIIByteDecoder</decode>
-		<introduction></introduction>
+		<introduction>故障码</introduction>
+		<extra></extra>
 	</Parameter>
 	<Parameter id="36">
 		<name>设备装车后行驶的里程</name>
 		<length>4</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction></introduction>
+		<introduction>里程</introduction>
+		<extra></extra>
 	</Parameter>
 </ODBTable>

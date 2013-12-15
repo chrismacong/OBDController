@@ -1,14 +1,19 @@
 package com.fix.obd.protocol.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import com.fix.obd.jpush.service.JPushClientExample;
 import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
 import com.fix.obd.util.MessageUtil;
@@ -90,6 +95,15 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			if(DBif){
 				TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 				t.addOBDLog(clientId, info, messageStr);
+				try {
+					PositionInfo.sentByXML(alertStr, dbStr);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			return true;
 		} catch (Exception e) {
@@ -117,41 +131,50 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 	//		p.DBOperation();
 	//	}
 	public static void sentByXML(String alertStr, String dbStr) throws FileNotFoundException, IOException{
-		Element root = new Element("positionxml");
-		Document Doc = new Document(root);
 		String[] alertcharacters = alertStr.split(";");
 		String[] dbcharacters = dbStr.split(";");
-		for(int i=0;i<alertcharacters.length;i++){
-			Element elements = new Element("position");
-			elements.setAttribute("id", "" + i);
-			String innerCharacters[] = alertcharacters[i].split(":");
-			if(innerCharacters.length>=2){
-				elements.addContent(new Element("name").setText(innerCharacters[0]));
-				elements.addContent(new Element("value").setText(innerCharacters[1]));
+        JPushClientExample j = new JPushClientExample();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String now = df.format(new Date());
+    	StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
+		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
+		String operationId = p.getIdByProtocol(classname);
+//        for(int i=0;i<alertcharacters.length;i++){
+//	        j.sendMessageToRandomSendNo(operationId + "(" + now + ")", alertcharacters[i]);
+//        }
+//        for(int i=0;i<dbcharacters.length;i++){
+//        	j.sendMessageToRandomSendNo(operationId + "(" + now + ")", dbcharacters[i]);
+//        }
+		String lat = "";
+		String lon = "";
+		boolean containsLat = false;
+		boolean containsLon = false;
+		for(int i=0;i<dbcharacters.length;i++){
+			if(dbcharacters[i].contains("Î³¶È:")){
+				containsLat = true;
+				lat = dbcharacters[i].split(":")[1];
 			}
-			else{
-				elements.addContent(new Element("name").setText("Nil"));
-				elements.addContent(new Element("value").setText("Nil"));
-			}
-			root.addContent(elements);  
 		}
 		for(int i=0;i<dbcharacters.length;i++){
-			Element elements = new Element("position");
-			int index = i + alertcharacters.length;
-			elements.setAttribute("id", "" + index);
-			String innerCharacters[] = dbcharacters[i].split(":");
-			if(innerCharacters.length>=2){
-				elements.addContent(new Element("name").setText(innerCharacters[0]));
-				elements.addContent(new Element("value").setText(innerCharacters[1]));
+			if(dbcharacters[i].contains("¾­¶È:")){
+				containsLon = true;
+				lon = dbcharacters[i].split(":")[1];
 			}
-			else{
-				elements.addContent(new Element("name").setText("Nil"));
-				elements.addContent(new Element("value").setText("Nil"));
-			}
-			root.addContent(elements);  
 		}
-		XMLOutputter XMLOut = new XMLOutputter();  
-		XMLOut.output(Doc, new FileOutputStream("e://position_to_apk.xml"));
+		if(containsLat==true&&containsLon==true){
+			lat = lat.replaceAll("\\.", "");
+			lat = lat.replaceAll("¡ã", ".");
+			String tempStrPart1 = lat.split("\\.")[1];
+			int tempInt1 = Integer.parseInt(tempStrPart1)/60*100;
+			lat = lat.split("\\.")[0] + "." + tempInt1;
+			lon = lon.replaceAll("\\.", "");
+			lon = lon.replaceAll("¡ã", ".");
+			String tempStrPart2 = lon.split("\\.")[1];
+			int tempInt2 = Integer.parseInt(tempStrPart2)/60*100;
+			lon = lon.split("\\.")[0] + "." + tempInt2;
+			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon);
+		}
 	}
 	private class GPSOrientate{
 		private String partOfStr;
@@ -313,15 +336,6 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			}
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addPositionData(clientId, dbStr, gpsDate,alertStr);
-			try {
-				PositionInfo.sentByXML(alertStr, dbStr);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 }
