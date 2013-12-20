@@ -18,7 +18,7 @@
 		<name>距离</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction>米</introduction>
+		<introduction>km</introduction>
 		<extra>本次行程行驶距离</extra>
 	</Parameter>
 	<Parameter id="3">

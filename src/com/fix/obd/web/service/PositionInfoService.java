@@ -2,6 +2,7 @@ package com.fix.obd.web.service;
 
 import java.util.List;
 
+import com.fix.obd.web.model.OBDData;
 import com.fix.obd.web.model.PositionData;
 
 

@@ -58,5 +58,7 @@
 	<a id="speed_graph" target="_blank" href="${pageContext.request.contextPath}/positioninfo/getsgraph.html?terminalId=${terminalId}"></a>
 	<a id="temperature_graph" target="_blank" href="${pageContext.request.contextPath}/positioninfo/gettgraph.html?terminalId=${terminalId}"></a>
 	<a id="location_graph" target="_blank" href="${pageContext.request.contextPath}/positioninfo/getlgraph.html?terminalId=${terminalId}"></a>
+	<a id="pressure_graph" target="_blank" href="${pageContext.request.contextPath}/obdinfo/getpgraph.html?terminalId=${terminalId}"></a>
+	<a id="dash_graph" target="_blank" href="${pageContext.request.contextPath}/obdinfo/getdgraph.html?terminalId=${terminalId}"></a>
 </body>
 </html>

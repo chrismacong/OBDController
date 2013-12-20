@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fix.obd.util.MessageUtil;
+import com.fix.obd.web.model.OBDData;
 import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.util.PositionSeperateUtilModel;
 import com.fix.obd.web.service.PositionInfoService;

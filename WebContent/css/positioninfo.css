@@ -72,10 +72,37 @@
 	background:url(../images/temperature_logo_hover.png) no-repeat center center;
 	cursor:pointer;
 }
-#location_graph{
+#temperature_graph:hover{
+	position:absolute;
+	top:500px;
+	left:810px;
+	width:90px;
+	height:90px;
+	background:url(../images/temperature_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#pressure_graph{
 	position:absolute;
 	top:500px;
 	left:930px;
+	width:90px;
+	height:90px;
+	background:url(../images/pressure_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#pressure_graph:hover{
+	position:absolute;
+	top:500px;
+	left:930px;
+	width:90px;
+	height:90px;
+	background:url(../images/pressure_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#location_graph{
+	position:absolute;
+	top:600px;
+	left:690px;
 	width:90px;
 	height:90px;
 	background:url(../images/location_logo.png) no-repeat center center;
@@ -83,10 +110,28 @@
 }
 #location_graph:hover{
 	position:absolute;
-	top:500px;
-	left:930px;
+	top:600px;
+	left:690px;
 	width:90px;
 	height:90px;
 	background:url(../images/location_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#dash_graph{
+	position:absolute;
+	top:600px;
+	left:810px;
+	width:90px;
+	height:90px;
+	background:url(../images/dash_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#dash_graph:hover{
+	position:absolute;
+	top:600px;
+	left:810px;
+	width:90px;
+	height:90px;
+	background:url(../images/dash_logo_hover.png) no-repeat center center;
 	cursor:pointer;
 }

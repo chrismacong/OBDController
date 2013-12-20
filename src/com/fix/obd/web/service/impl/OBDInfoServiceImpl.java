@@ -2,6 +2,7 @@ package com.fix.obd.web.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -95,5 +96,24 @@ public class OBDInfoServiceImpl implements OBDInfoService{
 			return false;
 		}
 	}
-
+	@Override
+	public List<OBDData> getLatest10OBDInfo(String terminalId) {
+		// TODO Auto-generated method stub
+		try {
+			List<OBDData> returnData = new ArrayList<OBDData>();
+			List<OBDData> tempData = new ArrayList<OBDData>();
+			List<OBDData> obd_list = new ArrayList<OBDData>();
+			obd_list = obdDataDao.findByHQL("from OBDData where tid = '" + terminalId + "' order by date desc");
+			for(int i=0;i<(obd_list.size()>10?10:obd_list.size());i++){
+				tempData.add(obd_list.get(i));
+			}
+			for(int i=tempData.size()-1;i>=0;i--)
+				returnData.add(tempData.get(i));
+			return returnData;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

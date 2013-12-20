@@ -10,7 +10,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.fix.obd.web.dao.OBDDataDao;
 import com.fix.obd.web.dao.PositionDataDao;
+import com.fix.obd.web.model.OBDData;
 import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.service.PositionInfoService;
 @Component
