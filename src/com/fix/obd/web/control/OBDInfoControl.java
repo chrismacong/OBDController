@@ -131,21 +131,23 @@ public class OBDInfoControl {
 		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
 		model.put("terminalId", terminalId);
 		OBDData latest_data = obdInfoService.getLatestOBDData(terminalId);
-		String info = latest_data.getInfo();
 		String str1 = "0";
 		String str2 = "0";
 		String str3 = "0";
-		if(info.lastIndexOf("燃油液位输入")>-1){
-			str1 = info.substring(info.lastIndexOf("燃油液位输入"));
-			str1 = str1.split(";")[1];
-		}
-		if(info.lastIndexOf("绝对节气门位置")>-1){
-			str2 = info.substring(info.indexOf("绝对节气门位置"));
-			str2 = str2.split(";")[1];
-		}
-		if(info.lastIndexOf("相对节气门位置")>-1){
-			str3 = info.substring(info.indexOf("相对节气门位置"));
-			str3 = str3.split(";")[1];
+		if(latest_data!=null){
+			String info = latest_data.getInfo();
+			if(info.lastIndexOf("燃油液位输入")>-1){
+				str1 = info.substring(info.lastIndexOf("燃油液位输入"));
+				str1 = str1.split(";")[1];
+			}
+			if(info.lastIndexOf("绝对节气门位置")>-1){
+				str2 = info.substring(info.indexOf("绝对节气门位置"));
+				str2 = str2.split(";")[1];
+			}
+			if(info.lastIndexOf("相对节气门位置")>-1){
+				str3 = info.substring(info.indexOf("相对节气门位置"));
+				str3 = str3.split(";")[1];
+			}
 		}
 		model.put("oillevel", str1);
 		model.put("absolute", str2);
