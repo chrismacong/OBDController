@@ -38,7 +38,7 @@
 }
 #speed_graph{
 	position:absolute;
-	top:500px;
+	top:400px;
 	left:690px;
 	width:90px;
 	height:90px;
@@ -47,7 +47,7 @@
 }
 #speed_graph:hover{
 	position:absolute;
-	top:500px;
+	top:400px;
 	left:690px;
 	width:90px;
 	height:90px;
@@ -56,7 +56,7 @@
 }
 #temperature_graph{
 	position:absolute;
-	top:500px;
+	top:400px;
 	left:810px;
 	width:90px;
 	height:90px;
@@ -65,16 +65,7 @@
 }
 #temperature_graph:hover{
 	position:absolute;
-	top:500px;
-	left:810px;
-	width:90px;
-	height:90px;
-	background:url(../images/temperature_logo_hover.png) no-repeat center center;
-	cursor:pointer;
-}
-#temperature_graph:hover{
-	position:absolute;
-	top:500px;
+	top:400px;
 	left:810px;
 	width:90px;
 	height:90px;
@@ -83,7 +74,7 @@
 }
 #pressure_graph{
 	position:absolute;
-	top:500px;
+	top:400px;
 	left:930px;
 	width:90px;
 	height:90px;
@@ -92,7 +83,7 @@
 }
 #pressure_graph:hover{
 	position:absolute;
-	top:500px;
+	top:400px;
 	left:930px;
 	width:90px;
 	height:90px;
@@ -101,7 +92,7 @@
 }
 #location_graph{
 	position:absolute;
-	top:600px;
+	top:500px;
 	left:690px;
 	width:90px;
 	height:90px;
@@ -110,7 +101,7 @@
 }
 #location_graph:hover{
 	position:absolute;
-	top:600px;
+	top:500px;
 	left:690px;
 	width:90px;
 	height:90px;
@@ -119,7 +110,7 @@
 }
 #dash_graph{
 	position:absolute;
-	top:600px;
+	top:500px;
 	left:810px;
 	width:90px;
 	height:90px;
@@ -128,10 +119,46 @@
 }
 #dash_graph:hover{
 	position:absolute;
-	top:600px;
+	top:500px;
 	left:810px;
 	width:90px;
 	height:90px;
 	background:url(../images/dash_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#travel_exm_graph{
+	position:absolute;
+	top:500px;
+	left:930px;
+	width:90px;
+	height:90px;
+	background:url(../images/travel_exm_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#travel_exm_graph:hover{
+	position:absolute;
+	top:500px;
+	left:930px;
+	width:90px;
+	height:90px;
+	background:url(../images/travel_exm_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#vehicle_exm_graph{
+	position:absolute;
+	top:600px;
+	left:690px;
+	width:90px;
+	height:90px;
+	background:url(../images/vehicle_exm_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#vehicle_exm_graph:hover{
+	position:absolute;
+	top:600px;
+	left:690px;
+	width:90px;
+	height:90px;
+	background:url(../images/vehicle_exm_logo_hover.png) no-repeat center center;
 	cursor:pointer;
 }

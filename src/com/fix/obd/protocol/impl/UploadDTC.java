@@ -28,7 +28,7 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 	private static final  Logger logger = Logger.getLogger(TerminalHeartbeat.class);
 	private String clientId;
 	private String bufferId;
-	
+
 	public UploadDTC(String messageStr){
 		super(messageStr);
 		MessageUtil.printAndToDivContent("收到来自终端" + this.getId() + "上传故障码",true);
@@ -39,7 +39,7 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 		// TODO Auto-generated method stub
 		this.clientId = this.getId();
 		this.bufferId = this.getBufferId();
-		
+
 		String message = this.getRealMessage();
 		int dtcNumber = Integer.valueOf(message.substring(0,2), 16);
 		int stringIndex = 2;
@@ -63,17 +63,17 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 			t.addOBDLog(clientId, info, messageStr);
 			if(allErrors.lastIndexOf(",")==-1)
 				t.updateDTCDefect(clientId, "No Error");
-			else
+			else{
 				t.updateDTCDefect(clientId, allErrors.substring(0,allErrors.lastIndexOf(",")));
-
-			try {
-				this.sentByXML(allErrors.substring(0,allErrors.lastIndexOf(",")));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					this.sentByXML(allErrors.substring(0,allErrors.lastIndexOf(",")));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return true;
@@ -93,37 +93,37 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 		return this.strForDiv;
 	}
 	public void sentByXML(String str) throws FileNotFoundException, IOException{
-//		Element root = new Element("faultcodexml");
-//		Document Doc = new Document(root);
+		//		Element root = new Element("faultcodexml");
+		//		Document Doc = new Document(root);
 		String[] characters = str.split(",");
-//		for(int i=0;i<characters.length;i++){
-//			Element elements = new Element("faultcode");
-//			elements.setAttribute("id", "" + i);
-//			elements.addContent(new Element("index").setText(characters[i]));
-//			FaultCodeXMLUtil f = new FaultCodeXMLUtil();
-//			ArrayList<FaultCodeIterator> list = f.parseByIndex(characters[i]);
-//			if(list.size()==0){
-//				elements.addContent(new Element("detail").setText("未识别的故障码"));
-//			}
-//			else{
-//				for(int j=0;j<list.size();j++)
-//					elements.addContent(new Element("detail").setText(list.get(j).getFaultDetail()));
-//			}
-//			root.addContent(elements);  
-//		}
-//		Format format = Format.getPrettyFormat();     
-//        format.setEncoding("gb2312");// 设置xml文件的字符为UTF-8，解决中文问题     
-//        XMLOutputter xmlout = new XMLOutputter(format);     
-//        ByteArrayOutputStream bo = new ByteArrayOutputStream();     
-//        xmlout.output(Doc, bo);
-//        String realtext = bo.toString();
-//        System.out.println("XML2String:" + realtext);
-        JPushClientExample jpush = new JPushClientExample();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//		for(int i=0;i<characters.length;i++){
+		//			Element elements = new Element("faultcode");
+		//			elements.setAttribute("id", "" + i);
+		//			elements.addContent(new Element("index").setText(characters[i]));
+		//			FaultCodeXMLUtil f = new FaultCodeXMLUtil();
+		//			ArrayList<FaultCodeIterator> list = f.parseByIndex(characters[i]);
+		//			if(list.size()==0){
+		//				elements.addContent(new Element("detail").setText("未识别的故障码"));
+		//			}
+		//			else{
+		//				for(int j=0;j<list.size();j++)
+		//					elements.addContent(new Element("detail").setText(list.get(j).getFaultDetail()));
+		//			}
+		//			root.addContent(elements);  
+		//		}
+		//		Format format = Format.getPrettyFormat();     
+		//        format.setEncoding("gb2312");// 设置xml文件的字符为UTF-8，解决中文问题     
+		//        XMLOutputter xmlout = new XMLOutputter(format);     
+		//        ByteArrayOutputStream bo = new ByteArrayOutputStream();     
+		//        xmlout.output(Doc, bo);
+		//        String realtext = bo.toString();
+		//        System.out.println("XML2String:" + realtext);
+		JPushClientExample jpush = new JPushClientExample();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String now = df.format(new Date());
-        for(int i=0;i<characters.length;i++){
-        	String faultStr = characters[i] + ":";
-        	FaultCodeXMLUtil f = new FaultCodeXMLUtil();
+		for(int i=0;i<characters.length;i++){
+			String faultStr = characters[i] + ":";
+			FaultCodeXMLUtil f = new FaultCodeXMLUtil();
 			ArrayList<FaultCodeIterator> list = f.parseByIndex(characters[i]);
 			if(list.size()==0){
 				faultStr += "未识别的故障码";
@@ -132,11 +132,11 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 				for(int j=0;j<list.size();j++)
 					faultStr += list.get(j).getFaultDetail();
 			}
-	        StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+			StackTraceElement[] stacks = new Throwable().getStackTrace(); 
 			String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 			ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 			String operationId = p.getIdByProtocol(classname);
-	        jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr);
-        }
+			jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr);
+		}
 	}
 }

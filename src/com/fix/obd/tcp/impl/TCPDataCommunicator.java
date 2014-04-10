@@ -118,8 +118,4 @@ public class TCPDataCommunicator implements ITCPDataCommunicator {
 	public int getStatus() {
 		return this.status;
 	}
-
-	public static void main(String[] args) {
-		TCPDataCommunicator.getInstance().start();
-	}
 }

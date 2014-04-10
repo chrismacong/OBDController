@@ -43,7 +43,7 @@ public class SendUpdateData extends ODBProtocolParser implements ODBProtocol{
 			message += characterSentence[i];
 		}
 		response.setMessageBody(message);
-		String messageLength = "0000" + message.length()/2;
+		String messageLength = "0000" + Integer.toHexString(message.length()/2);
 		messageLength = messageLength.substring(messageLength.length()-4);
 		response.setLength(messageLength);
 		response.setCheckNode(MessageUtil.buildCheckNode(response));

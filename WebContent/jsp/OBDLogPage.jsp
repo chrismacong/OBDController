@@ -13,9 +13,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/terminallog.js"></script>
 <script type="text/javascript">
 	$(function(){
-		var str = "" + ${terminalId};
+		var str = "${terminalId}";
 		$("#remove_all_button").click(function(){
-			window.location.href = "/OBDController/terminallog/removeall.html?terminalId=" + ${terminalId};
+			window.location.href = "/OBDController/terminallog/removeall.html?terminalId=${terminalId}";
 		});
 		$("#refresh_button").click(function(){
 			window.location.reload();

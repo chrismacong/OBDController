@@ -47,7 +47,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			alertInBinary = String.format("%016d", Integer.parseInt(alertInBinary));
 			alertInBinary = MessageUtil.reverseStr(alertInBinary);
 			System.out.println("-----------------------");
-			String[] alerts = {"急加速","超速报警","<预留>","电池欠压","电池过压","进矩阵区域报警","出矩阵区域报警","碰撞报警","保养期报警","温高报警","紧急加速","Obd故障严重报警","震动报警","gsm经纬度格式","急刹车","紧急刹车"};
+			String[] alerts = {"急加速","超速报警","电池供电","电池欠压","电池过压","进矩阵区域报警","出矩阵区域报警","碰撞报警","保养期报警","温高报警","紧急加速","Obd故障严重报警","震动报警","gsm经纬度格式","急刹车","紧急刹车"};
 			for(int i=0;i<alerts.length;i++){
 				if(alertInBinary.charAt(i)=='1'){
 					strForDiv += MessageUtil.printAndToDivContent(alerts[i], true);
@@ -71,7 +71,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 					{"疲劳驾驶检测","疲劳驾驶","疲劳驾驶检测正常"},
 					{"OBD检测","OBD故障","OBD未发生故障"},
 					{"是否实时位置信息","实时位置信息","非实时位置信息"},
-					{"设备状态","设备已插","设备未插"}
+					{"设备状态","设备未插","设备已插"}
 			};
 			for(int i=0;i<statuses.length;i++){
 				dbStr += statuses[i][0] + ":" + (statusInBinary.charAt(i)=='1'?statuses[i][1]:statuses[i][2]) + ";";

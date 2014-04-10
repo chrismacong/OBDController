@@ -92,7 +92,7 @@ public class DTCServiceImpl implements DTCService{
 	public DTCDefect getDTCDefect(String terminalId) {
 		// TODO Auto-generated method stub
 		try {
-			List<DTCDefect> list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + terminalId + "'");
+			List<DTCDefect> list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + terminalId + "' order by date desc");
 			if(list.size()>0){
 				return list.get(0);
 			}
@@ -109,7 +109,7 @@ public class DTCServiceImpl implements DTCService{
 	public OBDDefect getOBDDefect(String terminalId) {
 		// TODO Auto-generated method stub
 		try {
-			List<OBDDefect> list = obdDefectDao.findByHQL("from OBDDefect where tid = '" + MessageUtil.frontCompWithZore(terminalId, 20) + "'");
+			List<OBDDefect> list = obdDefectDao.findByHQL("from OBDDefect where tid = '" + MessageUtil.frontCompWithZore(terminalId, 20) + "' order by date desc");
 			if(list.size()>0){
 				return list.get(0);
 			}

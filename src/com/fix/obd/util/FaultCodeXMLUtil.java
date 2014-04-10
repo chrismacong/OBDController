@@ -34,6 +34,9 @@ private Document document;
 			String[] strs = t.getStringValue().split("\n");
 			fc.setIndex(strs[1].trim());
 			fc.setFaultDetail(strs[2].trim());
+			fc.setClassify(strs[3].trim());
+			fc.setPriorty(strs[4].trim());
+			fc.setSolution(strs[5].trim());
 			list.add(fc);
 		}
 		ArrayList<FaultCodeIterator> result_list = new ArrayList<FaultCodeIterator>();

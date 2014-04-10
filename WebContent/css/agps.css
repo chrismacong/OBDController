@@ -3,16 +3,16 @@
 #send_agps_data{
 	position:absolute;
 	width:150px;
-	height:40px;
-	background-color: #dce9f9;
 	top:200px;
 	left:250px;
+	height:40px;
+	background-color: #dce9f9;
 }
 #check_agps_time{
 	position:absolute;
 	width:200px;
-	height:40px;
-	background-color: #dce9f9;
 	top:200px;
 	left:550px;
+	height:40px;
+	background-color: #dce9f9;
 }

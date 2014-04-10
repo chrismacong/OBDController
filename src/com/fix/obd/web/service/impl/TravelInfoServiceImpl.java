@@ -41,7 +41,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 	public TravelInfo getTravelInfo(String terminalId) {
 		// TODO Auto-generated method stub
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by date desc");
 			if(info_list.size()>0){
 				TravelInfo travelinfo = info_list.get(0);
 				return travelinfo;

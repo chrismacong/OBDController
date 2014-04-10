@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#exm_button{
+	position:absolute;
+	left:670px;
+	top:70px;
+	width:100px;
+}
+#terminalTitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:230px;
+	height:12px;
+	font-size:15px;
+}
+#subtitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:120px;
+	height:20px;
+	font-size:18px;
+}
+#scoreTxtDiv{
+	position:absolute;
+	left:220px;
+	top:78px;
+	font-size:18px;
+	color:black;
+}
+#scoreDiv{
+	position:absolute;
+	left:400px;
+	top:70px;
+	font-size:28px;
+	font-style:italic;
+	color:#59CB00;
+}
+#totalsaying{
+	position:absolute;
+	top:140px;
+	left:120px;
+	color:black;
+}
+#totalreport{
+	position:absolute;
+	top:120px;
+	left:120px;
+	font-size:14px;
+	color:#D10101;
+	font-weight:bolder;
+}
+#error_table{
+	position:absolute;
+	top:170px;
+	left:50px;
+}

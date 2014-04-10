@@ -51,7 +51,7 @@ public class SendTime  extends ODBProtocolParser implements ODBProtocol{
 		second = second.length()==1 ? "0" + second : second;
 		message = message + year + month + date + hour + minute + second;
 		response.setMessageBody(message);
-		String messageLength = "0000" + message.length()/2;
+		String messageLength = "0000" + Integer.toHexString(message.length()/2);
 		messageLength = messageLength.substring(messageLength.length()-4);
 		response.setLength(messageLength);
 		response.setCheckNode(MessageUtil.buildCheckNode(response));

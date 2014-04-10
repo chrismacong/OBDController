@@ -80,7 +80,7 @@ $(function () {
 	<script src="${pageContext.request.contextPath}/js/exporting.js"></script>
 
 	<div id="container"
-		style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+		style="min-width: 310px; height: 400px;"></div>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	var terminal_id;
 	$(function(){
-		terminal_id = "" + ${terminalId};
+		terminal_id = "${terminalId}";
 	});
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/travelinfo.js"></script>

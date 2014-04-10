@@ -231,14 +231,7 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			String now = df.format(new Date());
 			obdDefect.setDate(now);
 			List<OBDDefect> list = obdDefectDao.findByHQL("from OBDDefect where tid = '" + clientId + "'");
-			if(list.size()==0)
-				obdDefectDao.addOBDDefect(obdDefect);
-			else{
-				obdDefect = list.get(0);
-				obdDefect.setInfo(info);
-				obdDefect.setDate(now);
-				obdDefectDao.updateOBDDefect(obdDefect);
-			}
+			obdDefectDao.addOBDDefect(obdDefect);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -255,15 +248,7 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String now = df.format(new Date());
 			dtcDefect.setDate(now);
-			List<DTCDefect> list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + clientId + "'");
-			if(list.size()==0)
-				dtcDefectDao.addDTCDefect(dtcDefect);
-			else{
-				dtcDefect = list.get(0);
-				dtcDefect.setInfo(info);
-				dtcDefect.setDate(now);
-				dtcDefectDao.updateDTCDefect(dtcDefect);
-			}
+			dtcDefectDao.addDTCDefect(dtcDefect);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -280,14 +265,7 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String now = df.format(new Date());
 			travelInfo.setDate(now);
-			List<TravelInfo> list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + clientId + "'");
-			if(list.size()==0)
-				travelInfoDao.addTravelInfo(travelInfo);
-			else{
-				travelInfo = list.get(0);
-				travelInfo.setInfo(info);
-				travelInfoDao.updateTravelInfo(travelInfo);
-			}
+			travelInfoDao.addTravelInfo(travelInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

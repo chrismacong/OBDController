@@ -36,7 +36,7 @@ public class RestoreFactorySettings extends ODBProtocolParser implements ODBProt
 		String findId = p.getIdByProtocol(classname);
 		message += findId;
 		response.setMessageBody(message);
-		String messageLength = "0000" + message.length()/2;
+		String messageLength = "0000" + Integer.toHexString(message.length()/2);
 		messageLength = messageLength.substring(messageLength.length()-4);
 		response.setLength(messageLength);
 		response.setCheckNode(MessageUtil.buildCheckNode(response));

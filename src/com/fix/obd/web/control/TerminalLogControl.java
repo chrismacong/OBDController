@@ -52,7 +52,7 @@ public class TerminalLogControl {
 		return new ModelAndView("OBDLogPage",model);
 	}
 	@RequestMapping(value = "/removeall", method = RequestMethod.GET)
-	public ModelAndView modifyAdmin(HttpServletRequest request,HttpServletResponse response){
+	public ModelAndView removeall(HttpServletRequest request,HttpServletResponse response){
 		String terminalId = request.getParameter("terminalId");
 		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
 		Map<String,Object> model = new HashMap<String,Object>();		

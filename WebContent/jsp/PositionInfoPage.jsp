@@ -60,5 +60,6 @@
 	<a id="location_graph" target="_blank" href="${pageContext.request.contextPath}/positioninfo/getlgraph.html?terminalId=${terminalId}"></a>
 	<a id="pressure_graph" target="_blank" href="${pageContext.request.contextPath}/obdinfo/getpgraph.html?terminalId=${terminalId}"></a>
 	<a id="dash_graph" target="_blank" href="${pageContext.request.contextPath}/obdinfo/getdgraph.html?terminalId=${terminalId}"></a>
+	<a id="travel_exm_graph" target="_blank" href= "${pageContext.request.contextPath}/travelexm.html?terminalId=${terminalId}"></a>
 </body>
 </html>

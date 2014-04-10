@@ -51,7 +51,7 @@
     			"\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId=" + terminals[i] + "\"" +
     			"}, {" + 
     			"\"menuid\" : \"1" + i + "4\"," + 
-    			"\"menuname\" : \"地理位置信息查询\"," + 
+    			"\"menuname\" : \"地理位置和驾驶习惯\"," + 
     			"\"icon\" : \"icon-nav\"," + 
     			"\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId=" + terminals[i] + "\"" +
     			"}, {" + 
@@ -76,6 +76,11 @@
     			"\"url\" : \"${pageContext.request.contextPath}/dtc.html?terminalId=" + terminals[i] + "\"" +
     			"}, {" + 
     			"\"menuid\" : \"1" + i + "9\"," + 
+    			"\"menuname\" : \"车辆健康体检\"," + 
+    			"\"icon\" : \"icon-nav\"," + 
+    			"\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId=" + terminals[i] + "\"" +
+    			"}, {" + 
+    			"\"menuid\" : \"1" + i + "10\"," + 
     			"\"menuname\" : \"其他功能\"," + 
     			"\"icon\" : \"icon-nav\"," + 
     			"\"url\" : \"${pageContext.request.contextPath}/other.html?terminalId=" + terminals[i] + "\"" +

@@ -15,7 +15,7 @@
 	<context:component-scan base-package="com.fix.obd" />
 
 	<context:property-placeholder location="classpath:db.properties" />
-	<mvc:annotation-driven />  
+	<mvc:annotation-driven />
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${database.driver}" />
@@ -29,30 +29,33 @@
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
-		
+
 		<property name="annotatedClasses">
 			<list>
-			    <value>com.fix.obd.web.model.OBDLogs</value>
-			    <value>com.fix.obd.web.model.OnLineTerminal</value>
-			    <value>com.fix.obd.web.model.OBDData</value>
-			    <value>com.fix.obd.web.model.PositionData</value>
-			    <value>com.fix.obd.web.model.OBDTerminalInfo</value>
-			    <value>com.fix.obd.web.model.ParameterResponse</value>
-			    <value>com.fix.obd.web.model.DTCDefect</value>
-			    <value>com.fix.obd.web.model.OBDDefect</value>
-			    <value>com.fix.obd.web.model.TravelInfo</value>
+				<value>com.fix.obd.web.model.OBDLogs</value>
+				<value>com.fix.obd.web.model.OnLineTerminal</value>
+				<value>com.fix.obd.web.model.OBDData</value>
+				<value>com.fix.obd.web.model.PositionData</value>
+				<value>com.fix.obd.web.model.OBDTerminalInfo</value>
+				<value>com.fix.obd.web.model.ParameterResponse</value>
+				<value>com.fix.obd.web.model.DTCDefect</value>
+				<value>com.fix.obd.web.model.OBDDefect</value>
+				<value>com.fix.obd.web.model.TravelInfo</value>
+				<value>com.fix.obd.web.model.TravelExmnation</value>
+				<value>com.fix.obd.web.model.YY_User</value>
 			</list>
 		</property>
-		
+
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>		
-				<prop key="hibernate.hbm2ddl.auto">update</prop>		
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>
-	<bean id="urlMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -60,11 +63,12 @@
 		<property name="prefix" value="/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<bean id="transactionManager" 
+	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<bean id="init2" class="com.fix.obd.web.util.DBInitializing" init-method="tcpInit"/>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="init2" class="com.fix.obd.web.util.DBInitializing"
+		init-method="tcpInit" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="thtApplicationContext" class="com.fix.obd.web.util.ThtApplicationContext"></bean>
 </beans>
