@@ -640,7 +640,7 @@ public class UploadTerminalDataTask implements Runnable {
 								this.ACCEPT_DTC =true;
 							if(propertyName.equals("DTCStatus"))
 								this.ACCEPT_DTC_STATUS = true;
-							if(propertyName.equals("UploadOBDInfo"))
+							if(propertyName.equals("UploadOBDInfo")||propertyName.equals("UploadOBDInfo_CWKJ"))
 								this.ACCEPT_OBD_INFO = true;
 							if(propertyName.equals("UploadTravelInfo"))
 								this.ACCEPT_TRAVEL_INFO = true;

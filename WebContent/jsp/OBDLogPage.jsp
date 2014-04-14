@@ -18,7 +18,8 @@
 			window.location.href = "/OBDController/terminallog/removeall.html?terminalId=${terminalId}";
 		});
 		$("#refresh_button").click(function(){
-			window.location.reload();
+			var refresh_page_size = $("#pageSize")[0].value;
+			window.location.href = "/OBDController/terminallog.html?terminalId=${terminalId}&pageSize=" + refresh_page_size;
 		});
 	});
 </script>
@@ -28,6 +29,7 @@
 	<div class="title_font terminal_Id_class" id="terminal_ID_div">终端ID：${terminalId} 的OBD日志</div>
 	<button id="remove_all_button">清空日志</button>
 	<button id="refresh_button">刷新</button>
+	<p id="page_size_p">日志数量：<input id="pageSize" type="text" value="${page_size}"></p>
 	<table class="bordered" id="log_table">
 		<thead>
 			<tr>

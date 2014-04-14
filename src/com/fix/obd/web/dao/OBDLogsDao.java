@@ -17,4 +17,6 @@ public interface OBDLogsDao {
 	public void updateOBDLogs(OBDLogs obdLogs);
 
 	public List<OBDLogs> findByHQL(String hql) throws Exception;
+	
+	public List<OBDLogs> getLogsByPage(String terminalId, int pageSize);
 }

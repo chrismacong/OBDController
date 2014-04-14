@@ -20,10 +20,10 @@ public class TerminalLogServiceImpl implements TerminalLogService{
 		this.obdLogsDao = obdLogsDao;
 	}
 	@Override
-	public List<OBDLogs> getTerminalLogsById(String terminalId) {
+	public List<OBDLogs> getTerminalLogsById(String terminalId, int page_size) {
 		// TODO Auto-generated method stub
 		try {
-			List<OBDLogs> logs_list = obdLogsDao.findByHQL("from OBDLogs where tid = '" + terminalId + "' order by date desc");
+			List<OBDLogs> logs_list = obdLogsDao.getLogsByPage(terminalId, page_size);
 			return logs_list;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -61,5 +61,4 @@ public class TerminalLogServiceImpl implements TerminalLogService{
 			return null;
 		}
 	}
-
 }

@@ -43,12 +43,14 @@ public class TerminalLogControl {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listResult(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		String terminalId = request.getParameter("terminalId");
+		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
 		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
 		logger.debug("--------terminal log:" + terminalId + "--------");
 		Map<String,Object> model = new HashMap<String,Object>();
 		model.put("terminalId", terminalId);
-		List<OBDLogs> logs_list = terminalLogService.getTerminalLogsById(terminalId);
+		List<OBDLogs> logs_list = terminalLogService.getTerminalLogsById(terminalId,pageSize);
 		model.put("logs_list", logs_list);
+		model.put("page_size",pageSize);
 		return new ModelAndView("OBDLogPage",model);
 	}
 	@RequestMapping(value = "/removeall", method = RequestMethod.GET)

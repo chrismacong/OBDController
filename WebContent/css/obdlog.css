@@ -24,6 +24,15 @@
 	height:40px;
 	background-color: #dce9f9;
 }
+#page_size_p{
+	position:absolute;
+	left:750px;
+	height:40px;
+}
+input{
+	height:32px;
+	width:80px;
+}
 #logBlock {
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;

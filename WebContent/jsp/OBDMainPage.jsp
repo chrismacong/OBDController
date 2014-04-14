@@ -38,7 +38,7 @@
     			"\"menuid\" : \"1" + i + "1\"," + 
     			"\"menuname\" : \"OBD日志\"," + 
     			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/terminallog.html?terminalId=" + terminals[i] + "\"" + 
+    			"\"url\" : \"${pageContext.request.contextPath}/terminallog.html?terminalId=" + terminals[i] + "&pageSize=50\"" + 
     			"}, {" + 
     			"\"menuid\" : \"1" + i + "2\"," + 
     			"\"menuname\" : \"参数设置与查询\"," + 
@@ -169,7 +169,7 @@ var _menus = {
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DebugTimeStamp: 2013-10-17
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-04-14 11:39
 			12:52:24</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"

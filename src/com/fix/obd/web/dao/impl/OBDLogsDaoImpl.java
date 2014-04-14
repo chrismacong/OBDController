@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.dao.OBDLogsDao;
 import com.fix.obd.web.model.OBDLogs;
 @Service
@@ -68,6 +69,19 @@ public class OBDLogsDaoImpl implements OBDLogsDao{
 		// TODO Auto-generated method stub
 		try{
 			Query queryObject = this.sessionFactory.getCurrentSession().createQuery(hql);
+			return queryObject.list();
+		}catch(Exception ex){
+			throw ex;
+		}
+	}
+
+	@Override
+	public List<OBDLogs> getLogsByPage(String terminalId, int pageSize) {
+		// TODO Auto-generated method stub
+		try{
+			Query queryObject = this.sessionFactory.getCurrentSession().createQuery("from OBDLogs where tid = '" + terminalId + "' order by date desc");
+//			queryObject.setFirstResult(pageIndex*pageSize-pageSize);
+			queryObject.setMaxResults(pageSize);
 			return queryObject.list();
 		}catch(Exception ex){
 			throw ex;
