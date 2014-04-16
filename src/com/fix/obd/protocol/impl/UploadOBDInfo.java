@@ -49,12 +49,12 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		String realMessage = this.getRealMessage();		
 		String time = readTime(realMessage);
 
-		boolean sign = true;
+		boolean sign = isTimeOdd(time);
 		if(sign){
 			dbStr = readEffectiveParameter(realMessage);
 		}
 		else{
-			readParameter(realMessage);
+			dbStr = readParameter(realMessage);
 		}
 		System.out.println(dbStr);
 		TerminalServerService t1 = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
@@ -88,7 +88,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 	}
 
 	//not use
-	private void readParameter(String message) {
+	private String readParameter(String message) {
 		// TODO Auto-generated method stub
 		int mapSize = reader.getMapSize();
 		int effIndex = 12;
@@ -100,7 +100,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 			String handler = reader.getElementHandler(index);
 			String introduction = reader.getElementIntroduction(index);
 
-			if(length > 0){
+			if(length > 0&&(effIndex+length*2<message.length())){
 				System.out.println(message.length()+"--"+effIndex+"--"+length*2);
 				String effString = message.substring(effIndex , effIndex+length*2);
 				effIndex += length*2;
@@ -114,7 +114,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 					resultBuilder.append(result);
 					resultBuilder.append(";");
 					resultBuilder.append(introduction);
-
+					strForDiv += MessageUtil.printAndToDivContent("收到OBD信息-"+name+":("+length+")"+result, false);
 					//					logger.info("收到OBD信息-"+name+":"+result);
 				}catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -140,12 +140,14 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				resultBuilder.append(result);
 				resultBuilder.append(";");
 				resultBuilder.append(introduction);
+				strForDiv += MessageUtil.printAndToDivContent("收到OBD信息-"+name+":("+length+")"+result, false);
 
 				//				logger.info("收到OBD信息-"+name+":"+result);
 			}
 
 			resultBuilder.append("@");
 		}
+		return resultBuilder.toString();
 	}
 
 	private String readEffectiveParameter(String message) {
