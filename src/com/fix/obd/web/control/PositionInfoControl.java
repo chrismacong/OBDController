@@ -143,8 +143,9 @@ public class PositionInfoControl {
 				tempStr = tempStr.replaceAll("\\.", "");
 				tempStr = tempStr.replaceAll("бу", ".");
 				String tempStrPart = tempStr.split("\\.")[1];
-				int tempInt = Integer.parseInt(tempStrPart)/60*100;
-				tempStr = tempStr.split("\\.")[0] + "." + tempInt;
+				tempStrPart = "0." + tempStrPart;
+				double tempD = Double.parseDouble(tempStrPart)/60*100;
+				tempStr = Integer.parseInt(tempStr.split("\\.")[0]) + tempD + "";
 				latitude_list += tempStr + ",";
 			}
 			latitude_list = latitude_list.substring(0,latitude_list.lastIndexOf(","));
