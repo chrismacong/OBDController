@@ -49,7 +49,7 @@ public class TravelExmControl {
 		list.add(tmpModel);
 		tmpModel = new OBDSeperateUtilModel();
 		tmpModel.setName("×î´ó¾àÀë");
-		tmpModel.setContent(t.getTotalDistance());
+		tmpModel.setContent(t.getLongestDistance());
 		tmpModel.setExtra("km");
 		list.add(tmpModel);
 		tmpModel = new OBDSeperateUtilModel();

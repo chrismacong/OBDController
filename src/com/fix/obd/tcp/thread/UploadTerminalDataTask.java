@@ -619,6 +619,10 @@ public class UploadTerminalDataTask implements Runnable {
 				str = str.replaceAll("aaaaa", "%aaaa");
 				String[] messages = str.split("aaaa");
 				for(int i=0;i<messages.length;i++){
+					messages[i] = messages[i].replaceAll("5501", "aa");
+					messages[i] = messages[i].replaceAll("5502", "55");
+				}
+				for(int i=0;i<messages.length;i++){
 					messages[i] = messages[i].replaceAll("%", "a");
 					System.out.println("Message:" + messages[i]);
 					try {

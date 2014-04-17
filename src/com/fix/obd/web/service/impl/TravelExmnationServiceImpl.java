@@ -64,6 +64,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 					if(infoStr.indexOf("æ‡¿Î")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("æ‡¿Î"));
 						temp = temp.split(";")[1];
+						System.out.println(temp);
 						totalDistance += Integer.parseInt(temp);
 					}
 				}
