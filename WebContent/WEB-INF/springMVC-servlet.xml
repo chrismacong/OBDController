@@ -43,6 +43,8 @@
 				<value>com.fix.obd.web.model.TravelInfo</value>
 				<value>com.fix.obd.web.model.TravelExmnation</value>
 				<value>com.fix.obd.web.model.YY_User</value>
+				<value>com.fix.obd.web.model.YY_Authority</value>
+				<value>com.fix.obd.web.model.YY_RoleAuthority</value>
 			</list>
 		</property>
 
@@ -71,4 +73,31 @@
 		init-method="tcpInit" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="thtApplicationContext" class="com.fix.obd.web.util.ThtApplicationContext"></bean>
+
+
+
+<bean id="urlFunctionMap" class="com.fix.obd.web.util.URLFunctionMapping">
+	    <property name="urlMapToFunction">
+	        <map>
+	            <entry key="/OBDController/login_check.html" value="1"></entry>
+	            <entry key="/OBDController/yy_register.html" value="2"></entry>
+	            <entry key="/OBDController/welcome.html" value="3"></entry>
+	            <entry key="/OBDController/editpassword.html" value="4"></entry>
+	            <entry key="/OBDController/main.html" value="5"></entry>
+	        </map>
+	    </property>
+	</bean> 
+<!-- 	
+    <mvc:interceptors>  
+           <bean class="com.fix.obd.web.interceptor.RoleInterceptor"></bean>   
+    </mvc:interceptors> 
+ -->
+
+
+
+
+
+
+
+
 </beans>

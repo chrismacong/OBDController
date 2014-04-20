@@ -24,7 +24,7 @@ public class YY_RegisterServiceImpl implements YY_RegisterService{
 	@Override
 	public boolean askRegisterUser(String email, String password,
 			String realname, String idnumber, String nickname, String tel,
-			String cartype, String obdnumber) {
+			String cartype, String obdnumber, String carnumber) {
 		// TODO Auto-generated method stub
 		YY_User newUser = new YY_User();
 		newUser.setEmail(email);
@@ -35,7 +35,8 @@ public class YY_RegisterServiceImpl implements YY_RegisterService{
 		newUser.setTel(tel);
 		newUser.setCartype(cartype);
 		newUser.setObdnumber(obdnumber);
-		
+		newUser.setCarnumber(carnumber);
+		newUser.setRole("member");
 		if(userDao.addUser(newUser)){
 			return true;
 		}

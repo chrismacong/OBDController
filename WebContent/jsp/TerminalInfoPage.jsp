@@ -37,5 +37,40 @@
 				<td>${lastUpdateDate}</td>
 			</tr>
 	</table>
+	<table class="bordered" id="user_table">
+		<thead>
+			<tr>
+				<th colspan="2">用户信息</th>
+			</tr>
+		</thead>
+			<tr>
+				<td>邮箱</td>
+				<td>${user.getEmail()}</td>
+			</tr>
+			<tr>
+				<td>姓名</td>
+				<td>${user.getRealname()}</td>
+			</tr>
+			<tr>
+				<td>身份证号</td>
+				<td>${user.getIdnumber()}</td>
+			</tr>
+			<tr>
+				<td>昵称</td>
+				<td>${user.getNickname()}</td>
+			</tr>
+			<tr>
+				<td>车辆牌号</td>
+				<td>${user.getCarnumber()}</td>
+			</tr>
+			<tr>
+				<td>车型</td>
+				<td>${user.getCartype()}</td>
+			</tr>
+			<tr>
+				<td>联系电话</td>
+				<td>${user.getTel()}</td>
+			</tr>
+	</table>
 </body>
 </html>

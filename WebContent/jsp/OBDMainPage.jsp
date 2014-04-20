@@ -18,119 +18,176 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jQuery/jquery.easyui.min-1.2.0.js"></script>
 <script type="text/javascript"
-	src='${pageContext.request.contextPath}/js/outlook.js'> </script>
-
+	src="${pageContext.request.contextPath}/js/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript"
+	src='${pageContext.request.contextPath}/js/yy_md5.js'></script>
+<script type="text/javascript"
+	src='${pageContext.request.contextPath}/js/outlook.js'></script>
 <script type="text/javascript">
-    onlineId_list = "${onlineId_list}";
-    function ff(onlineId_list){
-        var terminals = onlineId_list.split(";");
-   		var jsonStr = "[{";
-    	for(var i=0;i<terminals.length;i++){
-    		jsonStr += "\"menuid\" : \"1" + i + "\"," + 
-    			"\"icon\" : \"icon-sys\"," + 
-    			"\"menuname\" : \"" + terminals[i] + "\"," + 
-    			"\"menus\" : [{" + 
-    			"\"menuid\" : \"1" + i + "0\"," + 
-    			"\"menuname\" : \"设备信息\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/terminalinfo.html?terminalId=" + terminals[i] + "\"" + 
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "1\"," + 
-    			"\"menuname\" : \"OBD日志\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/terminallog.html?terminalId=" + terminals[i] + "&pageSize=50\"" + 
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "2\"," + 
-    			"\"menuname\" : \"参数设置与查询\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/character.html?terminalId=" + terminals[i] + "\"" + 
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "3\"," + 
-    			"\"menuname\" : \"OBD状态查询\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "4\"," + 
-    			"\"menuname\" : \"地理位置和驾驶习惯\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "5\"," + 
-    			"\"menuname\" : \"行程记录查询\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/travelinfo.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "6\"," + 
-    			"\"menuname\" : \"配置升级服务器信息\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/updateconfig.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "7\"," + 
-    			"\"menuname\" : \"AGPS\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/agps.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "8\"," + 
-    			"\"menuname\" : \"故障码操作\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/dtc.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "9\"," + 
-    			"\"menuname\" : \"车辆健康体检\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId=" + terminals[i] + "\"" +
-    			"}, {" + 
-    			"\"menuid\" : \"1" + i + "10\"," + 
-    			"\"menuname\" : \"其他功能\"," + 
-    			"\"icon\" : \"icon-nav\"," + 
-    			"\"url\" : \"${pageContext.request.contextPath}/other.html?terminalId=" + terminals[i] + "\"" +
-    			"}]" + 
-    			"},{";
-    	}
-    	jsonStr = jsonStr.substring(0,jsonStr.lastIndexOf(','));
-    	jsonStr += "]";
-    	return eval(jsonStr);
-    }
-var _menus = {
-	obd : ff(onlineId_list),
-	config : [{
-		"menuid" : "20",
-		"icon" : "icon-sys",
-		"menuname" : "全局设置",
-		"menus" : [ {
-			"menuid" : "201",
-			"menuname" : "更新服务器设置",
-			"icon" : "icon-nav",
-			"url" : "#"
-		}, {
-			"menuid" : "202",
-			"menuname" : "其他设置",
-			"icon" : "icon-nav",
-			"url" : "#"
-		} ]
+	onlineId_list = "${onlineId_list}";
+	function ff(onlineId_list) {
+		var terminals = onlineId_list.split(";");
+		var jsonStr = "[{";
+		for ( var i = 0; i < terminals.length; i++) {
+			jsonStr += "\"menuid\" : \"1"
+					+ i
+					+ "\","
+					+ "\"icon\" : \"icon-sys\","
+					+ "\"menuname\" : \""
+					+ terminals[i]
+					+ "\","
+					+ "\"menus\" : [{"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "0\","
+					+ "\"menuname\" : \"设备信息\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/terminalinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "1\","
+					+ "\"menuname\" : \"OBD日志\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/terminallog.html?terminalId="
+					+ terminals[i]
+					+ "&pageSize=50\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "2\","
+					+ "\"menuname\" : \"参数设置与查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/character.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "3\","
+					+ "\"menuname\" : \"OBD状态查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "4\","
+					+ "\"menuname\" : \"地理位置和驾驶习惯\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "5\","
+					+ "\"menuname\" : \"行程记录查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/travelinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "6\","
+					+ "\"menuname\" : \"配置升级服务器信息\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/updateconfig.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "7\","
+					+ "\"menuname\" : \"AGPS\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/agps.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "8\","
+					+ "\"menuname\" : \"故障码操作\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/dtc.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "9\","
+					+ "\"menuname\" : \"车辆健康体检\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "10\","
+					+ "\"menuname\" : \"其他功能\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/other.html?terminalId="
+					+ terminals[i] + "\"" + "}]" + "},{";
+		}
+		jsonStr = jsonStr.substring(0, jsonStr.lastIndexOf(','));
+		jsonStr += "]";
+		return eval(jsonStr);
+	}
+	var _menus = {
+		obd : ff(onlineId_list),
+		config : [ {
+			"menuid" : "20",
+			"icon" : "icon-sys",
+			"menuname" : "全局设置",
+			"menus" : [ {
+				"menuid" : "201",
+				"menuname" : "更新服务器设置",
+				"icon" : "icon-nav",
+				"url" : "#"
+			}, {
+				"menuid" : "202",
+				"menuname" : "其他设置",
+				"icon" : "icon-nav",
+				"url" : "#"
+			} ]
 
-	} ]
-};
-        $(function() {
-            openPwd();
-            $('#editpass').click(function() {
-                $('#w').window('open');
-            });
-            $('#btnEp').click(function() {
-                serverLogin();
-            })
-			$('#btnCancel').click(function(){closePwd();})
-            $('#loginOut').click(function() {
-                $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
-                    if (r) {
-                        location.href = '#';
-                    }
-                });
-            })
-            var refresh_T = "${online_terminal_refresh_minute}";
-        	window.setInterval("initEvery5Second()", parseInt(refresh_T));
-    });
-    </script>
+		} ]
+	};
+	$(function() {
+		openPwd();
+		$('#editpass').click(function() {
+			$('#w').window('open');
+		});
+		$('#btnEp').click(function() {
+			serverLogin();
+		})
+		$('#btnCancel').click(function() {
+			closePwd();
+		})
+		$('#loginOut').click(function() {
+			$.messager.confirm('系统提示','您确定要退出本次登录吗?',function(r) {
+				if (r) {
+					$.cookie('email', null, {
+						path : "/"
+					});
+					$.cookie('password', null,
+					{
+						path : "/"
+					});
+					window.location.href = "${pageContext.request.contextPath}/login.html";
+				}
+			});
+		})
+		var refresh_T = "${online_terminal_refresh_minute}";
+		window.setInterval("initEvery5Second()", parseInt(refresh_T));
+	});
+</script>
 <Style>
 #css3menu li {
 	float: left;
@@ -157,7 +214,7 @@ var _menus = {
 	<div region="north" split="true" border="false"
 		style="overflow: hidden; height: 30px; background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%; line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑, 黑体">
 		<span style="float: right; padding-right: 20px;" class="head">欢迎
-			-用户名- <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">安全退出</a>
+			-${useremail}- <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">安全退出</a>
 		</span> <span style="padding-left: 10px; font-size: 16px; float: left;"><img
 			src="images/blocks.gif" width="20" height="20" align="absmiddle" />
 			OBD在线支持系统</span>
@@ -169,8 +226,8 @@ var _menus = {
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-04-14 11:39
-			12:52:24</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-04-14
+			11:39 12:52:24</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">

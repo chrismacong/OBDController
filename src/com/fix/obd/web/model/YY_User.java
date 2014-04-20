@@ -14,9 +14,9 @@ public class YY_User {
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	@Column(name="id",nullable=false)
 	private int id;
-	@Column(name="email",nullable=false,columnDefinition="varchar(25)")
+	@Column(name="email",nullable=false,columnDefinition="varchar(50)")
 	private String email;
-	@Column(name="password",nullable=false,columnDefinition="varchar(25)")
+	@Column(name="password",nullable=false,columnDefinition="varchar(100)")
 	private String password;
 	@Column(name="realname",nullable=false,columnDefinition="varchar(25)")
 	private String realname;
@@ -30,7 +30,11 @@ public class YY_User {
 	private String cartype;
 	@Column(name="obdnumber",nullable=false,columnDefinition="varchar(25)")
 	private String obdnumber;
-	
+	@Column(name="carnumber",nullable=false,columnDefinition="varchar(25)")
+	private String carnumber;
+	@Column(name="role",nullable=false,columnDefinition="varchar(50)")
+	private String role;
+
 	public int getId() {
 		return id;
 	}
@@ -88,4 +92,17 @@ public class YY_User {
 		this.obdnumber = obdnumber;
 	}
 	
+	public String getCarnumber() {
+		return carnumber;
+	}
+	public void setCarnumber(String carnumber) {
+		this.carnumber = carnumber;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

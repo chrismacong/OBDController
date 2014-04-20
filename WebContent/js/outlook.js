@@ -374,6 +374,8 @@ function openPwd() {
 }
 //关闭登录窗口
 function closePwd() {
+	$('#txtNewPass').val('');
+	$('#txtRePass').val('');
     $('#w').window('close');
 }
 
@@ -381,9 +383,9 @@ function closePwd() {
 
 //修改密码
 function serverLogin() {
+	alert("0000")
     var $newpass = $('#txtNewPass');
     var $rePass = $('#txtRePass');
-
     if ($newpass.val() == '') {
         msgShow('系统提示', '请输入密码！', 'warning');
         return false;
@@ -392,17 +394,26 @@ function serverLogin() {
         msgShow('系统提示', '请在一次输入密码！', 'warning');
         return false;
     }
-
     if ($newpass.val() != $rePass.val()) {
         msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
         return false;
     }
-
+    /*
     $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
         msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
         $newpass.val('');
         $rePass.val('');
         close();
     })
-    
+   */
+   // msgShow('系统提示', '恭喜' +$('#email').text(), 'info');
+    $.post("http://"+window.location.host+'/OBDController/login/editpassword.html?newpass='+hex_md5($newpass.val())+'&email='+$('#email').text(), function() {
+        msgShow('系统提示', '恭喜，密码修改成功！' , 'info');
+        $newpass.val('');
+        $rePass.val('');
+        //close();
+       // closePwd();
+        $('#w').window('close');
+    })
 }
+// 

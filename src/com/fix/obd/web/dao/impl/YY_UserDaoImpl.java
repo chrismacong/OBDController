@@ -33,10 +33,25 @@ public class YY_UserDaoImpl implements YY_UserDao{
 	@Override
 	public boolean addUser(YY_User User) {
 		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.getCurrentSession();
-		session.save(User);
-		session.beginTransaction().commit();
-		return true;
+		List<YY_User> list = getAllUser();
+		boolean success = true;      //添加user成功的标志
+		for(int i=0;i<list.size();i++){
+			System.out.println(i+list.get(i).getEmail());
+			System.out.println("new user email:"+User.getEmail());
+			if(User.getEmail().equals(list.get(i).getEmail())){
+				success = false;
+				break;
+			}
+		}
+		if(success==true){
+			Session session = this.sessionFactory.getCurrentSession();
+			session.save(User);
+			session.beginTransaction().commit();
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
 	@Override
@@ -74,6 +89,19 @@ public class YY_UserDaoImpl implements YY_UserDao{
 			return queryObject.list();
 		}catch(Exception ex){
 			throw ex;
+		}
+	}
+
+	@Override
+	public String getRoleNameByEmail(String email) {
+		// TODO Auto-generated method stub
+		String hql = "from YY_User where email='"+email+"'";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		List<YY_User> user_list = query.list();
+		if(user_list.size()==0){
+			return null;
+		}else{
+			return user_list.get(0).getRole();
 		}
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.model.OBDTerminalInfo;
+import com.fix.obd.web.model.YY_User;
 import com.fix.obd.web.service.TerminalInfoService;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -40,8 +41,10 @@ public class TerminalInfoControl {
 		model.put("terminalId", terminalId);
 		OBDTerminalInfo info = terminalInfoService.getTerminalInfo(terminalId);
 		String lastUpdateDate = terminalInfoService.getLastUpdateDate(terminalId);
+		YY_User user = terminalInfoService.getTerminalUserInfo(terminalId);
 		model.put("info",info);
 		model.put("lastUpdateDate", lastUpdateDate);
+		model.put("user", user);
 		return new ModelAndView("TerminalInfoPage",model);
 	}
 }

@@ -44,4 +44,10 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 		return false;
 	}
 
+	@Override
+	public String getRoleName(String email) {
+		// TODO Auto-generated method stub
+		return userDao.getRoleNameByEmail(email);
+	}
+
 }

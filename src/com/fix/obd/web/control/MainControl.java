@@ -45,6 +45,9 @@ public class MainControl {
 			list += onlineId_list.get(i) + ";";
 		if(onlineId_list.size()!=0)
 			list = list.substring(0,list.lastIndexOf(";"));
+		Object email = session.getAttribute("email");
+		if(email!=null)
+			model.put("useremail",email.toString());
 		model.put("onlineId_list", list);
 		int online_terminal_refresh_minute = mainService.getTerminalOnlineRefreshMinute();
 		model.put("online_terminal_refresh_minute",online_terminal_refresh_minute);

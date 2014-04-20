@@ -4,18 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/yy_md5.js"></script>
  <script type="text/javascript">
-    function cartypeChoosingClose(){
-       
-    	document.getElementById("fade").style.display="none";
-        document.getElementById("car-container").style.display="none";
-        document.getElementById("user-auth-dialog-container").style.display="";
-        
-    }
+
       function checkEmail()
     {
-	    var email = document.getElementById("login-input-email");
+	    var email = document.getElementById("register-email");
 		var email_message = document.getElementById("email-message");
 		email_message.style.display="none";
 		if(email.value==""){
@@ -44,6 +38,8 @@
           	if(userPass==""||userRePass==""){
           		passwordMessage.innerText="密码不能为空";
           		passwordMessage.style.display="";
+          		document.getElementById("register-password").innerText="";
+          		document.getElementById("register-password-again").innerText="";
           		return false;
           	}
           	if(!(userPass==userRePass)){
@@ -52,8 +48,12 @@
           		document.getElementById("register-password").innerText="";
           		document.getElementById("register-password-again").innerText="";
           		return false;
+          	}else{
+          		passwordMessage.innerText="";
+              	passwordMessage.style.display="none";
+              	return true;
           	}
-          	return true;
+          	
       }
       
        function checkRealName(){
@@ -107,8 +107,8 @@
     		   nicknameMessage.style.display = "";
     		   return false;
     	   }
-    	   if(nickname.length<4||nickname.length>20){
-    		   nicknameMessage.innerText = "请输入4到20位昵称";
+    	   if(nickname.length<1||nickname.length>20){
+    		   nicknameMessage.innerText = "昵称不能超过20位";
     		   nicknameMessage.style.display = "";
     		   return false;
     	   }
@@ -135,18 +135,10 @@
       
         function check()
     {
-        /*  var email = document.getElementById("login-input-email");
-		var email_message = document.getElementById("email-message");
-		email_message.style.display="none";
-		if(email.value==""){
-	
-        //x.className = 'error-message'; 
-        email_message.innerText="请输入邮箱地址";
-		email_message.style.display="";
-		
-		} */
+        
 		if(checkEmail()&checkPassword()&checkRealName()&checkId()&checkNickname()&checkTel()){
 			//window.location.href = "${pageContext.request.contextPath}/register.html?}";
+			document.getElementById("register-password").value = hex_md5(document.getElementById("register-password").value);
 			return true;
 		}else{
 			//window.location.href = "${pageContext.request.contextPath}/register.html?}";
@@ -157,11 +149,16 @@
     	 document.getElementById("fade").style.display="";
          document.getElementById("car-container").style.display="";
          document.getElementById("user-auth-dialog-container").style.display="none";
-        }
+    }
+    function cartypeChoosingClose(){
+    	document.getElementById("fade").style.display="none";
+        document.getElementById("car-container").style.display="none";
+        document.getElementById("user-auth-dialog-container").style.display="";
+    }
  </script>
 
  
-<link rel="stylesheet" type="text/css" href="../css/yy.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/yy.css">
 
 
 <title>OBD在线支持系统</title>
@@ -170,23 +167,25 @@
 <body>
 
 	<div region="north" split="true" border="false"
-		style="overflow: hidden; height: 70px; background: url(images/layout-browser-hd-bg.gif) #28a9ff repeat-x center 50%; line-height: 55px; color: #fff; font-family: Verdana, Î¢ï¿½ï¿½ï¿½Åºï¿½, ï¿½ï¿½ï¿½ï¿½">
-		 <span style="padding-left: 8px; padding-top:8px; font-size: 40px; float: left;"><img
-			src="../images/blocks.gif" width="20" height="20" align="absmiddle" />
+		style="overflow: hidden; height: 70px; background: #28a9ff repeat-x center 50%; line-height: 55px; color: #fff; font-family: Verdana, Î¢ï¿½ï¿½ï¿½Åºï¿½, ï¿½ï¿½ï¿½ï¿½">
+		 <span style="padding-left: 10px; padding-top:8px; font-size: 40px; float: left;"><img
+			src="${pageContext.request.contextPath}/images/blocks.gif" width="20" height="20" align="absmiddle" />
 			OBD在线支持系统</span>
 		
 	</div>
 <div id="user-auth-dialog-container" style="position: absolute;  margin: 100px 0px; zoom: 1; top: 25px; display:; " lang="en">
      <div class="dialog-body">                                       
-		 <form class="dialog-tab dialog-box-login" action="${pageContext.request.contextPath}/register.html" method="post" onsubmit="return check()">                
+		 <form class="dialog-tab dialog-box-login" action="${pageContext.request.contextPath}/register/check_register.html" method="post" onsubmit="return check()">                
 		    <div class="clearfix"></div>  
                                
 			<div class="dialog-box">                            
-			   <div class="dialog-title">注册</div>                       
-		    </div>      
+			   <div class="dialog-title">注册</div>    
+			   <label name="register" class="input-box-desc hidden-element error-message" style="display: ;color:red;" id="register-message">${register_message}</label>                   
+		       
+		    </div>    
                              
             <div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="login-input-email" name="email" type="text" maxlength="60" class="inp enter-key" validation="notempty;email" placeholder="登录邮箱" onchange="checkEmail()"></input>
+			  <input tabindex="1" id="register-email" name="email" type="text" maxlength="60" class="inp enter-key" validation="notempty;email" placeholder="登录邮箱" onblur="checkEmail()"></input>
 			  <label name="email" class="input-box-desc hidden-element error-message" style="display: none;" id="email-message"></label>           
 			  <label class="input-box-desc desc-message">e.g. yourname@gmail.com</label>                        
 			</div>                         
@@ -196,40 +195,44 @@
 			</div>   
 			
  			<div class="input-box text-input-box">                           
-		      <input tabindex="2" id="register-password-again" name="password-again" type="password" maxlength="15" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="再次输入密码" onchange="checkPassword()">                            
+		      <input tabindex="3" id="register-password-again" name="password-again" type="password" maxlength="15" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="再次输入密码" onblur="checkPassword()" >                            
 			  <label name="password-message" class="input-box-desc hidden-element error-message" style="display: none;" id="password-message"></label>                                    
 			</div>  
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-name" name="realname" type="text" maxlength="60" class="inp enter-key" validation="notempty;" placeholder="真实姓名" onchange="checkRealName()">
+			  <input tabindex="4" id="register-name" name="realname" type="text" maxlength="60" class="inp enter-key" validation="notempty;" placeholder="真实姓名" onblur="checkRealName()">
 			  <label name="name-message" class="input-box-desc hidden-element error-message" style="display: none;" id="name-message"></label>                                 
 			</div>   
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-id" name="idnumber" type="text" maxlength=18" class="inp enter-key" validation="notempty;" placeholder="身份证号" onchange="checkId()">
+			  <input  tabindex="5" id="register-id" name="idnumber" type="text" maxlength=18" class="inp enter-key" validation="notempty;" placeholder="身份证号" onblur="checkId()">
 			  <label name="id-message" class="input-box-desc hidden-element error-message" style="display: none;" id="id-message"></label>                                 
 			</div>  
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-nickname" name="nickname" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="昵称" onchange="checkNickname()">
-			  <label name="nickname-message" class="input-box-desc hidden-element error-message" style="display: none;" id="nickname-message"></label> 
-			  <label class="input-box-desc desc-message">4到20个英文字符</label>                                 
+			  <input tabindex="6" id="register-nickname" name="nickname" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="昵称" onblur="checkNickname()">
+			  <label name="nickname-message" class="input-box-desc hidden-element error-message" style="display: none;" id="nickname-message"></label>                               
 			</div>
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="联系电话" onchange="checkTel()">
+			  <input tabindex="7" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="联系电话" onblur="checkTel()">
 			  <label name="tel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="tel-message"></label>                                  
 			</div>
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-carmodel" name="cartype" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车型选择" onclick="chooseCartype()">
-			  <label name="carmodel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carmodel-message"></label>                                  
+			  <input tabindex="8" id="register-carNumber" name="carnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车牌号" onchange="">
+			  <label name="carnumber-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carnumber-message"></label>                                  
 			</div>
 			
 			<div class="input-box text-input-box">                            
-			  <input autofocus="" tabindex="1" id="register-OBDid" name="obdnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="OBD编码" onchange="">
+			  <input tabindex="9" id="register-OBDid" name="obdnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="OBD编码" onchange="">
 			  <label name="OBDid-message" class="input-box-desc hidden-element error-message" style="display: none;" id="OBDid-message"></label>                                  
-			  <a id="two-dimensional-code" tabindex="9" href="#" class="switch-context switch-context-link ">扫描二维码</a>
+			  <a id="two-dimensional-code" href="#" class="switch-context switch-context-link ">扫描二维码</a>
+			</div>
+			
+			<div class="input-box text-input-box">                            
+			  <input  tabindex="10" id="register-carmodel" name="cartype" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车型选择" onfocus="chooseCartype()">
+			  <label name="carmodel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carmodel-message"></label>                                  
 			</div>
 			
 			         
@@ -245,6 +248,9 @@
 			<div class="action-box">                            
 			   <input type="submit" href="#" tabindex="6" id="register-action-go" class="dialog-button action-login" value="注册">                    
 		    </div>
+		    <div class="dialog-box">                                                                                      
+				 <a id="two-dimensional-code" href="${pageContext.request.contextPath}/login.html" class="switch-context switch-context-link right">返回登陆界面</a>                      
+			</div>
 <!--              
             <div class="dialog-box">                          
 			   <span class="dialog-checkbox">                                                             
