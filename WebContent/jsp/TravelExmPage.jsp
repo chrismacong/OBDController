@@ -56,6 +56,10 @@ $(function () {
 	        name: '我的评分',
 	        data: [parseInt("${oil_score}"), parseInt("${mile_score}"), parseInt("${stability_score}"), parseInt("${speed_score}"), parseInt("${tired_control_score}")],
 	        pointPlacement: 'on'
+	    },{
+	    	name: '满分',
+	        data: [100, 100, 100, 100, 100],
+	        pointPlacement: 'on'
 	    }]
 	
 	});

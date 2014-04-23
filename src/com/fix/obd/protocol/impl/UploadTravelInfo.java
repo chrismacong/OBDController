@@ -126,12 +126,15 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
+		String character_str = "";
 		for(int i=0;i<characters.length;i++){
         	String character_sep[] = characters[i].split(";"); 
         	System.out.println(characters[i]);
         	if(character_sep.length>=3){
-        		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")");
+        		character_str += character_sep[1] + ";";
         	}
 		}
+		System.out.println(character_str);
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str.substring(0,character_str.lastIndexOf(";")));
 	}
 }

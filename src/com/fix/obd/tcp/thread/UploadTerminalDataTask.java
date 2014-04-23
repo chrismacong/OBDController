@@ -596,6 +596,7 @@ public class UploadTerminalDataTask implements Runnable {
 			MessageUtil.printAndToDivContent("终端连接地址：" + terminalAddress, true);
 			ThreadMap.threadNameMap.put(terminalAddress.toString().split(":")[0], this);
 			logger.info("HashMap size:" + ThreadMap.threadNameMap.size());
+			logger.info("新增连接:" + terminalAddress.toString().split(":")[0]);
 			is = socket.getInputStream();
 			os = socket.getOutputStream();
 

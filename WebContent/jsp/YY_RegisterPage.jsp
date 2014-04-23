@@ -276,12 +276,14 @@
                        <li><a target="_self" href="#a_3">兰博基尼</a></li>
                        <li><a target="_self" href="#a_4">大众</a></li>
                        <li><a target="_self" href="#a_5">奔驰</a></li>
-                    </ul>                   
+                    </ul>
                     <ul class="innerNav innerNav_c clearfix" id="usa">
                        <li class="nav01"><a target="_self" href="#b">美国品牌：</a></li>
-               
+                       <li><a target="_self" href="#b_1" >凯迪拉克</a></li>
+                    </ul>                   
+                     <ul class="innerNav innerNav_c clearfix" id="usa">
+                       <li class="nav01"><a target="_self" href="#b">美国品牌：</a></li>
                        <li><a target="_self" href="#b_1">凯迪拉克</a></li>
-                       
                     </ul>
                     <ul class="innerNav innerNav_c clearfix" id="japan">
                        <li class="nav01"><a target="_self" href="#c">日韩品牌：</a></li>
@@ -322,78 +324,81 @@
              
                 <dl class="clearfix">
                   <dt name="a_3" id="a_3"><a href="">兰博基尼</a></dt>
-                  <dd><a href="#">兰博基尼Countach</a></dd>
-                  <dd><a href="#">兰博基尼Diablo</a></dd>
-                  <dd><a href="#">兰博基尼Gallardo</a></dd>
-                  <dd><a href="#">兰博基尼Miura</a></dd>
-                  <dd><a href="#">兰博基尼Murcielago</a></dd>
-                  <dd><a href="#">兰博基尼Reventon</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">兰博基尼Countach</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">兰博基尼Diablo</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">兰博基尼Gallardo</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">兰博基尼Miura</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">兰博基尼Reventon</a></dd>
                 </dl>
              
              
              
                 <dl class="clearfix">
-                   <dt name="a_4" id="a_4"><a href="">大众</a></dt><dd><a href="">大众CC</a></dd><dd><a href="http://image.baidu.">大众Cross Polo</a></dd><dd><a href="http://image.baidu.">大众E-Up</a></dd><dd><a href="">大众EOS</a></dd><dd><a href="">大众Lupo</a></dd>
-                   <dd><a href="#">大众Microbus</a></dd>
-                   <dd><a href="#">大众Multivan</a></dd>
-                   <dd><a href="#">大众NCC</a></dd>
-                   <dd><a href="#">大众Polo</a></dd>
-                   <dd><a href="#">大众Polo Sporty</a></dd>
-                   <dd><a href="#">大众Polo劲取</a></dd>
-                   <dd><a href="#">大众Polo劲情</a></dd>
-                   <dd><a href="#">大众R36</a></dd>
-                   <dd><a href="#">大众T5</a></dd>
-                   <dd><a href="#">大众Up!Lite</a></dd>
-                   <dd><a href="#">大众W12</a></dd>
-                   <dd><a href="#">大众夏朗</a></dd>
-                   <dd><a href="#">大众宝来</a></dd>
-                   <dd><a href="#">大众尚酷Scirocco</a></dd>
-                   <dd><a href="#">大众帕萨特</a></dd>
-                   <dd><a href="#">大众志俊</a></dd>
-                   <dd><a href="#">大众捷达</a></dd>
-                   <dd><a href="#">大众朗逸</a></dd>
-                   <dd><a href="#">大众桑塔纳</a></dd>
-                   <dd><a href="#">大众甲壳虫</a></dd>
-                   <dd><a href="#">大众辉腾</a></dd>
-                   <dd><a href="#">大众迈腾</a></dd>
-                   <dd><a href="#">大众途安</a></dd>
-                   <dd><a href="#">大众途欢Tiguan</a></dd>
-                   <dd><a href="#">大众途观</a></dd>
-                   <dd><a href="#">大众途锐</a></dd>
-                   <dd><a href="#">大众速腾</a></dd>
-                   <dd><a href="#">大众领驭</a></dd>
-                   <dd><a href="#">大众高尔夫</a></dd>
-                   <dd><a href="#">大众高尔夫GTI</a></dd>
+                   <dt name="a_4" id="a_4"><a href="">大众</a></dt>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众CC</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Cross Polo</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众E-Up</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众EOS</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Lupo</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Microbus</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Multivan</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众NCC</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Polo</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Polo Sporty</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Polo劲取</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Polo劲情</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众R36</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众T5</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众Up!Lite</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众W12</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众夏朗</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众宝来</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众尚酷Scirocco</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众帕萨特</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众志俊</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众捷达</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众朗逸</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众桑塔纳</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众甲壳虫</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众辉腾</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众迈腾</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众途安</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众途欢Tiguan</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众途观</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众途锐</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众速腾</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众领驭</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众高尔夫</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">大众高尔夫GTI</a></dd>
                  </dl>
                 
                  <dl class="clearfix">
                     <dt name="a_5" id="a_5"><a href="">奔驰</a></dt>
-                    <dd><a href="#">奔驰AMG</a></dd>
-                    <dd><a href="#">奔驰A级</a></dd>
-                    <dd><a href="#">奔驰BLK</a></dd>
-                    <dd><a href="#">奔驰B级</a></dd>
-                    <dd><a href="#">奔驰CLK</a></dd>
-                    <dd><a href="#">奔驰CLS</a></dd>
-                    <dd><a href="#">奔驰CL级</a></dd>
-                    <dd><a href="#">奔驰C级</a></dd>
-                    <dd><a href="#">奔驰C级旅行轿车</a></dd>
-                    <dd><a href="#">奔驰E级</a></dd>
-                    <dd><a href="#">奔驰E级coupe</a></dd>
-                    <dd><a href="#">奔驰E级敞篷跑车</a></dd>
-                    <dd><a href="#">奔驰F-CELLRoadster</a></dd>
-                    <dd><a href="#">奔驰F800概念车</a></dd>
-                    <dd><a href="#">奔驰GL</a></dd>
-                    <dd><a href="#">奔驰GLK</a></dd>
-                    <dd><a href="#">奔驰G级</a></dd>
-                    <dd><a href="#">奔驰MB100</a></dd>
-                    <dd><a href="#">奔驰ML级</a></dd>
-                    <dd><a href="#">奔驰R级</a></dd>
-                    <dd><a href="#">奔驰S400混合动力</a></dd>
-                    <dd><a href="#">奔驰SL</a></dd>
-                    <dd><a href="#">奔驰SLK</a></dd>
-                    <dd><a href="#">奔驰SLR</a></dd>
-                    <dd><a href="#">奔驰S级</a></dd>
-                    <dd><a href="#">奔驰Vaneo</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰AMG</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰A级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰BLK</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰B级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰CLK</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰CLS</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰CL级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰C级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰C级旅行轿车</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰E级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰E级coupe</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰E级敞篷跑车</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰F800概念车</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰GL</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰GLK</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰G级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰MB100</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰ML级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰R级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰S400混合动力</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰SL</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰SLK</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰SLR</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰S级</a></dd>
+                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">奔驰Vaneo</a></dd>
                  </dl>
              
              
@@ -404,20 +409,21 @@
              <h1><a name="b" shape=""></a>美国品牌</h1>
              <div class="carlist" id="item2Tag01">
                <dl class="clearfix"><dt name="b_1" id="b_1"><a href="">凯迪拉克</a></dt>
-               <dd><a href="#">凯迪拉克CTS</a></dd><dd><a href="">凯迪拉克CTS-V</a></dd>
-               <dd><a href="#">凯迪拉克Converj</a></dd>
-               <dd><a href="#">凯迪拉克DTS</a></dd>
-               <dd><a href="#">凯迪拉克Escalade</a></dd>
-               <dd><a href="#">凯迪拉克SLS</a></dd>
-               <dd><a href="#">凯迪拉克SRX</a></dd>
-               <dd><a href="#">凯迪拉克STS</a></dd>
-               <dd><a href="#">凯迪拉克XLR</a></dd>
-               <dd><a href="#">凯迪拉克XTS白金版</a></dd>
-               <dd><a href="#">凯迪拉克依沃克</a></dd>
-               <dd><a href="#">凯迪拉克加长版</a></dd>
-               <dd><a href="#">凯迪拉克帝威</a></dd>
-               <dd><a href="#">凯迪拉克皮卡</a></dd>
-               <dd><a href="#">凯迪拉克维尚</a></dd></dl>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克CTS</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克CTS-V</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克Converj</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克DTS</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克Escalade</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克SLS</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克SRX</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克STS</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克XLR</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克XTS白金版</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克依沃克</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克加长版</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克帝威</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克皮卡</a></dd>
+               <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">凯迪拉克维尚</a></dd></dl>
                </dl>
                
               
@@ -433,27 +439,27 @@
                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Avalon</a></dd>
                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Aygo</a></dd>
                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Camry</a></dd>
-                  <dd><a href="#">丰田Celica</a></dd>
-                  <dd><a href="#">丰田Century</a></dd>
-                  <dd><a href="#">丰田Corolla</a></dd>
-                  <dd><a href="#">丰田FCHV</a></dd>
-                  <dd><a href="#">丰田FT Cruiser</a></dd>
-                  <dd><a href="#">丰田FT-86</a></dd>
-                  <dd><a href="#">丰田FT-CH</a></dd>
-                  <dd><a href="#">丰田FT-EV</a></dd>
-                  <dd><a href="#">丰田FT-EV2</a></dd>
-                  <dd><a href="#">丰田FT-HS</a></dd>
-                  <dd><a href="#">丰田Funcargo</a></dd>
-                  <dd><a href="#">丰田Funcoupe</a></dd>
-                  <dd><a href="#">丰田Funtime</a></dd>
-                  <dd><a href="#">丰田IQ</a></dd>
-                  <dd><a href="#">丰田Previa</a></dd>
-                  <dd><a href="#">丰田RAV4</a></dd>
-                  <dd><a href="#">丰田Sienna</a></dd>
-                  <dd><a href="#">丰田Supra</a></dd>
-                  <dd><a href="#">丰田VITZ</a></dd>
-                  <dd><a href="#">丰田Venza</a></dd>
-                  <dd><a href="#">丰田Verso</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Celica</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Century</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Corolla</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FCHV</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT Cruiser</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT-86</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT-CH</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT-EV</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT-EV2</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田FT-HS</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Funcargo</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Funcoupe</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Funtime</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田IQ</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Previa</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田RAV4</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Sienna</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Supra</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田VITZ</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Venza</a></dd>
+                  <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">丰田Verso</a></dd>
                </dl>
              </div>
           </div>  <!-- end of item1 -->
@@ -464,14 +470,14 @@
                <dl class="clearfix">
                    <dt name="d_1" id="d_1"><a href="">一汽</a></dt>
                    <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽E-COO</a></dd>
-                   <dd><a href="#">一汽E-wing</a></dd>
-                   <dd><a href="#">一汽佳宝</a></dd>
-                   <dd><a href="#">一汽夏利A+</a></dd>
-                   <dd><a href="#">一汽夏利N3</a></dd>
-                   <dd><a href="#">一汽夏利N5</a></dd>
-                   <dd><a href="#">一汽奔腾B30</a></dd>
-                   <dd><a href="#">一汽奔腾B50</a></dd>
-                   <dd><a href="#">一汽奔腾B70</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽E-wing</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽佳宝</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽夏利A+</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽夏利N3</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽夏利N5</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽奔腾B30</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽奔腾B50</a></dd>
+                   <dd><a href="#" onMouseOver="this.style.fontSize= '18px'" onMouseOut="this.style.fontSize='16px'"  onclick="cartypeChoosingClose();document.getElementById('register-carmodel').value=this.innerHTML;">一汽奔腾B70</a></dd>
                </dl>
              
              

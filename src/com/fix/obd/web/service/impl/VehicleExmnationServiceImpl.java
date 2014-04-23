@@ -1,9 +1,12 @@
 package com.fix.obd.web.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import oracle.net.aso.i;
 
 import org.springframework.stereotype.Component;
 
@@ -12,17 +15,16 @@ import com.fix.obd.util.FaultCodeXMLUtil;
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.util.ThreadMap;
 import com.fix.obd.web.dao.DTCDefectDao;
-import com.fix.obd.web.dao.OBDDefectDao;
 import com.fix.obd.web.dao.OBDTerminalInfoDao;
 import com.fix.obd.web.model.DTCDefect;
-import com.fix.obd.web.model.OBDDefect;
 import com.fix.obd.web.model.OBDTerminalInfo;
 import com.fix.obd.web.model.util.FaultCodeIterator;
 import com.fix.obd.web.model.util.VehicleExmnationReport;
 import com.fix.obd.web.service.VehicleExmnationService;
 @Component
 public class VehicleExmnationServiceImpl implements VehicleExmnationService{
-	private final String[] MAIN_SOLUTIONS = {"您正处于高危驾驶状态，车辆存在严重问题，请立刻到相关单位进行检修！",
+	private final String[] MAIN_SOLUTIONS = {"您的爱车状况极度危险，请立刻到相关单位进行全面检修！",
+			"您正处于高危驾驶状态，车辆存在严重问题，请立刻到相关单位进行检修！",
 			"您的爱车存在大量危险故障，这将直接威胁到您的人身安全，请尽快到相关单位进行车辆检修",
 			"您的车辆处于不安全的状态下，这可能会对您的人身安全造成危害，抽时间去相关单位进行车辆检修吧！",
 			"您的爱车存在可优化的项目，请注意车辆健康！",
@@ -102,7 +104,7 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 			SCORE = SCORE<0?0:SCORE;
 		}
 		System.out.println("您的体检评分为：" + SCORE);
-		String main_solution = MAIN_SOLUTIONS[(int) Math.floor(SCORE/20)-1];
+		String main_solution = MAIN_SOLUTIONS[(int) Math.floor(SCORE/20)];
 		System.out.println(main_solution);
 		vehicleExmnationReport.setVehicle_exm_score(SCORE);
 		vehicleExmnationReport.setVehicle_exm_main_solution(main_solution);
@@ -125,6 +127,13 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 				String port = ipAndPort.split(":")[1];
 				UploadTerminalDataTask u = ThreadMap.threadNameMap.get("/" + ip);				
 				String bufferId = "78";
+				System.out.println(ip);
+				System.out.println(ThreadMap.threadNameMap.size() + " IPs in map:");
+				Iterator i = ThreadMap.threadNameMap.entrySet().iterator();
+				while(i.hasNext()){
+					Object o = i.next();
+					System.out.println(o.toString());
+				}
 				System.out.println(terminalId);
 				System.out.println(u);
 				boolean result = u.SentReadDTC(terminalId, bufferId);
