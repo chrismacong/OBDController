@@ -1,5 +1,6 @@
 package com.fix.obd.web.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.fix.obd.tcp.thread.UploadTerminalDataTask;
 import com.fix.obd.util.ThreadMap;
 import com.fix.obd.web.dao.YY_UserDao;
+import com.fix.obd.web.model.OBDData;
 import com.fix.obd.web.model.OBDTerminalInfo;
 import com.fix.obd.web.model.YY_User;
 import com.fix.obd.web.service.YY_LoginService;
@@ -48,6 +50,22 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 	public String getRoleName(String email) {
 		// TODO Auto-generated method stub
 		return userDao.getRoleNameByEmail(email);
+	}
+
+	@Override
+	public String getTerminalIdByEmail(String email) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> user_list = userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0)
+				return user_list.get(0).getObdnumber();
+			else
+				return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

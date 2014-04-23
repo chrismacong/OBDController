@@ -59,7 +59,9 @@ public class YY_LogControl {
 			        response.addCookie(passwordCookie);
 			 
 			}
-		
+			String terminalId = loginService.getTerminalIdByEmail(email);
+			if(terminalId!=null)
+				session.setAttribute("terminalId", terminalId);
 		    if(rolename.equals("manager")){
 		    	return new ModelAndView(new RedirectView("/OBDController/main.html"));
 		    }else if(rolename.equals("member")){
