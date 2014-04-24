@@ -23,6 +23,14 @@ $(function () {
 	        x: 0	
 	    },
 	    
+	    exporting: {
+    		enabled: false
+    	},
+    	
+    	credits: {
+            enabled: false
+        },
+	    
 	    pane: {
 	    	size: '75%'
 	    },
@@ -37,7 +45,8 @@ $(function () {
 	    yAxis: {
 	        gridLineInterpolation: 'polygon',
 	        lineWidth: 0,
-	        min: 0
+	        min: 0,
+	        max: 100
 	    },
 	    
 	    tooltip: {
@@ -49,7 +58,7 @@ $(function () {
 	        align: 'right',
 	        verticalAlign: 'top',
 	        y: 70,
-	        layout: 'vertical'
+	        layout: 'vertical',
 	    },
 	    
 	    series: [{
