@@ -53,11 +53,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		lineOfDate = year + "-" + monthStr + "-" + dayStr + " 00:00:00";
 	}
 	@Override
-	public String getTotalDistance(String terminalId) {
+	public String getTotalDistance(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalDistance = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -80,11 +79,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getLongestDistance(String terminalId) {
+	public String getLongestDistance(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int longestDistance = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -108,11 +106,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getMaxSpeed(String terminalId) {
+	public String getMaxSpeed(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int maxSpeed = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -136,11 +133,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalExceedSeconds(String terminalId) {
+	public String getTotalExceedSeconds(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalExceedSeconds = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -162,11 +158,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalBrakeTimes(String terminalId) {
+	public String getTotalBrakeTimes(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalBrakeTimes = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -188,11 +183,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalEmerBrakeTimes(String terminalId) {
+	public String getTotalEmerBrakeTimes(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalEmerBrakeTimes = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -214,11 +208,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalSpeedUpTimes(String terminalId) {
+	public String getTotalSpeedUpTimes(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalSpeedUpTimes = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -240,11 +233,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalEmerSpeedUpTimes(String terminalId) {
+	public String getTotalEmerSpeedUpTimes(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalEmerSpeedUpTimes = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -266,12 +258,11 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getAvgSpeed(String terminalId) {
+	public String getAvgSpeed(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int avgSpeed = 0;
 			int totalSpeed = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -294,11 +285,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getMaxWaterTmp(String terminalId) {
+	public String getMaxWaterTmp(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int maxWaterTmp = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -322,11 +312,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getMaxRevolution(String terminalId) {
+	public String getMaxRevolution(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int maxRevolution = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -350,11 +339,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalOilExpend(String terminalId) {
+	public String getTotalOilExpend(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			double totalOilExpend = 0.00;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -376,26 +364,15 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getAvgOilExpend(String terminalId) {
+	public String getAvgOilExpend(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
-			double avgOilExpend = 0.00;
-			double totalAvgOilExpend = 0.00;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
-				for(int i=0;i<info_list.size();i++){
-					String infoStr = info_list.get(i).getInfo();
-					if(infoStr.indexOf("平均油耗")>-1){
-						String temp = infoStr.substring(infoStr.indexOf("平均油耗"));
-						temp = temp.split(";")[1];
-						totalAvgOilExpend += Double.parseDouble(temp)*0.01;
-					}
-				}
-				avgOilExpend = totalAvgOilExpend/info_list.size();
+				double avgOilExpend = Double.parseDouble(this.getTotalOilExpend(info_list))/Double.parseDouble(this.getTotalDistance(info_list))*100.00;
 				return avgOilExpend + "";
 			}
 			else
-				return null;
+				return "0.00";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -404,11 +381,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	}
 
 	@Override
-	public String getTotalTiredDrivingMinutes(String terminalId) {
+	public String getTotalTiredDrivingMinutes(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
 			int totalTiredDrivingMinutes = 0;
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
@@ -436,25 +412,45 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	public TravelExmnation exmnationAndRecord(String terminalId) {
 		// TODO Auto-generated method stub
 		TravelExmnation t = new TravelExmnation();
-		t.setTerminalId(terminalId);
-		t.setTotalDistance(this.getTotalDistance(terminalId));
-		t.setLongestDistance(this.getLongestDistance(terminalId));
-		t.setMaxSpeed(this.getMaxSpeed(terminalId));
-		t.setTotalExceedSeconds(this.getTotalExceedSeconds(terminalId));
-		t.setTotalBrakeTimes(this.getTotalBrakeTimes(terminalId));
-		t.setTotalEmerBrakeTimes(this.getTotalEmerBrakeTimes(terminalId));
-		t.setTotalSpeedUpTimes(this.getTotalSpeedUpTimes(terminalId));
-		t.setTotalEmerSpeedUpTimes(this.getTotalEmerSpeedUpTimes(terminalId));
-		t.setAvgSpeed(this.getAvgSpeed(terminalId));
-		t.setMaxWaterTmp(this.getMaxWaterTmp(terminalId));
-		t.setMaxRevolution(this.getMaxRevolution(terminalId));
-		t.setTotalOilExpend(this.getTotalOilExpend(terminalId));
-		t.setAvgOilExpend(this.getAvgOilExpend(terminalId));
-		t.setTotalTiredDrivingMinutes(this.getTotalTiredDrivingMinutes(terminalId));
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String now = df.format(new Date());
-		t.setDate(now);
-		travelExmnationDao.addTravelExmnation(t);
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			
+			
+			t.setTerminalId(terminalId);
+			t.setTotalDistance(this.getTotalDistance(info_list));
+			t.setLongestDistance(this.getLongestDistance(info_list));
+			t.setMaxSpeed(this.getMaxSpeed(info_list));
+			t.setTotalExceedSeconds(this.getTotalExceedSeconds(info_list));
+			t.setTotalBrakeTimes(this.getTotalBrakeTimes(info_list));
+			t.setTotalEmerBrakeTimes(this.getTotalEmerBrakeTimes(info_list));
+			t.setTotalSpeedUpTimes(this.getTotalSpeedUpTimes(info_list));
+			t.setTotalEmerSpeedUpTimes(this.getTotalEmerSpeedUpTimes(info_list));
+			t.setAvgSpeed(this.getAvgSpeed(info_list));
+			t.setMaxWaterTmp(this.getMaxWaterTmp(info_list));
+			t.setMaxRevolution(this.getMaxRevolution(info_list));
+			t.setTotalOilExpend(this.getTotalOilExpend(info_list));
+			t.setAvgOilExpend(this.getAvgOilExpend(info_list));
+			t.setTotalTiredDrivingMinutes(this.getTotalTiredDrivingMinutes(info_list));
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String now = df.format(new Date());
+			t.setDate(now);
+			travelExmnationDao.addTravelExmnation(t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return t;
 	}
 
@@ -482,6 +478,19 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		final String TIRED_NORMAL = "您经常出现疲劳驾驶的情况，为了您的安全，请务必健康行车";
 		Map map = new HashMap();
 		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
 			ArrayList<TravelExmnation> listBesidesSelf = new ArrayList<TravelExmnation>();
 			List<TravelExmnation> list = travelExmnationDao.findByHQL("from TravelExmnation order by date desc");
 			for(int i=0;i<list.size();i++){
@@ -501,8 +510,8 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			//			}
 			//油耗在好友中的排名
 			int oilCount = 0;
-			if(this.getAvgOilExpend(terminalId)!=null){
-				double myOil = Double.parseDouble(this.getAvgOilExpend(terminalId));
+			if(this.getAvgOilExpend(info_list)!=null){
+				double myOil = Double.parseDouble(this.getAvgOilExpend(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
 					double hisOil = Double.parseDouble(listBesidesSelf.get(i).getAvgOilExpend());
 					if(myOil<=hisOil)
@@ -520,8 +529,8 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 
 			//里程在好友中的排名
 			int mileCount = 0;
-			if(this.getTotalBrakeTimes(terminalId)!=null){
-				double myMile = Double.parseDouble(this.getTotalDistance(terminalId));
+			if(this.getTotalBrakeTimes(info_list)!=null){
+				double myMile = Double.parseDouble(this.getTotalDistance(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
 					double hisMile = Double.parseDouble(listBesidesSelf.get(i).getTotalDistance());
 					if(myMile>=hisMile)
@@ -543,11 +552,11 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			final int NORMAL_OP = 1;
 			/*---急刹车，急加速的权值---*/
 			final int EXTRA_OP = 2;
-			if(this.getTotalBrakeTimes(terminalId)!=null){
-				int myStabilily = Integer.parseInt(this.getTotalBrakeTimes(terminalId))*NORMAL_OP + 
-						Integer.parseInt(this.getTotalEmerBrakeTimes(terminalId))*EXTRA_OP + 
-						Integer.parseInt(this.getTotalSpeedUpTimes(terminalId))*NORMAL_OP + 
-						Integer.parseInt(this.getTotalEmerSpeedUpTimes(terminalId))*EXTRA_OP;
+			if(this.getTotalBrakeTimes(info_list)!=null){
+				int myStabilily = Integer.parseInt(this.getTotalBrakeTimes(info_list))*NORMAL_OP + 
+						Integer.parseInt(this.getTotalEmerBrakeTimes(info_list))*EXTRA_OP + 
+						Integer.parseInt(this.getTotalSpeedUpTimes(info_list))*NORMAL_OP + 
+						Integer.parseInt(this.getTotalEmerSpeedUpTimes(info_list))*EXTRA_OP;
 				for(int i=0;i<listBesidesSelf.size();i++){
 					int hisStabilily = Integer.parseInt(listBesidesSelf.get(i).getTotalBrakeTimes())*NORMAL_OP + 
 							Integer.parseInt(listBesidesSelf.get(i).getTotalEmerBrakeTimes())*EXTRA_OP + 
@@ -568,8 +577,8 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 
 			//速度在好友中的排名
 			int speedCount = 0;
-			if(this.getAvgSpeed(terminalId)!=null){
-				double mySpeed = Double.parseDouble(this.getAvgSpeed(terminalId));
+			if(this.getAvgSpeed(info_list)!=null){
+				double mySpeed = Double.parseDouble(this.getAvgSpeed(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
 					double hisSpeed = Double.parseDouble(listBesidesSelf.get(i).getAvgSpeed());
 					if(mySpeed>=hisSpeed)
@@ -587,8 +596,8 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 
 			//疲劳控制在好友中的排名
 			int tiredControlCount = 0;
-			if(this.getTotalBrakeTimes(terminalId)!=null){
-				int myTiredControl = Integer.parseInt(this.getTotalTiredDrivingMinutes(terminalId));
+			if(this.getTotalBrakeTimes(info_list)!=null){
+				int myTiredControl = Integer.parseInt(this.getTotalTiredDrivingMinutes(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
 					int hisTiredControl = Integer.parseInt(listBesidesSelf.get(i).getTotalTiredDrivingMinutes());
 					if(myTiredControl<=hisTiredControl)
