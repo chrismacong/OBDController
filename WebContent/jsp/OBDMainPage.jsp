@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-04-14
-			11:39 12:52:24</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-04-24
+			09:12 V1.1.1.4</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">

@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#subtitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:120px;
+	height:20px;
+	font-size:18px;
+}
+#terminalTitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:230px;
+	height:12px;
+	font-size:15px;
+}
+#container{
+	position:relative;
+	top:30px;
+	border:5px solid blue;
+}
+#travel_exm_table{
+	position:absolute;
+	top:50px;
+	left:500px;
+}
+table{
+	width:45%;
+}
+.healthy_title{
+	font-size:18px;
+	color:green;
+}
+#healthy{
+	position:absolute;
+	top:390px;
+	left:30px;
+}
+#healthy_container{
+	position:absolute;
+	top:420px;
+	left:15px;
+}

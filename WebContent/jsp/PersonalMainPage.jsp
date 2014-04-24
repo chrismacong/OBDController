@@ -59,7 +59,7 @@
 				<iframe id="vehicle_exm_iframe" class="section_iframe" src="${pageContext.request.contextPath}/vehicleexm.html?terminalId=${terminalId}" width="960px" height="540px" scrolling="yes" frameborder="0"></iframe>
 			</div>
 			<div class="section" id="travel_exm_section">
-				<iframe id="travel_exm_iframe" class="section_iframe" src="${pageContext.request.contextPath}/travelexm.html?terminalId=${terminalId}" width="960px" height="540px" scrolling="yes" frameborder="0"></iframe>
+				<iframe id="travel_exm_iframe" class="section_iframe" src="${pageContext.request.contextPath}/travelexmpersonal.html?terminalId=${terminalId}" width="960px" height="540px" scrolling="yes" frameborder="0"></iframe>
 			</div>
 			<div class="section" id="map_section">
 				<iframe id="position_iframe" class="section_iframe" src="${pageContext.request.contextPath}/positioninfo/getlgraph.html?terminalId=${terminalId}" width="960px" height="540px" scrolling="yes" frameborder="0"></iframe>
