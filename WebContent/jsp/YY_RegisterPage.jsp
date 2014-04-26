@@ -6,7 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/yy_md5.js"></script>
  <script type="text/javascript">
-
+      var xmlHttp;
+      function createXMLHttpRequest(){
+    	  if (window.XMLHttpRequest)
+    	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+    		  xmlHttp=new XMLHttpRequest();
+    		  /* alert("in createXMLHttpRequest:XMLHttpRequest"); */
+    	  }
+    	  else
+    	  {// code for IE6, IE5
+    		  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    		  /* alert("in createXMLHttpRequest:ActiveXObject"); */
+    	  }
+      }
+      
       function checkEmail()
     {
 	    var email = document.getElementById("register-email");
@@ -18,15 +31,33 @@
 			return false;
 		}
 		if(email.value!=""){
-		//var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-		var reg=/^(?:[a-zA-Z0-9]+[_\-\+\.]?)*[a-zA-Z0-9]+@(?:([a-zA-Z0-9]+[_\-]?)*[a-zA-Z0-9]+\.)+([a-zA-Z]{2,})+$/;
-		if(!reg.test(email.value)){
-        //x.className = 'error-message'; 
-        email_message.innerText="请输入正确邮箱地址!";
-		email_message.style.display="";
-		return false;
+			//var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+			var reg=/^(?:[a-zA-Z0-9]+[_\-\+\.]?)*[a-zA-Z0-9]+@(?:([a-zA-Z0-9]+[_\-]?)*[a-zA-Z0-9]+\.)+([a-zA-Z]{2,})+$/;
+			if(!reg.test(email.value)){
+		       //x.className = 'error-message'; 
+		       email_message.innerText="请输入正确邮箱地址!";
+			   email_message.style.display="";
+			   return false;
+			}
 		}
-		}
+		createXMLHttpRequest();
+ 		xmlHttp.onreadystatechange = function(){
+			var responseContext;
+			if(xmlHttp.readyState == 4){
+				if(xmlHttp.status == 200){
+					responseContext = xmlHttp.responseText;
+					if(responseContext.indexOf("true")!=-1){
+						//alert("恭喜您，注册email有效");                      //验证成功
+					}else{
+						email.value="";
+					    email_message.innerText="邮箱已注册，请重新输入!";
+						email_message.style.display="";
+					}
+				}
+			}
+		} 
+		xmlHttp.open("GET", "${pageContext.request.contextPath}/register/check_email.html?email="+email.value,true);
+		xmlHttp.send(null);
 		return true;
     }
       
@@ -38,15 +69,15 @@
           	if(userPass==""||userRePass==""){
           		passwordMessage.innerText="密码不能为空";
           		passwordMessage.style.display="";
-          		document.getElementById("register-password").innerText="";
-          		document.getElementById("register-password-again").innerText="";
+          		document.getElementById("register-password").value="";
+          		document.getElementById("register-password-again").value="";
           		return false;
           	}
           	if(!(userPass==userRePass)){
           		passwordMessage.innerText="两次密码输入不同，请重新输入";
           		passwordMessage.style.display="";
-          		document.getElementById("register-password").innerText="";
-          		document.getElementById("register-password-again").innerText="";
+          		document.getElementById("register-password").value="";
+          		document.getElementById("register-password-again").value="";
           		return false;
           	}else{
           		passwordMessage.innerText="";
@@ -121,7 +152,7 @@
     	   telMessage.style.display = "none";
     	   var reg = /^[\d]+$/;
     	   if(tel==""){
-    		   telMessage.innerText = "联系电话不能为空";
+    		   telMessage.innerText = "手机号不能为空";
     		   telMessage.style.display = "";
     		   return false;
     	   }
@@ -130,7 +161,30 @@
     		   telMessage.style.display = "";
     		   return false;
     	   }
-    	   return true;
+    	   if(tel.length!=11){
+    		   telMessage.innerText = "请输入11位手机号码";
+    		   telMessage.style.display = "";
+    		   return false;
+    	   }
+    	   createXMLHttpRequest();
+    		xmlHttp.onreadystatechange = function(){
+   			var responseContext;
+   			if(xmlHttp.readyState == 4){
+   				if(xmlHttp.status == 200){
+   					responseContext = xmlHttp.responseText;
+   					if(responseContext.indexOf("true")!=-1){
+   						//alert("恭喜您，注册tel有效");                      //验证成功
+   					}else{
+   						tel = "";
+   					    telMessage.innerText="该手机号已注册，请重新输入!";
+   						telMessage.style.display="";
+   					}
+   				}
+   			}
+   		} 
+   		xmlHttp.open("GET", "${pageContext.request.contextPath}/register/check_tel.html?tel="+tel,true);
+   		xmlHttp.send(null);
+    	return true;
        }
       
         function check()
@@ -215,7 +269,7 @@
 			</div>
 			
 			<div class="input-box text-input-box">                            
-			  <input tabindex="7" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="联系电话" onblur="checkTel()">
+			  <input tabindex="7" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="手机号" onblur="checkTel()">
 			  <label name="tel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="tel-message"></label>                                  
 			</div>
 			
@@ -233,30 +287,13 @@
 			<div class="input-box text-input-box">                            
 			  <input  tabindex="10" id="register-carmodel" name="cartype" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车型选择" onfocus="chooseCartype()">
 			  <label name="carmodel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carmodel-message"></label>                                  
-			</div>
-			
-			         
-                      
-<!--			<div class="dialog-box">                            
-			   <span class="dialog-checkbox">                              
-			     <input tabindex="5" id="login-input-remember" name="rememberMe" type="checkbox" checked="checked">                
-				 <label for="login-input-remember">记住我！</label>                               
-				 <a id="login-switch-context-forgot-password" tabindex="9" href="#" class="switch-context switch-context-link right" rev="forgot-password">忘记密码？</a>
-			   </span>                        
-			</div>                         
-			<div class="clearfix"></div>          -->              
+			</div>            
 			<div class="action-box">                            
-			   <input type="submit" href="#" tabindex="6" id="register-action-go" class="dialog-button action-login" value="注册">                    
+			   <input type="submit" href="#" tabindex="6" id="register-action-go" class="dialog-button action-login" value="注册" onkeydown="if(event.keyCode==13){event.keyCode=9}">                    
 		    </div>
 		    <div class="dialog-box">                                                                                      
 				 <a id="two-dimensional-code" href="${pageContext.request.contextPath}/login.html" class="switch-context switch-context-link right">返回登陆界面</a>                      
-			</div>
-<!--              
-            <div class="dialog-box">                          
-			   <span class="dialog-checkbox">                                                             
-				  <label for="new-user">还不是我们的用户？</label><a id="login-new-user" tabindex="9" href="YYRegister.jsp" class="switch-context switch-context-link " rev="new-user">立即注册</a>
-			   </span>                        
-			</div>  -->                   
+			</div>               
 		</form>                          
       </div>
   </div>

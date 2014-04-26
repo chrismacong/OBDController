@@ -1,5 +1,7 @@
 package com.fix.obd.web.control;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,5 +71,36 @@ public class YY_RegisterControl {
 		}
 		
  	}
+	
+	@RequestMapping(value = "/check_email", method = RequestMethod.GET)
+	public void checkEmail(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
+		System.out.println("in checkEmail");
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String email = request.getParameter("email");
+		String responseContext = "true";
+		if(!registerService.askRegisterEmail(email)){
+			responseContext = "false";
+		}
+		out.println(responseContext);
+		out.flush();
+		out.close();
+	}
+	
+	@RequestMapping(value = "/check_tel", method = RequestMethod.GET)
+	public void checkTel(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
+		System.out.println("in checkTel");
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String tel = request.getParameter("tel");
+		String responseContext = "true";
+		if(!registerService.askRegisterTel(tel)){
+			responseContext = "false";
+		}
+		System.out.println("responseContext:"+responseContext);
+		out.println(responseContext);
+		out.flush();
+		out.close();
+	}
 
 }

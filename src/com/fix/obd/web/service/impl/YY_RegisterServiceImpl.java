@@ -1,6 +1,8 @@
 package com.fix.obd.web.service.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
@@ -41,6 +43,37 @@ public class YY_RegisterServiceImpl implements YY_RegisterService{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean askRegisterEmail(String email) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> userList = userDao.findByHQL("from YY_User where email='"+email+"'");
+		    if(userList.size()==0){
+		    	return true;          //email未注册
+		    }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;        //注册用email已经存在    
+		
+	}
+
+	@Override
+	public boolean askRegisterTel(String tel) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> userList = userDao.findByHQL("from YY_User where tel='"+tel+"'");
+		    if(userList.size()==0){
+		    	return true;          //email未注册
+		    }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;        //注册用email已经存在    
 	}
 
 }
