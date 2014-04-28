@@ -214,7 +214,7 @@ $(document).ready(function(){
 		            rotation: 'auto'
 		        },
 		        title: {
-		            text: '*1000r/s'
+		            text: '*1000r/min'
 		        },
 		        plotBands: [{
 		            from: 0,
@@ -235,7 +235,7 @@ $(document).ready(function(){
 		        name: 'Revolution',
 		        data: [0.00],
 		        tooltip: {
-		            valueSuffix: ' *1000r/s'
+		            valueSuffix: ' *1000r/min'
 		        }
 		    }]
 	

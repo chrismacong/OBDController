@@ -37,6 +37,7 @@
 				<td>${lastUpdateDate}</td>
 			</tr>
 	</table>
+	<button id="modify_button">修改</button>
 	<table class="bordered" id="user_table">
 		<thead>
 			<tr>
