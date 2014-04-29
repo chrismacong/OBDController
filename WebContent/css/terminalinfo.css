@@ -14,17 +14,9 @@
 	left:50px;
 	width:500px;
 }
-#modify_button{
-	position:absolute;
-	top:50px;
-	width:100px;
-	height:40px;
-	left:600px;
-	background-color: #dce9f9;
-}
 #user_table{
 	position:absolute;
-	top:120px;
+	top:60px;
 	left:600px;
 	width:400px;
 }

@@ -6,7 +6,7 @@ $(function() {
 	tabClose();
 	tabCloseEven();
 
-	$('#css3menu a').click(function() {
+	$('#logout_a').click(function() {
 		$('#css3menu a').removeClass('active');
 		$(this).addClass('active');
 

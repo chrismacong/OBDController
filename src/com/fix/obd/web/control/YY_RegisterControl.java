@@ -45,16 +45,16 @@ public class YY_RegisterControl {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		System.out.println("I'm here .password: "+password);
-		System.out.println(email);
+//		System.out.println("I'm here .password: "+password);
+//		System.out.println(email);
 		String realname = request.getParameter("realname");
-		System.out.println("realname"+realname);
+//		System.out.println("realname"+realname);
         String idnumber = request.getParameter("idnumber");
         String nickname = request.getParameter("nickname");
         String tel = request.getParameter("tel");
         String cartype = request.getParameter("cartype");
 		
-	    System.out.println("cartype"+cartype);
+//	    System.out.println("cartype"+cartype);
 		String obdnumber = request.getParameter("obdnumber");
         String carnumber = request.getParameter("carnumber");
 		if(registerService.askRegisterUser(email, password, realname, idnumber, nickname, tel, cartype, obdnumber, carnumber)){
@@ -64,7 +64,8 @@ public class YY_RegisterControl {
             response.addCookie(user);
             session.setAttribute("email",email);
 			return new ModelAndView(new RedirectView("/OBDController/login.html"));
-		}else{
+		}
+		else{
 			model.put("register_message", "邮箱已注册，请重新输入其他邮箱地址！");
 			System.out.println("邮箱已注册");
 			return new ModelAndView(new RedirectView("/OBDController/register.html"), model);

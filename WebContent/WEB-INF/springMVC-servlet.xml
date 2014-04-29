@@ -43,8 +43,8 @@
 				<value>com.fix.obd.web.model.TravelInfo</value>
 				<value>com.fix.obd.web.model.TravelExmnation</value>
 				<value>com.fix.obd.web.model.YY_User</value>
-				<value>com.fix.obd.web.model.YY_Authority</value>
-				<value>com.fix.obd.web.model.YY_RoleAuthority</value>
+				<value>com.fix.obd.web.model.YY_UserPassword</value>
+				
 			</list>
 		</property>
 

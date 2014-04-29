@@ -14,6 +14,7 @@
 	<link href="${pageContext.request.contextPath}/css/global.css" rel="stylesheet" type="text/css" />
 	<link href="${pageContext.request.contextPath}/css/personal.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery.cookie.js"></script>
 	<script src="${pageContext.request.contextPath}/js/highcharts.js"></script>
 	<script src="${pageContext.request.contextPath}/js/highcharts-more.js"></script>
 	<script src="${pageContext.request.contextPath}/js/exporting.js"></script>
@@ -72,7 +73,7 @@
 		<a id="title2_on_top_selected" href="#"></a>
 		<a id="title3_on_top_selected" href="#"></a>
 		<a id="title4_on_top_selected" href="#"></a>
-		<div id="logout_div">${useremail}[ <a href="${pageContext.request.contextPath}/login.html">注销</a> ]</div>
+		<div id="logout_div">${useremail}[ <a id="logout_a" href="${pageContext.request.contextPath}/login.html">注销</a> ]</div>
 	</div>
 </body><!-- [END] body -->
 </html>

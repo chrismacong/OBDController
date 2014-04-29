@@ -1,6 +1,16 @@
 $(document).ready(function(){
 		
 		// initiate page scroller plugin
+		$('#logout_a').click(function() {
+			$.cookie('email', null, {
+				path : "/"
+			});
+			$.cookie('password', null,
+			{
+				path : "/"
+			});
+			window.location.href = "${pageContext.request.contextPath}/login.html";
+		});
 		$('body').pageScroller({
 			navigation: '#nav'
 		});

@@ -62,18 +62,20 @@
     }
       
        function checkPassword(){
-        	var userPass = document.getElementById("register-password").value; 
-          	var userRePass = document.getElementById("register-password-again").value; 
+        	var userPass = document.getElementById("register-password"); 
+          	var userRePass = document.getElementById("register-password-again"); 
           	var passwordMessage = document.getElementById("password-message");
           	passwordMessage.style.display="none";
-          	if(userPass==""||userRePass==""){
-          		passwordMessage.innerText="密码不能为空";
+          	if(userPass.value==""){
+          		passwordMessage.innerText="请输入密码";
           		passwordMessage.style.display="";
-          		document.getElementById("register-password").value="";
-          		document.getElementById("register-password-again").value="";
           		return false;
-          	}
-          	if(!(userPass==userRePass)){
+          	}else if(userRePass.value==""){
+          		passwordMessage.innerText="请再次输入密码";
+          		passwordMessage.style.display="";
+          		return false;
+            }
+          	if(!(userPass.value==userRePass.value)){
           		passwordMessage.innerText="两次密码输入不同，请重新输入";
           		passwordMessage.style.display="";
           		document.getElementById("register-password").value="";
@@ -235,7 +237,6 @@
 			<div class="dialog-box">                            
 			   <div class="dialog-title">注册</div>    
 			   <label name="register" class="input-box-desc hidden-element error-message" style="display: ;color:red;" id="register-message">${register_message}</label>                   
-		       
 		    </div>    
                              
             <div class="input-box text-input-box">                            
