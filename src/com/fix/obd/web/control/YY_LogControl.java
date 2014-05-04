@@ -174,7 +174,6 @@ public class YY_LogControl {
 	
 	@RequestMapping(value = "/login_check", method = RequestMethod.GET)
 	public void login(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		 System.out.println("1111111111111111111");
 		try {
 		 Map<String,Object> model = new HashMap<String,Object>();
 		 String email = request.getParameter("email");
@@ -188,6 +187,11 @@ public class YY_LogControl {
 			String rolename = loginService.getRoleName(email);
 			session.setAttribute("email",email);
 			session.setAttribute("rolename", rolename);
+			String terminalId = loginService.getTerminalIdByEmail(email);
+			 if(terminalId!=null)
+				    session.setAttribute("terminalId", terminalId);
+			 else
+				 	session.setAttribute("terminalId","00000000000000000000");			
 			if(rememberMe.equals("on")){
 				
 				System.out.println("记住密码！");
@@ -213,7 +217,6 @@ public class YY_LogControl {
 				  pw.print(jsonObject.toString());
 				  pw.flush();
 				  pw.close();
-				  System.out.println("444444");
 				  return;
 			    	
 			 }else if(rolename.equals("member")){
@@ -223,7 +226,6 @@ public class YY_LogControl {
 			      pw.print(jsonObject.toString());
 			 	  pw.flush();
 			 	  pw.close();
-			 	  System.out.println("333333");
 			 	 // RequestDispatcher dispatcher = request.getRequestDispatcher("/OBDController/personal.html");
 			 	  // dispatcher.forward(request, response);
 				
@@ -243,7 +245,6 @@ public class YY_LogControl {
 	    pw.print(jsonObject.toString());
 		pw.flush();
 		pw.close();
-		System.out.println("2222222");
 		return ;
 	    //return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
 		//return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
@@ -251,7 +252,6 @@ public class YY_LogControl {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("11111");
 			e.printStackTrace();
 		}
 	
