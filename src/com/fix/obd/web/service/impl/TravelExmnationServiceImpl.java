@@ -513,8 +513,13 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			if(this.getAvgOilExpend(info_list)!=null){
 				double myOil = Double.parseDouble(this.getAvgOilExpend(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
-					double hisOil = Double.parseDouble(listBesidesSelf.get(i).getAvgOilExpend());
-					if(myOil<=hisOil)
+					String str = listBesidesSelf.get(i).getAvgOilExpend();
+					if(str!=null&&!("".equals(str))){
+						double hisOil = Double.parseDouble(listBesidesSelf.get(i).getAvgOilExpend());
+						if(myOil<=hisOil)
+							oilCount++;
+					}
+					else
 						oilCount++;
 				}
 			}
@@ -532,8 +537,13 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			if(this.getTotalBrakeTimes(info_list)!=null){
 				double myMile = Double.parseDouble(this.getTotalDistance(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
-					double hisMile = Double.parseDouble(listBesidesSelf.get(i).getTotalDistance());
-					if(myMile>=hisMile)
+					String str = listBesidesSelf.get(i).getTotalDistance();
+					if(str!=null&&!("".equals(str))){
+						double hisMile = Double.parseDouble(listBesidesSelf.get(i).getTotalDistance());
+						if(myMile>=hisMile)
+							mileCount++;
+					}
+					else
 						mileCount++;
 				}
 			}
@@ -558,11 +568,16 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 						Integer.parseInt(this.getTotalSpeedUpTimes(info_list))*NORMAL_OP + 
 						Integer.parseInt(this.getTotalEmerSpeedUpTimes(info_list))*EXTRA_OP;
 				for(int i=0;i<listBesidesSelf.size();i++){
-					int hisStabilily = Integer.parseInt(listBesidesSelf.get(i).getTotalBrakeTimes())*NORMAL_OP + 
-							Integer.parseInt(listBesidesSelf.get(i).getTotalEmerBrakeTimes())*EXTRA_OP + 
-							Integer.parseInt(listBesidesSelf.get(i).getTotalSpeedUpTimes())*NORMAL_OP + 
-							Integer.parseInt(listBesidesSelf.get(i).getTotalEmerSpeedUpTimes())*EXTRA_OP;
-					if(myStabilily<=hisStabilily)
+					String str = listBesidesSelf.get(i).getTotalBrakeTimes();
+					if(str!=null&&!("".equals(str))){
+						int hisStabilily = Integer.parseInt(listBesidesSelf.get(i).getTotalBrakeTimes())*NORMAL_OP + 
+								Integer.parseInt(listBesidesSelf.get(i).getTotalEmerBrakeTimes())*EXTRA_OP + 
+								Integer.parseInt(listBesidesSelf.get(i).getTotalSpeedUpTimes())*NORMAL_OP + 
+								Integer.parseInt(listBesidesSelf.get(i).getTotalEmerSpeedUpTimes())*EXTRA_OP;
+						if(myStabilily<=hisStabilily)
+							stabilityCount++;
+					}
+					else
 						stabilityCount++;
 				}
 			}
@@ -580,8 +595,13 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			if(this.getAvgSpeed(info_list)!=null){
 				double mySpeed = Double.parseDouble(this.getAvgSpeed(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
-					double hisSpeed = Double.parseDouble(listBesidesSelf.get(i).getAvgSpeed());
-					if(mySpeed>=hisSpeed)
+					String str = listBesidesSelf.get(i).getAvgSpeed();
+					if(str!=null&&!("".equals(str))){
+						double hisSpeed = Double.parseDouble(listBesidesSelf.get(i).getAvgSpeed());
+						if(mySpeed>=hisSpeed)
+							speedCount++;
+					}
+					else
 						speedCount++;
 				}
 			}
@@ -599,9 +619,15 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 			if(this.getTotalBrakeTimes(info_list)!=null){
 				int myTiredControl = Integer.parseInt(this.getTotalTiredDrivingMinutes(info_list));
 				for(int i=0;i<listBesidesSelf.size();i++){
-					int hisTiredControl = Integer.parseInt(listBesidesSelf.get(i).getTotalTiredDrivingMinutes());
-					if(myTiredControl<=hisTiredControl)
+					String str = listBesidesSelf.get(i).getTotalTiredDrivingMinutes();
+					if(str!=null&&!("".equals(str))){
+						int hisTiredControl = Integer.parseInt(listBesidesSelf.get(i).getTotalTiredDrivingMinutes());
+						if(myTiredControl<=hisTiredControl)
+							tiredControlCount++;
+					}
+					else{
 						tiredControlCount++;
+					}
 				}
 			}
 			int tiredControlScore = 100*(tiredControlCount+1)/(listBesidesSelf.size()+1);
