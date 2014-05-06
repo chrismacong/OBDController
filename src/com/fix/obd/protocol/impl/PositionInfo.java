@@ -168,13 +168,15 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			lat = lat.replaceAll("\\.", "");
 			lat = lat.replaceAll("бу", ".");
 			String tempStrPart1 = lat.split("\\.")[1];
-			int tempInt1 = Integer.parseInt(tempStrPart1)/60*100;
-			lat = lat.split("\\.")[0] + "." + tempInt1;
+			tempStrPart1 = "0." + tempStrPart1;
+			double tempD1 = Double.parseDouble(tempStrPart1)/60*100;
+			lat = lat.split("\\.")[0] + tempD1 + "";
 			lon = lon.replaceAll("\\.", "");
 			lon = lon.replaceAll("бу", ".");
 			String tempStrPart2 = lon.split("\\.")[1];
-			int tempInt2 = Integer.parseInt(tempStrPart2)/60*100;
-			lon = lon.split("\\.")[0] + "." + tempInt2;
+			tempStrPart2 = "0." + tempStrPart2;
+			double tempD2 = Double.parseDouble(tempStrPart2)/60*100;
+			lon = lon.split("\\.")[0] + "." + tempD2 + "";
 			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon, terminalId);
 		}
 	}

@@ -227,7 +227,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-06
-			12:52 V1.1.1.13</div>
+			21:12 V1.1.1.15</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,7 +243,7 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.1.13</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.1.15</div>
 
 			</div>
 		</div>

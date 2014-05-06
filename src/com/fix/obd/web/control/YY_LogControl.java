@@ -314,4 +314,27 @@ public class YY_LogControl {
 		return new ModelAndView("YY_PasswordRegetPage");
 	}
    */
+	@RequestMapping(value = "/mobilelogin", method = RequestMethod.GET)
+	public void mobileLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		 String email = request.getParameter("email");
+		 String password = request.getParameter("password");
+		 String result = null;
+	    if(loginService.askCheckUser(email,password)){
+			 String terminalId = loginService.getTerminalIdByEmail(email);
+			 if(terminalId==null){
+				 terminalId = "Œ¥∞Û∂®…Ë±∏";
+			 }
+   	        result = "1,";
+			result = result + terminalId;
+		}else{
+			result = "0,null";
+		}
+	    try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 	}
+
 }
