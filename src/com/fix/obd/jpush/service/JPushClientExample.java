@@ -62,7 +62,7 @@ public class JPushClientExample {
 		//this.sendMessageToRandomSendNo("我是一只小鸭子呀","咿呀咿呀呦~~~~");
 	}
 
-	public void sendMessageToRandomSendNo(String msgTitle, String msgContent) {
+	public void sendMessageToRandomSendNo(String msgTitle, String msgContent,String terminalId) {
 		// 在实际业务中，建议 sendNo 是一个你自己的业务可以处理的一个自增数字。
 		// 除非需要覆盖，请确保不要重复使用。详情请参考 API 文档相关说明。
 		int sendNo = getRandomSendNo();
@@ -78,8 +78,8 @@ public class JPushClientExample {
 
 		//对所有用户发送通知, 更多方法请参考文档
 //		MessageResult msgResult = jpush.sendNotificationWithAppKey(sendNo,msgTitle, msgContent);
-		MessageResult msgResult = jpush.sendCustomMessageWithAppKey(sendNo,msgTitle, msgContent);
-		//MessageResult msgResult  = jpush.sendNotificationWithAlias(sendNo, "a", msgTitle, msgContent);
+//		MessageResult msgResult = jpush.sendCustomMessageWithAppKey(sendNo,msgTitle, msgContent);
+		MessageResult msgResult  = jpush.sendNotificationWithAlias(sendNo, terminalId, msgTitle, msgContent);
 		//覆盖指定msgId的消息,msgId可以从msgResult.getMsgid()获取。
 		//MessageResult msgResult = jpush.sendNotificationWithAppKey(sendNo, msgTitle, msgContent, 0, extra,msgResult.getMsgid());
 

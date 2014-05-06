@@ -25,6 +25,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 	private static final Logger logger = Logger.getLogger(PositionInfo.class);
 	private String clientId;
 	private String bufferId;
+	private static String terminalId;
 	public PositionInfo(String messageStr){
 		super(messageStr);
 		MessageUtil.printAndToDivContent("收到来自终端" + this.getId() + "的位置信息",true);
@@ -37,6 +38,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			String dbStr = "";
 			this.clientId = this.getId();
 			this.bufferId = this.getBufferId();
+			this.terminalId = this.clientId;
 			String message = this.getRealMessage();
 			//			System.out.println(message);
 			String gpsDate = message.substring(0,2) + "-" + message.substring(2,4) + "-" + message.substring(4,6) + " " + message.substring(6,8) + ":" + message.substring(8,10) + ":" + message.substring(10,12);
@@ -173,7 +175,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			String tempStrPart2 = lon.split("\\.")[1];
 			int tempInt2 = Integer.parseInt(tempStrPart2)/60*100;
 			lon = lon.split("\\.")[0] + "." + tempInt2;
-			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon);
+			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon, terminalId);
 		}
 	}
 	private class GPSOrientate{

@@ -303,7 +303,7 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
         for(int i=0;i<characters.length;i++){
         	String character_sep[] = characters[i].split(";"); 
         	if(character_sep.length>=3){
-        		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")");
+        		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")", this.getId());
         	}
         }
 	}

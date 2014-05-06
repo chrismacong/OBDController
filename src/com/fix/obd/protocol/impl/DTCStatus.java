@@ -87,6 +87,6 @@ public class DTCStatus extends ODBProtocolParser implements ODBProtocol{
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
-	    jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", str);
+	    jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", str, this.getId());
 	}
 }

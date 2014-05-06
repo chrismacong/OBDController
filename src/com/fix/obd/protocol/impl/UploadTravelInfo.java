@@ -135,6 +135,6 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
         	}
 		}
 		System.out.println(character_str);
-		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str.substring(0,character_str.lastIndexOf(";")));
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str.substring(0,character_str.lastIndexOf(";")), this.getId());
 	}
 }

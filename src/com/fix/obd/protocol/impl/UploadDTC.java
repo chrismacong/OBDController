@@ -121,8 +121,9 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 		JPushClientExample jpush = new JPushClientExample();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String now = df.format(new Date());
+		String faultStr = "";
 		for(int i=0;i<characters.length;i++){
-			String faultStr = characters[i] + ":";
+			faultStr += characters[i] + ":";
 			FaultCodeXMLUtil f = new FaultCodeXMLUtil();
 			ArrayList<FaultCodeIterator> list = f.parseByIndex(characters[i]);
 			if(list.size()==0){
@@ -132,11 +133,12 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 				for(int j=0;j<list.size();j++)
 					faultStr += list.get(j).getFaultDetail();
 			}
-			StackTraceElement[] stacks = new Throwable().getStackTrace(); 
-			String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
-			ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
-			String operationId = p.getIdByProtocol(classname);
-			jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr);
+			faultStr += ";";
 		}
+		StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
+		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
+		String operationId = p.getIdByProtocol(classname);
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr, this.getId());
 	}
 }
