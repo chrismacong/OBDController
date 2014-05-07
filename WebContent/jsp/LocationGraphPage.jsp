@@ -17,6 +17,7 @@ body,html,#allmap {
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=15cf002106718ce6a60a7841ea39f127"></script>
 <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery-1.8.2.min.js"></script>
 <title>添加普通标注点</title>
 </head>
 <body>
@@ -29,6 +30,7 @@ var result = "";
 var gps_latitude_list = "${latitude_list}".split(",");
 var gps_longitute_list = "${longitute_list}".split(",");
 //1
+var terminal_id = "${terminalId}";
 var date_list = "${date_list}".split(",");
 var points = new Array(date_list.length);
 var geocoders = new Array(date_list.length);
@@ -46,6 +48,7 @@ for(var i=0;i<points.length;i++){
 function getGeocoder(){
 	
 }
+
 function callback(xyResults){
 	var xyResult = null;
 	for(var index in xyResults){
@@ -64,7 +67,7 @@ function callback(xyResults){
 		});
 	} */
 	if(latitude_list.length>0){
-  		map.centerAndZoom(new BMap.Point(longitute_list[0], latitude_list[0]), 16);
+  		map.centerAndZoom(new BMap.Point(longitute_list[longitute_list.length-1], latitude_list[latitude_list.length-1]), 16);
   		var marker = new BMap.Marker(new BMap.Point(longitute_list[0], latitude_list[0]));
   		myGeo.getLocation(new BMap.Point(base64decode(longitute_list[0]), base64decode(latitude_list[0])),function(result){
   			var geocoder0 = result.address;
@@ -155,7 +158,40 @@ function addArrow(polyline,length,angleValue){ //绘制箭头的函数
 		
 	}  
 }
-window.setInterval("window.location.reload()", parseInt("${graph_refresh_minute}"));
+function refreshPointsFromServer(){
+	var $params="terminalId=" + terminal_id;
+	$.ajax({
+		type:'GET',
+		contentType: 'application/json',  
+		url:"refreshlgraph.html",
+		data: $params,
+		dataType: "json",
+		success:function(data){
+			if (data && data.success == "true") {
+				gps_latitude_list = data.refreshed_latitude_list.split(",");
+				gps_longitute_list = data.refreshed_longitute_list.split(",");
+				date_list = data.refreshed_date_list.split(",");
+				var new_points = new Array(date_list.length);
+				latitude_list = new Array(date_list.length);
+				longitute_list = new Array(date_list.length);
+				for(var i=0;i<new_points.length;i++){
+					new_points[i] = new BMap.Point(gps_longitute_list[i], gps_latitude_list[i])
+				}
+				map.clearOverlays();
+				setTimeout(function(){
+				    BMap.Convertor.transMore(new_points,0,callback);        //一秒之后开始进行坐标转换。参数2，表示是从GCJ-02坐标到百度坐标。参数0，表示是从GPS到百度坐标
+				}, 0)
+			}
+			else{
+				alert("操作失败，请重新操作")
+			}
+		},
+		error:function(){
+			alert("操作失败，请重新操作")
+		}
+	});
+}
+window.setInterval("refreshPointsFromServer()", parseInt("${graph_refresh_minute}"));
 
 	var base64encodechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	var base64decodechars = new Array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,

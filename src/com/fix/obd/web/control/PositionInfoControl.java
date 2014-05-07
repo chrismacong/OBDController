@@ -1,5 +1,7 @@
 package com.fix.obd.web.control;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -167,6 +171,64 @@ public class PositionInfoControl {
 		model.put("date_list", date_list);
 		model.put("latitude_list", latitude_list);
 		model.put("longitute_list", longitute_list);
+		model.put("terminalId", terminalId);
 		return new ModelAndView("LocationGraphPage",model);
+	}
+	@RequestMapping(value = "/refreshlgraph", method = RequestMethod.GET)
+	public void refreshLGraph(HttpServletRequest request,HttpServletResponse response){
+		System.out.println("In!!!!!!!!");
+		String terminalId = request.getParameter("terminalId");
+		Map<String,Object> model = new HashMap<String,Object>();		
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		model.put("terminalId", terminalId);
+		List<PositionData> list = positionInfoService.getLatest10GpsPositionInfo(terminalId);
+		String date_list = "";
+		String latitude_list = "";
+		String longitute_list = "";
+		if(list.size()>0){
+			for(int i=0;i<list.size();i++)
+				date_list += list.get(i).getDate() + ",";
+			date_list = date_list.substring(0,date_list.lastIndexOf(","));
+			for(int i=0;i<list.size();i++){
+				String tempStr = list.get(i).getInfo().substring(list.get(i).getInfo().lastIndexOf("Î³¶È:"));
+				tempStr = tempStr.substring(0,tempStr.indexOf(";"));
+				tempStr = tempStr.split(":")[1];
+				tempStr = tempStr.replaceAll("\\.", "");
+				tempStr = tempStr.replaceAll("¡ã", ".");
+				String tempStrPart = tempStr.split("\\.")[1];
+				tempStrPart = "0." + tempStrPart;
+				double tempD = Double.parseDouble(tempStrPart)/60*100;
+				tempStr = Integer.parseInt(tempStr.split("\\.")[0]) + tempD + "";
+				latitude_list += tempStr + ",";
+			}
+			latitude_list = latitude_list.substring(0,latitude_list.lastIndexOf(","));
+			for(int i=0;i<list.size();i++){
+				String tempStr = list.get(i).getInfo().substring(list.get(i).getInfo().lastIndexOf("¾­¶È:"));
+				tempStr = tempStr.substring(0,tempStr.indexOf(";"));
+				tempStr = tempStr.split(":")[1];
+				tempStr = tempStr.replaceAll("\\.", "");
+				tempStr = tempStr.replaceAll("¡ã", ".");
+				String tempStrPart = "0." + tempStr.split("\\.")[1];
+				double tempD = Double.parseDouble(tempStrPart)/60*100;
+				tempStr = Integer.parseInt(tempStr.split("\\.")[0]) + tempD + "";
+				longitute_list += tempStr + ",";
+			}
+			longitute_list = longitute_list.substring(0,longitute_list.lastIndexOf(","));
+		}
+		try {
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			jsonObject.put("refreshed_date_list", date_list);
+			jsonObject.put("refreshed_latitude_list", latitude_list);
+			jsonObject.put("refreshed_longitute_list", longitute_list);
+			jsonObject.put("success", "true");
+			pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

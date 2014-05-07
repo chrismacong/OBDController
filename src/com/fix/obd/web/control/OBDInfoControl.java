@@ -60,7 +60,7 @@ public class OBDInfoControl {
 			String[] seperates = latest_data.getInfo().substring(0,latest_data.getInfo().lastIndexOf("@")).split("@");
 			for(int i=0;i<seperates.length;i++){
 				if(seperates[i]!=null&&!"".equals(seperates[i])){
-					System.out.println(seperates[i]);
+//					System.out.println(seperates[i]);
 					OBDSeperateUtilModel o = new OBDSeperateUtilModel();
 					String[] character_sentense = seperates[i].split(";");
 					o.setName(character_sentense[0]);
