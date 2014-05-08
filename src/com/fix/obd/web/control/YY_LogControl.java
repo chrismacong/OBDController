@@ -336,5 +336,81 @@ public class YY_LogControl {
 			e.printStackTrace();
 		}
  	}
+	@RequestMapping(value = "/login_check_by_tel", method = RequestMethod.GET)
+	public void loginByTel(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+			try {
+			 Map<String,Object> model = new HashMap<String,Object>();
+			 String tel = request.getParameter("tel");
+			 String password = request.getParameter("password");
+			 String rememberMe = request.getParameter("rememberMe");
+			 System.out.println("rememberMe:"+rememberMe);
+			 PrintWriter pw = null;
+			 pw=response.getWriter();
+			 JSONObject jsonObject = new JSONObject(); 
+			if(loginService.askCheckUserByTel(tel,password)){
+				String email = loginService.getEmail(tel);
+				String rolename = loginService.getRoleName(email);
+				session.setAttribute("email",email);
+				session.setAttribute("rolename", rolename);
+				if(rememberMe.equals("on")){
+					System.out.println("记住密码！");
+					 Cookie emailCookie=new Cookie("email",email);
+					    emailCookie.setMaxAge(30 * 24 * 60 * 60); 
+				        emailCookie.setPath("/");
+				        response.addCookie(emailCookie);
+				        Cookie rolenameCookie=new Cookie("rolename",rolename);
+					     rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
+					     rolenameCookie.setPath("/");
+						 response.addCookie(rolenameCookie);
+				 
+				}
+				try{
+				 if(rolename.equals("manager")){
+					  jsonObject.put("success", "true");
+					  jsonObject.put("rolename", "manager");
+					  pw.print(jsonObject.toString());
+					  pw.flush();
+					  pw.close();
+					  System.out.println("444444");
+					  return;
+				    	
+				 }else if(rolename.equals("member")){
+					  jsonObject.put("success", "true");
+					  jsonObject.put("rolename", "member");
+				      session.setAttribute("rolename", "loggedmember");
+				      pw.print(jsonObject.toString());
+				 	  pw.flush();
+				 	  pw.close();
+				 	  System.out.println("333333");
+					
+				 	  return;
+				    	
+				 }
+				}catch(NullPointerException e){
+					
+				}
+				
+			
+			}
+			
+			jsonObject.put("success", "false");
+			model.put("tel", tel);
+		    model.put("password_message", "密码或手机号错误，请重新输入");
+		    pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+			return ;
+		    //return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
+			//return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
+			//return new ModelAndView("YY_LoginPage",model);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			
+	}
+
 
 }

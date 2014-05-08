@@ -87,11 +87,9 @@
 	        </map>
 	    </property>
 	</bean> 
-<!-- 	
-    <mvc:interceptors>  
-           <bean class="com.fix.obd.web.interceptor.RoleInterceptor"></bean>   
-    </mvc:interceptors> 
- -->
+<!--     <mvc:interceptors>  
+           <bean class="com.fix.obd.web.interceptor.Interceptor"></bean>   
+    </mvc:interceptors>  -->
 
 
 

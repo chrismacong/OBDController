@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-07
-			11:02 V1.1.2.1</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-08
+			16:07 V1.1.2.2</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,9 +243,13 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.1</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.2</div>
 				<br/>
 				<h1>近期版本更新说明</h1>
+				<h2>1.1.2.2</h2>
+				<div>增加了手机号码登录的功能</div>
+				<div>修改了注册界面的效果，包括密码强度提示和用户信息错误的图标</div>
+				<br/>
 				<h2>1.1.2.1</h2>
 				<div>通过调整代码顺序，缩短了地图图层刷新时的空端时间。</div>
 				<br/>
@@ -258,9 +262,6 @@
 				<br/>
 				<h2>1.1.1.16</h2>
 				<div>修复了服务器数据向安卓端推送时，小数部分包含数字"0"导致格式转换不正确，造成地图偏差的问题。</div>
-				<br/>
-				<h2>1.1.1.15</h2>
-				<div>向服务器添加了支持手机验证用户登录的WEB Service。</div>
 
 			</div>
 		</div>

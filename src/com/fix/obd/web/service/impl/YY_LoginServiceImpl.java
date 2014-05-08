@@ -65,5 +65,29 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 			return null;
 		}
 	}
+	@Override
+	public boolean askCheckUserByTel(String tel, String password) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> userlist = userDao.findByHQL("from YY_User where tel = '" + tel + "'");
+			if(userlist.size()==1){
+				YY_User user = userlist.get(0);
+				if(user.getPassword().equals(password)){
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public String getEmail(String tel) {
+		// TODO Auto-generated method stub
+		return userDao.getEmailByTel(tel);
+	}
+
 
 }

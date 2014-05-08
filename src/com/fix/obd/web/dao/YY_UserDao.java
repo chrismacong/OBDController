@@ -18,4 +18,7 @@ public interface YY_UserDao {
 	public List<YY_User> findByHQL(String hql) throws Exception;
 	
 	public String getRoleNameByEmail(String email);
+	
+	public String getEmailByTel(String tel);
+
 }

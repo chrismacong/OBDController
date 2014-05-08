@@ -104,5 +104,17 @@ public class YY_UserDaoImpl implements YY_UserDao{
 			return user_list.get(0).getRole();
 		}
 	}
+	@Override
+	public String getEmailByTel(String tel) {
+		// TODO Auto-generated method stub
+		String hql = "from YY_User where tel='"+tel+"'";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		List<YY_User> user_list = query.list();
+		if(user_list.size()==0){
+			return null;
+		}else{
+			return user_list.get(0).getEmail();
+		}
+	}
 
 }

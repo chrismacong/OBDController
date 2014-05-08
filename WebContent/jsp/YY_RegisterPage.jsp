@@ -4,7 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/yy_md5.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.complexify.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.placeholder.min.js"></script>
  <script type="text/javascript">
       var xmlHttp;
       function createXMLHttpRequest(){
@@ -25,9 +28,12 @@
 	    var email = document.getElementById("register-email");
 		var email_message = document.getElementById("email-message");
 		email_message.style.display="none";
+		document.getElementById("check-mark-wrong-email").style.display = "none";
+		document.getElementById("check-mark-right-email").style.display = "none";
 		if(email.value==""){
 			email_message.innerText="邮箱地址不能为空";
 			email_message.style.display="";
+			document.getElementById("check-mark-wrong-email").style.display = "";
 			return false;
 		}
 		if(email.value!=""){
@@ -37,6 +43,7 @@
 		       //x.className = 'error-message'; 
 		       email_message.innerText="请输入正确邮箱地址!";
 			   email_message.style.display="";
+			   document.getElementById("check-mark-wrong-email").style.display = "";
 			   return false;
 			}
 		}
@@ -48,31 +55,84 @@
 					responseContext = xmlHttp.responseText;
 					if(responseContext.indexOf("true")!=-1){
 						//alert("恭喜您，注册email有效");                      //验证成功
+						document.getElementById("check-mark-right-email").style.display = "";
 					}else{
 						email.value="";
 					    email_message.innerText="邮箱已注册，请重新输入!";
 						email_message.style.display="";
+						document.getElementById("check-mark-wrong-email").style.display = "";
 					}
 				}
 			}
 		} 
 		xmlHttp.open("GET", "${pageContext.request.contextPath}/register/check_email.html?email="+email.value,true);
 		xmlHttp.send(null);
-		return true;
+		if(email_message.style.diaplay==""){
+			return false;
+		}else{
+			return true;
+		}
     }
-      
+       //密码强度
+      $(function(){
+			$("#register-password").complexify({}, function(valid, complexity){
+				if (!valid) {
+					$('#complexity').animate({'width':complexity + '%'}).removeClass('valid').addClass('invalid');
+				} else {
+					$('#complexity').animate({'width':complexity + '%'}).removeClass('invalid').addClass('valid');
+				}
+				$('#complexity').html(Math.round(complexity) + '%');
+			});
+		});
+/* 
+      function checkStrong(sValue)
+      {
+       var modes = 0;
+       if (sValue.length < 6) return modes;
+       if (/\d/.test(sValue)) modes++; //数字
+       if (/[a-z]/.test(sValue)) modes++; //小写
+       if (/[A-Z]/.test(sValue)) modes++; //大写  
+       if (/\W/.test(sValue)) modes++; //特殊字符
+       switch (modes)
+       {
+        case 1:
+         return 1;
+         break;
+        case 2:
+         return 2;
+        case 3:
+        case 4:
+         return sValue.length < 12 ? 3 : 4
+         break;
+       }
+      }       */
+      function checkPasswordComplexity(){
+          
+          
+      }
+
+       function passwordComplexity(){
+    	  document.getElementById("block-wrap").style.display="";
+      } 
        function checkPassword(){
         	var userPass = document.getElementById("register-password"); 
           	var userRePass = document.getElementById("register-password-again"); 
           	var passwordMessage = document.getElementById("password-message");
+          	//初始化
           	passwordMessage.style.display="none";
+          	document.getElementById("check-mark-right-password").style.display = "none";
+          	document.getElementById("check-mark-wrong-password").style.display = "none";
+          	document.getElementById("check-mark-right-password-again").style.display = "none";
+          	document.getElementById("check-mark-wrong-password-again").style.display = "none";
           	if(userPass.value==""){
           		passwordMessage.innerText="请输入密码";
           		passwordMessage.style.display="";
+          		document.getElementById("check-mark-wrong-password").style.display = "";
           		return false;
           	}else if(userRePass.value==""){
           		passwordMessage.innerText="请再次输入密码";
           		passwordMessage.style.display="";
+          		document.getElementById("check-mark-wrong-password-again").style.display = "";
           		return false;
             }
           	if(!(userPass.value==userRePass.value)){
@@ -80,30 +140,39 @@
           		passwordMessage.style.display="";
           		document.getElementById("register-password").value="";
           		document.getElementById("register-password-again").value="";
+          		document.getElementById("check-mark-wrong-password").style.display = "";
+          		document.getElementById("check-mark-wrong-password-again").style.display = "";
           		return false;
           	}else{
           		passwordMessage.innerText="";
               	passwordMessage.style.display="none";
+              	document.getElementById("check-mark-right-password").style.display = "";
+          		document.getElementById("check-mark-right-password-again").style.display = "";
               	return true;
           	}
           	
       }
       
        function checkRealName(){
-    	   var filter=/[A-Za-z0-9\u4e00-\u9fa5]/;
+    	   var filter=/^[A-Za-z\u4e00-\u9fa5]+$/;
     	   var name = document.getElementById("register-name");
     	   var nameMessage = document.getElementById("name-message");
     	   nameMessage.style.display = "none";
+    	   document.getElementById("check-mark-right-realname").style.display = "none";
+    	   document.getElementById("check-mark-wrong-realname").style.display = "none";
     	   if(name.value==""){
     		   nameMessage.innerText="真实姓名不能为空";
      		  nameMessage.style.display = "";
+     		 document.getElementById("check-mark-wrong-realname").style.display = "";
      		 return false;
     	   }
     	   if(!filter.test(name.value)){
-    		  nameMessage.innerText="请输入真实姓名，不能有标点符号";
+    		  nameMessage.innerText="请输入真实姓名，不能有标点符号和数字";
     		  nameMessage.style.display = "";
+    		  document.getElementById("check-mark-wrong-realname").style.display = "";
     		  return false;
     	  }	    
+    	   document.getElementById("check-mark-right-realname").style.display = "";
     	   return true;
       } 
        
@@ -112,22 +181,27 @@
     	   var idMessage = document.getElementById("id-message");
     	   idMessage.style.display = "none";
     	   var reg = /^[\d]+$/;
+    	   document.getElementById("check-mark-wrong-id").style.display = "none";
+    	   document.getElementById("check-mark-right-id").style.display = "none";
     	   if(id==""){
     		   idMessage.innerText = "身份证号不能为空";
     		   idMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-id").style.display = "";
     		   return false;
     	   }
+    	   if(!reg.test(id)){     //只能输入数字
+			   idMessage.innerText = "只能输入数字";
+    		   idMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-id").style.display = "";
+    		   return false;
+		   }
     	   if(!(id.length==18)){
     		   idMessage.innerText = "请输入18位身份证号";
     		   idMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-id").style.display = "";
     		   return false;
-    	   }else{
-    		   if(!reg.test(id)){     //只能输入数字
-    			   idMessage.innerText = "格式不对，请重新输入";
-        		   idMessage.style.display = "";
-        		   return false;
-    		   }
     	   }
+    	   document.getElementById("check-mark-right-id").style.display = "";
     	   return true;
        }
        
@@ -135,16 +209,21 @@
     	   var nickname = document.getElementById("register-nickname").value;
     	   var nicknameMessage = document.getElementById("nickname-message");
     	   nicknameMessage.style.display = "none";
+    	   document.getElementById("check-mark-wrong-nickname").style.display = "none";
+    	   document.getElementById("check-mark-right-nickname").style.display = "none";
     	   if(nickname==""){
     		   nicknameMessage.innerText = "昵称不能为空";
     		   nicknameMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-nickname").style.display = "";
     		   return false;
     	   }
     	   if(nickname.length<1||nickname.length>20){
     		   nicknameMessage.innerText = "昵称不能超过20位";
     		   nicknameMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-nickname").style.display = "";
     		   return false;
     	   }
+    	   document.getElementById("check-mark-right-nickname").style.display = "";
     	   return true;
        }
        
@@ -153,19 +232,24 @@
     	   var telMessage = document.getElementById("tel-message");
     	   telMessage.style.display = "none";
     	   var reg = /^[\d]+$/;
+    	   document.getElementById("check-mark-wrong-tel").style.display = "none";
+    	   document.getElementById("check-mark-right-tel").style.display = "none";
     	   if(tel==""){
     		   telMessage.innerText = "手机号不能为空";
     		   telMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-tel").style.display = "";
     		   return false;
     	   }
     	   if(!reg.test(tel)){
     		   telMessage.innerText = "只能输入数字";
     		   telMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-tel").style.display = "";
     		   return false;
     	   }
     	   if(tel.length!=11){
     		   telMessage.innerText = "请输入11位手机号码";
     		   telMessage.style.display = "";
+    		   document.getElementById("check-mark-wrong-tel").style.display = "";
     		   return false;
     	   }
     	   createXMLHttpRequest();
@@ -176,23 +260,59 @@
    					responseContext = xmlHttp.responseText;
    					if(responseContext.indexOf("true")!=-1){
    						//alert("恭喜您，注册tel有效");                      //验证成功
+   						document.getElementById("check-mark-right-tel").style.display = "";
    					}else{
    						tel = "";
    					    telMessage.innerText="该手机号已注册，请重新输入!";
    						telMessage.style.display="";
+   						document.getElementById("check-mark-wrong-tel").style.display = "";
    					}
    				}
    			}
    		} 
    		xmlHttp.open("GET", "${pageContext.request.contextPath}/register/check_tel.html?tel="+tel,true);
    		xmlHttp.send(null);
-    	return true;
+    	if(telMessage.style.display==""){
+    		return false;
+    		
+    	}else{
+    		return true;
+    	}
        }
-      
+      function checkCarnumber(){
+    	  var car_number = document.getElementById("register-carNumber").value;
+    	  var car_number_message = document.getElementById("carnumber-message");
+    	  car_number_message.style.display = "none";
+    	  document.getElementById("check-mark-right-carnumber").style.display="none";
+    	  document.getElementById("check-mark-wrong-carnumber").style.display="none";
+    	  if(car_number==""){
+    		  car_number_message.innerText = "请输入车牌号";
+    		  car_number_message.style.display = "";
+    		  document.getElementById("check-mark-wrong-carnumber").style.display="";
+    		  return false;
+    	  }
+    	  document.getElementById("check-mark-right-carnumber").style.display="";
+    	  return true;
+      }
+      function checkOBDNumber(){
+    	  var obd_number = document.getElementById("register-OBDid").value;
+    	  var obd_number_message = document.getElementById("OBDid-message");
+    	  obd_number_message.style.display = "none";
+    	  document.getElementById("check-mark-right-obdnumber").style.display="none";
+    	  document.getElementById("check-mark-wrong-obdnumber").style.display="none";
+    	  if(obd_number==""){
+    		  obd_number_message.innerText = "请输入OBD序列号";
+    		  obd_number_message.style.display = "";
+    		  document.getElementById("check-mark-wrong-obdnumber").style.display="";
+    		  return false;
+    	  }
+    	  document.getElementById("check-mark-right-obdnumber").style.display="";
+    	  return true;
+      }
         function check()
     {
         
-		if(checkEmail()&checkPassword()&checkRealName()&checkId()&checkNickname()&checkTel()){
+		if(checkEmail()&checkPassword()&checkRealName()&checkId()&checkNickname()&checkTel()&checkCarnumber()&checkOBDNumber()){
 			//window.location.href = "${pageContext.request.contextPath}/register.html?}";
 			document.getElementById("register-password").value = hex_md5(document.getElementById("register-password").value);
 			return true;
@@ -210,19 +330,20 @@
     	document.getElementById("fade").style.display="none";
         document.getElementById("car-container").style.display="none";
         document.getElementById("user-auth-dialog-container").style.display="";
+        document.getElementById("check-mark-right-cartype").style.display="";
     }
  </script>
 
  
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/yy.css">
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/yy2.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/yy_password_complexity.css">
 
 <title>OBD在线支持系统</title>
 </head>
 
 <body>
 
-	<div region="north" split="true" border="false"
+ 	<div region="north" split="true" border="false"
 		style="overflow: hidden; height: 70px; background: #28a9ff repeat-x center 50%; line-height: 55px; color: #fff; font-family: Verdana, Î¢ï¿½ï¿½ï¿½Åºï¿½, ï¿½ï¿½ï¿½ï¿½">
 		 <span style="padding-left: 10px; padding-top:8px; font-size: 40px; float: left;"><img
 			src="${pageContext.request.contextPath}/images/blocks.gif" width="20" height="20" align="absmiddle" />
@@ -230,7 +351,9 @@
 		
 	</div>
 <div id="user-auth-dialog-container" style="position: absolute;  margin: 100px 0px; zoom: 1; top: 25px; display:; " lang="en">
-     <div class="dialog-body">                                       
+
+      
+      <div class="dialog-body" >                                       
 		 <form class="dialog-tab dialog-box-login" action="${pageContext.request.contextPath}/register/check_register.html" method="post" onsubmit="return check()">                
 		    <div class="clearfix"></div>  
                                
@@ -238,67 +361,113 @@
 			   <div class="dialog-title">注册</div>    
 			   <label name="register" class="input-box-desc hidden-element error-message" style="display: ;color:red;" id="register-message">${register_message}</label>                   
 		    </div>    
-                             
-            <div class="input-box text-input-box">                            
-			  <input tabindex="1" id="register-email" name="email" type="text" maxlength="60" class="inp enter-key" validation="notempty;email" placeholder="登录邮箱" onblur="checkEmail()"></input>
+            
+			 <div class="input-box text-input-box">
+              <div>
+                <input tabindex="1" id="register-email" name="email" type="text" maxlength="60" class="inp enter-key" validation="notempty;email" placeholder="登录邮箱" onblur="checkEmail()"></input>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-email" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-email" style="display:none;"></img>
+              </div>                            
 			  <label name="email" class="input-box-desc hidden-element error-message" style="display: none;" id="email-message"></label>           
 			  <label class="input-box-desc desc-message">e.g. yourname@gmail.com</label>                        
 			</div>                         
 			                       
  		   <div class="input-box text-input-box">                           
-		      <input tabindex="2" id="register-password" name="password" type="password" maxlength="15" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="密码">                                                                  
-			</div>   
+		      <input tabindex="2" id="register-password" name="password" type="password" maxlength="30" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="密码"   onfocus="passwordComplexity()">     <!--onfocus="passwordComplexity()"-->                                                             
+			  <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-password" style="display:none;"></img>
+              <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-password" style="display:none;"></img>
+ 
+              <div id="block-wrap" style="display:none; width:300px;margin-top:10px;">
+ 			    <div style="padding:0px; font-size:12px; display:inline;">密码强度：</div>
+		        <div id="complexity" style="width:180px;display:inline;padding:0px;color:black;">0%</div>
+			  </div>
+
+			  
+		   </div>   
 			
- 			<div class="input-box text-input-box">                           
-		      <input tabindex="3" id="register-password-again" name="password-again" type="password" maxlength="15" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="再次输入密码" onblur="checkPassword()" >                            
+			 <div class="input-box text-input-box"> 
+ 			  <div>                          
+		        <input tabindex="3" id="register-password-again" name="password-again" type="password" maxlength="30" class="inp enter-key" validation="notempty;length:{4,15};password" placeholder="确认密码" onblur="checkPassword()" >                            
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-password-again" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-password-again" style="display:none;"></img>
+              </div>
 			  <label name="password-message" class="input-box-desc hidden-element error-message" style="display: none;" id="password-message"></label>                                    
+			 
 			</div>  
-			
-			<div class="input-box text-input-box">                            
-			  <input tabindex="4" id="register-name" name="realname" type="text" maxlength="60" class="inp enter-key" validation="notempty;" placeholder="真实姓名" onblur="checkRealName()">
+			<div class="input-box text-input-box">       
+			  <div>
+			    <input tabindex="4" id="register-name" name="realname" type="text" maxlength="60" class="inp enter-key" validation="notempty;" placeholder="真实姓名" onblur="checkRealName()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-realname" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-realname" style="display:none;"></img>
+			  </div>                     
 			  <label name="name-message" class="input-box-desc hidden-element error-message" style="display: none;" id="name-message"></label>                                 
 			</div>   
 			
-			<div class="input-box text-input-box">                            
-			  <input  tabindex="5" id="register-id" name="idnumber" type="text" maxlength=18" class="inp enter-key" validation="notempty;" placeholder="身份证号" onblur="checkId()">
+			<div class="input-box text-input-box"> 
+			  <div>
+			    <input  tabindex="5" id="register-id" name="idnumber" type="text" maxlength=18" class="inp enter-key" validation="notempty;" placeholder="身份证号" onblur="checkId()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-id" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-id" style="display:none;"></img>
+			  </div>                           
 			  <label name="id-message" class="input-box-desc hidden-element error-message" style="display: none;" id="id-message"></label>                                 
 			</div>  
 			
-			<div class="input-box text-input-box">                            
-			  <input tabindex="6" id="register-nickname" name="nickname" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="昵称" onblur="checkNickname()">
+			<div class="input-box text-input-box"> 
+			  <div>
+			    <input tabindex="6" id="register-nickname" name="nickname" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="昵称" onblur="checkNickname()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-nickname" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-nickname" style="display:none;"></img>
+			  </div>                           
 			  <label name="nickname-message" class="input-box-desc hidden-element error-message" style="display: none;" id="nickname-message"></label>                               
 			</div>
 			
-			<div class="input-box text-input-box">                            
-			  <input tabindex="7" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="手机号" onblur="checkTel()">
+			<div class="input-box text-input-box">  
+			  <div>
+			    <input tabindex="7" id="register-tel" name="tel" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="手机号" onblur="checkTel()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-tel" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-tel" style="display:none;"></img>
+			  </div>                          
 			  <label name="tel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="tel-message"></label>                                  
 			</div>
-			
-			<div class="input-box text-input-box">                            
-			  <input tabindex="8" id="register-carNumber" name="carnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车牌号" onchange="">
+			<div class="input-box text-input-box">  
+			  <div>
+			    <input tabindex="8" id="register-carNumber" name="carnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车牌号" onblur="checkCarnumber()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-carnumber" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-carnumber" style="display:none;"></img>
+			  </div>                          
 			  <label name="carnumber-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carnumber-message"></label>                                  
 			</div>
 			
-			<div class="input-box text-input-box">                            
-			  <input tabindex="9" id="register-OBDid" name="obdnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="OBD编码" onchange="">
+			<div class="input-box text-input-box">  
+			 <div>
+			    <input tabindex="9" id="register-OBDid" name="obdnumber" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="OBD编码" onblur="checkOBDNumber()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-obdnumber" style="display:none;"></img>
+			     <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-obdnumber" style="display:none;"></img>                     
+			  </div>
 			  <label name="OBDid-message" class="input-box-desc hidden-element error-message" style="display: none;" id="OBDid-message"></label>                                  
 			  <a id="two-dimensional-code" href="#" class="switch-context switch-context-link ">扫描二维码</a>
 			</div>
-			
-			<div class="input-box text-input-box">                            
-			  <input  tabindex="10" id="register-carmodel" name="cartype" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车型选择" onfocus="chooseCartype()">
+		
+			<div class="input-box text-input-box">
+			  <div>
+			    <input  tabindex="10" id="register-carmodel" name="cartype" type="text" maxlength=20" class="inp enter-key" validation="notempty;" placeholder="车型选择" onfocus="chooseCartype()">
+			    <img border=0 src="${pageContext.request.contextPath}/images/yy_greencheckmark.png" id="check-mark-right-cartype" style="display:none;"></img>
+                <img border=0 src="${pageContext.request.contextPath}/images/yy_redcross.png" id="check-mark-wrong-cartype" style="display:none;"></img>
+			   </div>                         
 			  <label name="carmodel-message" class="input-box-desc hidden-element error-message" style="display: none;" id="carmodel-message"></label>                                  
-			</div>            
+			</div>         
 			<div class="action-box">                            
 			   <input type="submit" href="#" tabindex="6" id="register-action-go" class="dialog-button action-login" value="注册" onkeydown="if(event.keyCode==13){event.keyCode=9}">                    
 		    </div>
 		    <div class="dialog-box">                                                                                      
-				 <a id="two-dimensional-code" href="${pageContext.request.contextPath}/login.html" class="switch-context switch-context-link right">返回登陆界面</a>                      
+				 <a id="two-dimensional-code" href="${pageContext.request.contextPath}/login.html" class="switch-context switch-context-link left"> << 我要登录</a>                      
 			</div>               
 		</form>                          
       </div>
+      
+      
+      
   </div>
-  
   
   <div id="car-container" style="display:none;" >
   
