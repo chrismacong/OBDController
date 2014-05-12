@@ -352,6 +352,11 @@ public class YY_LogControl {
 				String rolename = loginService.getRoleName(email);
 				session.setAttribute("email",email);
 				session.setAttribute("rolename", rolename);
+				String terminalId = loginService.getTerminalIdByEmail(email);
+				 if(terminalId!=null)
+					    session.setAttribute("terminalId", terminalId);
+				 else
+					 	session.setAttribute("terminalId","00000000000000000000");
 				if(rememberMe.equals("on")){
 					System.out.println("¼Ç×¡ÃÜÂë£¡");
 					 Cookie emailCookie=new Cookie("email",email);

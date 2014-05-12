@@ -37,6 +37,10 @@ public class RequestTravelInfo extends ODBProtocolParser implements ODBProtocol 
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String findId = p.getIdByProtocol(classname);
 		message += findId;
+		characterSentence = Integer.toHexString(Integer.parseInt(characterSentence));
+		if(characterSentence.length()==1){
+			characterSentence = "0" + characterSentence;
+		}
 		message += characterSentence;
 		response.setMessageBody(message);
 		String messageLength = "0000" + Integer.toHexString(message.length()/2);

@@ -26,6 +26,7 @@ body,html,#allmap {
 </html>
 <script type="text/javascript">
 var result = "";
+var zoomOrNot = true;
 // 百度地图API功能
 var gps_latitude_list = "${latitude_list}".split(",");
 var gps_longitute_list = "${longitute_list}".split(",");
@@ -67,7 +68,8 @@ function callback(xyResults){
 		});
 	} */
 	if(latitude_list.length>0){
-  		map.centerAndZoom(new BMap.Point(longitute_list[longitute_list.length-1], latitude_list[latitude_list.length-1]), 16);
+		if(zoomOrNot)
+  			map.centerAndZoom(new BMap.Point(longitute_list[longitute_list.length-1], latitude_list[latitude_list.length-1]), 16);
   		var marker = new BMap.Marker(new BMap.Point(longitute_list[0], latitude_list[0]));
   		myGeo.getLocation(new BMap.Point(base64decode(longitute_list[0]), base64decode(latitude_list[0])),function(result){
   			var geocoder0 = result.address;
@@ -178,6 +180,7 @@ function refreshPointsFromServer(){
 					new_points[i] = new BMap.Point(gps_longitute_list[i], gps_latitude_list[i])
 				}
 				map.clearOverlays();
+				zoomOrNot = false;
 				setTimeout(function(){
 				    BMap.Convertor.transMore(new_points,0,callback);        //一秒之后开始进行坐标转换。参数2，表示是从GCJ-02坐标到百度坐标。参数0，表示是从GPS到百度坐标
 				}, 0)

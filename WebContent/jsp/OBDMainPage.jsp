@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-08
-			16:07 V1.1.2.2</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-12
+			16:38 V1.1.2.5</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,25 +243,25 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.2</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.5</div>
 				<br/>
 				<h1>近期版本更新说明</h1>
+				<h2>1.1.2.5</h2>
+				<div>修改了地图的展示方式，现在地图刷新坐标点时不会再进行zoom和重新取中心点了</div>
+				<br/>
+				<h2>1.1.2.4</h2>
+				<div>修改了获取特定行程记录时进制转换的问题</div>
+				<br/>
+				<h1>近期版本更新说明</h1>
+				<h2>1.1.2.3</h2>
+				<div>修复了session不记录terminalId的问题</div>
+				<br/>
 				<h2>1.1.2.2</h2>
 				<div>增加了手机号码登录的功能</div>
 				<div>修改了注册界面的效果，包括密码强度提示和用户信息错误的图标</div>
 				<br/>
 				<h2>1.1.2.1</h2>
 				<div>通过调整代码顺序，缩短了地图图层刷新时的空端时间。</div>
-				<br/>
-				<h2>1.1.2.0</h2>
-				<div>修复了web端地图频繁刷新的问题。现在将只对图层进行刷新，不会刷新地图了。</div>
-				<div>修复了地图中心点不是目前最新的坐标点的问题。</div>
-				<br/>
-				<h2>1.1.1.17</h2>
-				<div>修复了1.1.1.16的改动中带来的格式BUG，这将是1.1.1的最后一个版本。</div>
-				<br/>
-				<h2>1.1.1.16</h2>
-				<div>修复了服务器数据向安卓端推送时，小数部分包含数字"0"导致格式转换不正确，造成地图偏差的问题。</div>
 
 			</div>
 		</div>
@@ -308,7 +308,5 @@
 		<div class="menu-sep"></div>
 		<div id="mm-exit">退出</div>
 	</div>
-
-
 </body>
 </html>
