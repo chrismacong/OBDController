@@ -586,13 +586,13 @@ function loginCheck_Tel() {
 	<div id="backpages">
 		<div class="banner has-dots" style="overflow: hidden; width:100%; height: 100%; ">
 			<ul style="width: 400%; position: relative; left: 0%; height: 100%;">
-				<li style="background-image: url(${pageContext.request.contextPath}/images/car1.jpg); background-size: 100%; width: 25%;"></li>
+				<li id="backpages-1" style="background-image: url(${pageContext.request.contextPath}/images/car1.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${pageContext.request.contextPath}/images/car1.jpg',sizingMethod='scale'); background-size: 100%; width: 25%;"></li>
 				
-				<li style="background-image:url(${pageContext.request.contextPath}/images/car2.jpg); background-size: 100%; width: 25%;"></li>
+				<li id="backpages-2" style="background-image: url(${pageContext.request.contextPath}/images/car2.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${pageContext.request.contextPath}/images/car2.jpg',sizingMethod='scale'); background-size: 100%; width: 25%;"></li>
 				
-				<li style="background-image: url(${pageContext.request.contextPath}/images/car3.jpg); background-size: 100%; width: 25%;"></li>
+				<li id="backpages-3" style="background-image: url(${pageContext.request.contextPath}/images/car3.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${pageContext.request.contextPath}/images/car3.jpg',sizingMethod='scale'); background-size: 100%; width: 25%;"></li>
 				
-				<li style="background-image: url(${pageContext.request.contextPath}/images/car4.jpg); background-size: 100%; width: 25%;"></li>
+				<li id="backpages-4" style="background-image: url(${pageContext.request.contextPath}/images/car4.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${pageContext.request.contextPath}/images/car4.jpg',sizingMethod='scale'); background-size: 100%; width: 25%;"></li>
 			</ul>
 		<ol class="dots"><li class="dot active">1</li><li class="dot">2</li><li class="dot">3</li><li class="dot">4</li></ol>
 		</div>

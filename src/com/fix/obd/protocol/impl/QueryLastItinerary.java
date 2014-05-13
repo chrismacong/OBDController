@@ -24,7 +24,7 @@ public class QueryLastItinerary extends ODBProtocolParser implements ODBProtocol
 	@Override
 	public boolean DBOperation(boolean DBif) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

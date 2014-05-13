@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-12
-			16:38 V1.1.2.5</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-13
+			13:40 V1.1.2.6</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,9 +243,13 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.5</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.6</div>
 				<br/>
 				<h1>近期版本更新说明</h1>
+				<h2>1.1.2.6</h2>
+				<div>对登陆界面在不同分辨率的IE浏览器下的展示效果BUG进行了修复</div>
+				<div>修正了无法获取最近一次行程记录的问题</div>
+				<br/>
 				<h2>1.1.2.5</h2>
 				<div>修改了地图的展示方式，现在地图刷新坐标点时不会再进行zoom和重新取中心点了</div>
 				<br/>
@@ -258,9 +262,6 @@
 				<h2>1.1.2.2</h2>
 				<div>增加了手机号码登录的功能</div>
 				<div>修改了注册界面的效果，包括密码强度提示和用户信息错误的图标</div>
-				<br/>
-				<h2>1.1.2.1</h2>
-				<div>通过调整代码顺序，缩短了地图图层刷新时的空端时间。</div>
 
 			</div>
 		</div>
