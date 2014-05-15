@@ -718,4 +718,82 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		}
 		return map;
 	}
+
+	@Override
+	public Map statisticOfHour(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		int[] hour_count = new int[24];
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			for(int i=0;i<info_list.size();i++){
+				TravelInfo info = info_list.get(i);
+				String start_date_str = info.getInfo().split("@")[1].split(";")[1];
+				String end_date_str = info.getInfo().split("@")[0].split(";")[1];
+				if(start_date_str.length()==12){
+					String start_date_format_str = start_date_str.substring(0,2) + "-" + start_date_str.substring(2,4) + "-" + start_date_str.substring(4,6) + " " + start_date_str.substring(6,8) + ":" + start_date_str.substring(8,10) + ":" + start_date_str.substring(10,12);
+					String end_date_format_str = end_date_str.substring(0,2) + "-" + end_date_str.substring(2,4) + "-" + end_date_str.substring(4,6) + " " + end_date_str.substring(6,8) + ":" + end_date_str.substring(8,10) + ":" + end_date_str.substring(10,12);
+					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+					Date start_date = sdf.parse(start_date_format_str);
+					Date end_date = sdf.parse(end_date_format_str);
+					Calendar start_calendar = Calendar.getInstance();
+					Calendar end_calendar = Calendar.getInstance();
+					start_calendar.setTime(start_date);
+					end_calendar.setTime(end_date);
+					Calendar count_from_calendar = Calendar.getInstance();
+					count_from_calendar.setTime(start_date);
+					count_from_calendar.set(Calendar.MINUTE, 0);
+					count_from_calendar.set(Calendar.SECOND, 0);
+					Calendar count_to_calendar = Calendar.getInstance();
+					count_to_calendar.setTime(end_date);
+					count_to_calendar.set(Calendar.HOUR_OF_DAY,end_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					count_to_calendar.set(Calendar.MINUTE, 0);
+					count_to_calendar.set(Calendar.SECOND, 0);
+					while(count_from_calendar.compareTo(count_to_calendar)<0){
+						if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)&&end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)&&start_calendar.get(Calendar.HOUR_OF_DAY)==end_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-start_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - start_calendar.get(Calendar.SECOND);
+							hour_count[count_from_calendar.get(Calendar.HOUR_OF_DAY)] += seconds;
+						}
+						else if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (60-start_calendar.get(Calendar.MINUTE)) * 60 - start_calendar.get(Calendar.SECOND);
+							hour_count[count_from_calendar.get(Calendar.HOUR_OF_DAY)] += seconds;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							hour_count[count_from_calendar.get(Calendar.HOUR_OF_DAY)] += seconds;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==24&&count_to_calendar.get(Calendar.HOUR_OF_DAY)==0){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							hour_count[count_from_calendar.get(Calendar.HOUR_OF_DAY)] += seconds;
+						}
+						else{
+							int seconds = 3600;
+							hour_count[count_from_calendar.get(Calendar.HOUR_OF_DAY)] += seconds;
+						}
+						count_from_calendar.set(Calendar.HOUR_OF_DAY, count_from_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					}
+				}
+			}
+			for(int i=0;i<hour_count.length;i++){
+				hour_count[i] = hour_count[i]/60;
+			}
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		map.put("hour_count", hour_count);
+		return map;
+	}
 }

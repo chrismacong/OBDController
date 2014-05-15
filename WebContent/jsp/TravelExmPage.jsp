@@ -104,8 +104,14 @@ $(function () {
 			</tr>
 		</c:forEach>
 	</table>
-	<a id="speed_hour_btn"></a>
-	<div id="graphBlock" style="display: none; cursor: default;"
+	<a id="hour_btn" title="时钟统计图"></a>
+	<a id="speed_hour_btn" title="速度/时钟统计图"></a>
+	<div id="hour_graphBlock" style="display: none; cursor: default;"
+		align="center">
+		<a class="block_close_btn"></a> <br />
+		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/hour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	</div>
+	<div id="speed_hour_graphBlock" style="display: none; cursor: default;"
 		align="center">
 		<a class="block_close_btn"></a> <br />
 		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/speedhour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>

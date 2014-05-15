@@ -41,10 +41,28 @@ table{
 	top:520px;
 	left:15px;
 }
-#speed_hour_btn{
+#hour_btn{
 	position:absolute;
 	top:540px;
 	left:650px;
+	height:80px;
+	width:80px;
+	background: url(../images/hour.png) top left no-repeat;
+	cursor:pointer;
+}
+#hour_btn:hover{
+	position:absolute;
+	top:540px;
+	left:650px;
+	height:80px;
+	width:80px;
+	background: url(../images/hour_hover.png) top left no-repeat;
+	cursor:pointer;
+}
+#speed_hour_btn{
+	position:absolute;
+	top:540px;
+	left:750px;
 	height:80px;
 	width:80px;
 	background: url(../images/speed_hour.png) top left no-repeat;
@@ -53,7 +71,7 @@ table{
 #speed_hour_btn:hover{
 	position:absolute;
 	top:540px;
-	left:650px;
+	left:750px;
 	height:80px;
 	width:80px;
 	background: url(../images/speed_hour_hover.png) top left no-repeat;

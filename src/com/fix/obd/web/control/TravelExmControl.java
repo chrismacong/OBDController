@@ -166,4 +166,20 @@ public class TravelExmControl {
 		model.put("max_speed_of_hour", maxSpeedOfHour);
 		return new ModelAndView("SpeedHourStatistics",model);
 	}
+	@RequestMapping(value = "/hour", method = RequestMethod.GET)
+	public ModelAndView hour(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------get graph of hours:" + terminalId + "--------");
+		Map map = travelExmnationService.statisticOfHour(terminalId);
+		int[] hour_count = (int[]) map.get("hour_count");
+		Map<String,Object> model = new HashMap<String,Object>();
+		String hours = "[";
+		for(int i=0;i<hour_count.length;i++)
+			hours += "" + hour_count[i] + ",";
+		hours = hours.substring(0,hours.lastIndexOf(","));
+		hours += "]";
+		model.put("hour_count", hours);
+		return new ModelAndView("HourStatistics",model);
+	}
 }
