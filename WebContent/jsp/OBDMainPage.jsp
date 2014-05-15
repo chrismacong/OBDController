@@ -227,7 +227,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-15
-			12:101 V1.1.2.9</div>
+			16:44 V1.1.2.12</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,25 +243,24 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.9</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.12</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.2.12</h2>
+				<div>修改了管理界面的车辆显示阈值，因进入正式测试阶段，现只会显示24小时内连接过服务器的终端</div>
+				<br/>
+				<h2>1.1.2.11</h2>
+				<div>在驾驶习惯分析中 ，增加了车速规划功能</div>
+				<br/>
+				<h2>1.1.2.10</h2>
+				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的急刹车次数的图表统计</div>
+				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的急加速次数的图表统计</div>
 				<br/>
 				<h2>1.1.2.9</h2>
 				<div>修复了驾驶时间统计图表偏移的问题，需要设置pointPlacement为between</div>
 				<br/>
 				<h2>1.1.2.8</h2>
 				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的驾车时间的图表统计</div>
-				<br/>
-				<h2>1.1.2.7</h2>
-				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的驾驶速度的图表统计</div>
-				<div>修改了系统管理员主界面的tab顺序</div>
-				<br/>
-				<h2>1.1.2.6</h2>
-				<div>对登陆界面在不同分辨率的IE浏览器下的展示效果BUG进行了修复</div>
-				<div>修正了无法获取最近一次行程记录的问题</div>
-				<br/>
-				<h2>1.1.2.5</h2>
-				<div>修改了地图的展示方式，现在地图刷新坐标点时不会再进行zoom和重新取中心点了</div>
 				<br/>
 			</div>
 		</div>

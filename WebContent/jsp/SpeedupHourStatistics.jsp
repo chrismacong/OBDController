@@ -18,7 +18,7 @@
 		    },
 		    
 		    title: {
-		        text: '速度/时间统计图'
+		        text: '加速/时间统计图'
 		    },
 
 	    	credits: {
@@ -47,7 +47,7 @@
 		    
 	        tooltip: {
 	        	headerFormat: '',
-	            valueSuffix: 'km/h'
+	            valueSuffix: '次'
 	        },
 	        
 		    plotOptions: {
@@ -63,13 +63,13 @@
 		
 		    series: [{
 		        type: 'column',
-		        name: '平均速度',
-		        data: ${speed_of_hour},
+		        name: '急加速次数',
+		        data: ${speedup_hour},
 		        pointPlacement: 'between'
 		    }, {
-		        type: 'line',
-		        name: '最大速度',
-		        data: ${max_speed_of_hour},
+		        type: 'column',
+		        name: '紧急加速次数',
+		        data: ${emer_speedup_hour},
 		        pointPlacement: 'between'
 		    }]
 		});

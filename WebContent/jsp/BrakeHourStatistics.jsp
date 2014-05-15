@@ -18,7 +18,7 @@
 		    },
 		    
 		    title: {
-		        text: '速度/时间统计图'
+		        text: '刹车/时间统计图'
 		    },
 
 	    	credits: {
@@ -47,7 +47,7 @@
 		    
 	        tooltip: {
 	        	headerFormat: '',
-	            valueSuffix: 'km/h'
+	            valueSuffix: '次'
 	        },
 	        
 		    plotOptions: {
@@ -63,13 +63,13 @@
 		
 		    series: [{
 		        type: 'column',
-		        name: '平均速度',
-		        data: ${speed_of_hour},
+		        name: '急刹车次数',
+		        data: ${brake_hour},
 		        pointPlacement: 'between'
 		    }, {
-		        type: 'line',
-		        name: '最大速度',
-		        data: ${max_speed_of_hour},
+		        type: 'column',
+		        name: '紧急刹车次数',
+		        data: ${emer_brake_hour},
 		        pointPlacement: 'between'
 		    }]
 		});

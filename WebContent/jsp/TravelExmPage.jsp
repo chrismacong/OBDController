@@ -106,6 +106,9 @@ $(function () {
 	</table>
 	<a id="hour_btn" title="时钟统计图"></a>
 	<a id="speed_hour_btn" title="速度/时钟统计图"></a>
+	<a id="brake_hour_btn" title="刹车/时钟统计图"></a>
+	<a id="speedup_hour_btn" title="加速/时钟统计图"></a>
+	<a id="speedplan_btn" title="加速/时钟统计图"></a>
 	<div id="hour_graphBlock" style="display: none; cursor: default;"
 		align="center">
 		<a class="block_close_btn"></a> <br />
@@ -115,6 +118,21 @@ $(function () {
 		align="center">
 		<a class="block_close_btn"></a> <br />
 		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/speedhour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	</div>
+	<div id="brake_hour_graphBlock" style="display: none; cursor: default;"
+		align="center">
+		<a class="block_close_btn"></a> <br />
+		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/brakehour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	</div>
+	<div id="speedup_hour_graphBlock" style="display: none; cursor: default;"
+		align="center">
+		<a class="block_close_btn"></a> <br />
+		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/speeduphour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	</div>
+	<div id="speedplan_graphBlock" style="display: none; cursor: default;"
+		align="center">
+		<a class="block_close_btn"></a> <br />
+		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/speedplan.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
 	</div>
 	</body>
 </html>

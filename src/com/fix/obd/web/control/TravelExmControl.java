@@ -182,4 +182,63 @@ public class TravelExmControl {
 		model.put("hour_count", hours);
 		return new ModelAndView("HourStatistics",model);
 	}
+	@RequestMapping(value = "/brakehour", method = RequestMethod.GET)
+	public ModelAndView brakeHour(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------get graph of brake and hour:" + terminalId + "--------");
+		Map map = travelExmnationService.statisticOfBrakeAndHour(terminalId);
+		int[] brake_hour = (int[]) map.get("brake_hour");
+		int[] emer_brake_hour = (int[]) map.get("emer_brake_hour");
+		Map<String,Object> model = new HashMap<String,Object>();
+		String brake_hours = "[";
+		for(int i=0;i<brake_hour.length;i++)
+			brake_hours += "" + brake_hour[i] + ",";
+		brake_hours = brake_hours.substring(0,brake_hours.lastIndexOf(","));
+		brake_hours += "]";
+		String emer_brake_hours = "[";
+		for(int i=0;i<emer_brake_hour.length;i++)
+			emer_brake_hours += "" + emer_brake_hour[i] + ",";
+		emer_brake_hours = emer_brake_hours.substring(0,emer_brake_hours.lastIndexOf(","));
+		emer_brake_hours += "]";
+		model.put("brake_hour", brake_hours);
+		model.put("emer_brake_hour", emer_brake_hours);
+		return new ModelAndView("BrakeHourStatistics",model);
+	}
+	@RequestMapping(value = "/speeduphour", method = RequestMethod.GET)
+	public ModelAndView speedupHour(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------get graph of speedup and hour:" + terminalId + "--------");
+		Map map = travelExmnationService.statisticOfSpeedupAndHour(terminalId);
+		int[] speedup_hour = (int[]) map.get("speedup_hour");
+		int[] emer_speedup_hour = (int[]) map.get("emer_speedup_hour");
+		Map<String,Object> model = new HashMap<String,Object>();
+		String speedup_hours = "[";
+		for(int i=0;i<speedup_hour.length;i++)
+			speedup_hours += "" + speedup_hour[i] + ",";
+		speedup_hours = speedup_hours.substring(0,speedup_hours.lastIndexOf(","));
+		speedup_hours += "]";
+		String emer_speedup_hours = "[";
+		for(int i=0;i<emer_speedup_hour.length;i++)
+			emer_speedup_hours += "" + emer_speedup_hour[i] + ",";
+		emer_speedup_hours = emer_speedup_hours.substring(0,emer_speedup_hours.lastIndexOf(","));
+		emer_speedup_hours += "]";
+		model.put("speedup_hour", speedup_hours);
+		model.put("emer_speedup_hour", emer_speedup_hours);
+		return new ModelAndView("SpeedupHourStatistics",model);
+	}
+	@RequestMapping(value = "/speedplan", method = RequestMethod.GET)
+	public ModelAndView speedPlan(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------get graph of speed plan:" + terminalId + "--------");
+		Map map = travelExmnationService.speedPlan(terminalId);
+		String brake_speed = (String) map.get("brake_speed");
+		String speedup_speed = (String) map.get("speedup_speed");
+		Map<String,Object> model = new HashMap<String,Object>();
+		model.put("brake_speed", brake_speed);
+		model.put("speedup_speed", speedup_speed);
+		return new ModelAndView("SpeedPlan",model);
+	}
 }

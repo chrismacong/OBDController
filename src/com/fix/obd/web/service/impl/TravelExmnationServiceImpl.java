@@ -796,4 +796,270 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		map.put("hour_count", hour_count);
 		return map;
 	}
+
+	@Override
+	public Map statisticOfBrakeAndHour(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		int[] brake_hour = new int[24];
+		double[] brake_hour_double = new double[24];
+		int[] emer_brake_hour = new int[24];
+		double[] emer_brake_hour_double = new double[24];
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			for(int i=0;i<info_list.size();i++){
+				TravelInfo info = info_list.get(i);
+				String start_date_str = info.getInfo().split("@")[1].split(";")[1];
+				String end_date_str = info.getInfo().split("@")[0].split(";")[1];
+				if(start_date_str.length()==12&&info.getInfo().indexOf("急刹车次数")>-1&&info.getInfo().indexOf("紧急刹车次数")>-1){
+					String temp1 = info.getInfo().substring(info.getInfo().indexOf("急刹车次数"));
+					String temp2 = info.getInfo().substring(info.getInfo().indexOf("紧急刹车次数"));
+					temp1 = temp1.split(";")[1];
+					temp2 = temp2.split(";")[1];
+					double brake_times = Double.parseDouble(temp1);
+					double emer_brake_times = Double.parseDouble(temp2);
+					String start_date_format_str = start_date_str.substring(0,2) + "-" + start_date_str.substring(2,4) + "-" + start_date_str.substring(4,6) + " " + start_date_str.substring(6,8) + ":" + start_date_str.substring(8,10) + ":" + start_date_str.substring(10,12);
+					String end_date_format_str = end_date_str.substring(0,2) + "-" + end_date_str.substring(2,4) + "-" + end_date_str.substring(4,6) + " " + end_date_str.substring(6,8) + ":" + end_date_str.substring(8,10) + ":" + end_date_str.substring(10,12);
+					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+					Date start_date = sdf.parse(start_date_format_str);
+					Date end_date = sdf.parse(end_date_format_str);
+					Calendar start_calendar = Calendar.getInstance();
+					Calendar end_calendar = Calendar.getInstance();
+					start_calendar.setTime(start_date);
+					end_calendar.setTime(end_date);
+					Calendar count_from_calendar = Calendar.getInstance();
+					count_from_calendar.setTime(start_date);
+					count_from_calendar.set(Calendar.MINUTE, 0);
+					count_from_calendar.set(Calendar.SECOND, 0);
+					int start_index= count_from_calendar.get(Calendar.HOUR_OF_DAY);
+					Calendar count_to_calendar = Calendar.getInstance();
+					count_to_calendar.setTime(end_date);
+					count_to_calendar.set(Calendar.HOUR_OF_DAY,end_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					count_to_calendar.set(Calendar.MINUTE, 0);
+					count_to_calendar.set(Calendar.SECOND, 0);
+					long diff = (count_to_calendar.getTimeInMillis()-count_from_calendar.getTimeInMillis())/(1000*60*60);
+					int diff_int = (int)diff;
+//					System.out.println(start_calendar.getTime() + "--->" + end_calendar.getTime());
+//					System.out.println(diff_int);
+					double[] calculate_minute_array = new double[diff_int];
+					int count_index = 0;
+					while(count_from_calendar.compareTo(count_to_calendar)<0){
+						if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)&&end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)&&start_calendar.get(Calendar.HOUR_OF_DAY)==end_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-start_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - start_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (60-start_calendar.get(Calendar.MINUTE)) * 60 - start_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==24&&count_to_calendar.get(Calendar.HOUR_OF_DAY)==0){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else{
+							calculate_minute_array[count_index] = 60.0;
+						}
+						count_index++;
+						count_from_calendar.set(Calendar.HOUR_OF_DAY, count_from_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					}
+
+					double amount = 0;
+					for(int p=0;p<calculate_minute_array.length;p++)
+						amount += calculate_minute_array[p];
+					if(amount>0){
+						for(int p=0;p<calculate_minute_array.length;p++){
+							brake_hour_double[start_index] += brake_times * calculate_minute_array[p] / amount;
+							emer_brake_hour_double[start_index] += emer_brake_times * calculate_minute_array[p] / amount;
+							start_index++;
+							if(start_index==24){
+								start_index = 0;
+							}
+						}
+					}
+				}
+			}
+			for(int i=0;i<brake_hour_double.length;i++){
+				brake_hour[i] = (int)brake_hour_double[i];
+				emer_brake_hour[i] = (int)emer_brake_hour_double[i];
+			}
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		map.put("brake_hour",brake_hour);
+		map.put("emer_brake_hour",emer_brake_hour);
+		return map;
+	}
+	
+	@Override
+	public Map statisticOfSpeedupAndHour(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		int[] speedup_hour = new int[24];
+		double[] speedup_hour_double = new double[24];
+		int[] emer_speedup_hour = new int[24];
+		double[] emer_speedup_hour_double = new double[24];
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			for(int i=0;i<info_list.size();i++){
+				TravelInfo info = info_list.get(i);
+				String start_date_str = info.getInfo().split("@")[1].split(";")[1];
+				String end_date_str = info.getInfo().split("@")[0].split(";")[1];
+				if(start_date_str.length()==12&&info.getInfo().indexOf("急加速次数")>-1&&info.getInfo().indexOf("紧急加速次数")>-1){
+					String temp1 = info.getInfo().substring(info.getInfo().indexOf("急加速次数"));
+					String temp2 = info.getInfo().substring(info.getInfo().indexOf("紧急加速次数"));
+					temp1 = temp1.split(";")[1];
+					temp2 = temp2.split(";")[1];
+					double speedup_times = Double.parseDouble(temp1);
+					double emer_speedup_times = Double.parseDouble(temp2);
+					String start_date_format_str = start_date_str.substring(0,2) + "-" + start_date_str.substring(2,4) + "-" + start_date_str.substring(4,6) + " " + start_date_str.substring(6,8) + ":" + start_date_str.substring(8,10) + ":" + start_date_str.substring(10,12);
+					String end_date_format_str = end_date_str.substring(0,2) + "-" + end_date_str.substring(2,4) + "-" + end_date_str.substring(4,6) + " " + end_date_str.substring(6,8) + ":" + end_date_str.substring(8,10) + ":" + end_date_str.substring(10,12);
+					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+					Date start_date = sdf.parse(start_date_format_str);
+					Date end_date = sdf.parse(end_date_format_str);
+					Calendar start_calendar = Calendar.getInstance();
+					Calendar end_calendar = Calendar.getInstance();
+					start_calendar.setTime(start_date);
+					end_calendar.setTime(end_date);
+					Calendar count_from_calendar = Calendar.getInstance();
+					count_from_calendar.setTime(start_date);
+					count_from_calendar.set(Calendar.MINUTE, 0);
+					count_from_calendar.set(Calendar.SECOND, 0);
+					int start_index= count_from_calendar.get(Calendar.HOUR_OF_DAY);
+					Calendar count_to_calendar = Calendar.getInstance();
+					count_to_calendar.setTime(end_date);
+					count_to_calendar.set(Calendar.HOUR_OF_DAY,end_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					count_to_calendar.set(Calendar.MINUTE, 0);
+					count_to_calendar.set(Calendar.SECOND, 0);
+					long diff = (count_to_calendar.getTimeInMillis()-count_from_calendar.getTimeInMillis())/(1000*60*60);
+					int diff_int = (int)diff;
+//					System.out.println(start_calendar.getTime() + "--->" + end_calendar.getTime());
+//					System.out.println(diff_int);
+					double[] calculate_minute_array = new double[diff_int];
+					int count_index = 0;
+					while(count_from_calendar.compareTo(count_to_calendar)<0){
+						if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)&&end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)&&start_calendar.get(Calendar.HOUR_OF_DAY)==end_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-start_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - start_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(start_calendar.get(Calendar.HOUR_OF_DAY)==count_from_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (60-start_calendar.get(Calendar.MINUTE)) * 60 - start_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==count_to_calendar.get(Calendar.HOUR_OF_DAY)){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else if(end_calendar.get(Calendar.HOUR_OF_DAY)+1==24&&count_to_calendar.get(Calendar.HOUR_OF_DAY)==0){
+							int seconds = (end_calendar.get(Calendar.MINUTE)-count_from_calendar.get(Calendar.MINUTE)) * 60 + end_calendar.get(Calendar.SECOND) - count_from_calendar.get(Calendar.SECOND);
+							calculate_minute_array[count_index] = seconds/60.0;
+						}
+						else{
+							calculate_minute_array[count_index] = 60.0;
+						}
+						count_index++;
+						count_from_calendar.set(Calendar.HOUR_OF_DAY, count_from_calendar.get(Calendar.HOUR_OF_DAY)+1);
+					}
+					
+					double amount = 0;
+					for(int p=0;p<calculate_minute_array.length;p++)
+						amount += calculate_minute_array[p];
+					if(amount>0){
+						for(int p=0;p<calculate_minute_array.length;p++){
+							speedup_hour_double[start_index] += speedup_times * calculate_minute_array[p] / amount;
+							emer_speedup_hour_double[start_index] += emer_speedup_times * calculate_minute_array[p] / amount;
+							start_index++;
+							if(start_index==24)
+								start_index=0;
+						}
+					}
+				}
+			}
+			for(int i=0;i<speedup_hour_double.length;i++){
+				speedup_hour[i] = (int)speedup_hour_double[i];
+				emer_speedup_hour[i] = (int)emer_speedup_hour_double[i];
+			}
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		map.put("speedup_hour",speedup_hour);
+		map.put("emer_speedup_hour",emer_speedup_hour);
+		return map;
+	}
+
+	@Override
+	public Map speedPlan(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		String s1 = "[";
+		String s2 = "[";
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			for(int i=0;i<info_list.size();i++){
+				TravelInfo info = info_list.get(i);
+				if(info.getInfo().indexOf("急加速次数")>-1&&info.getInfo().indexOf("急刹车次数")>-1&&info.getInfo().indexOf("平均速度")>-1){
+					String temp1 = info.getInfo().substring(info.getInfo().indexOf("急加速次数"));
+					String temp2 = info.getInfo().substring(info.getInfo().indexOf("急刹车次数"));
+					String temp3 = info.getInfo().substring(info.getInfo().indexOf("平均速度"));
+					temp1 = temp1.split(";")[1];
+					temp2 = temp2.split(";")[1];
+					temp3 = temp3.split(";")[1];
+					int speedup_times = Integer.parseInt(temp1);
+					int brake_times = Integer.parseInt(temp2);
+					int speed = Integer.parseInt(temp3);
+					s1 += "[" + speed + "," + brake_times + "]" + ",";
+					s2 += "[" + speed + "," + speedup_times + "]" + ",";
+				}
+			}
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		s1 = s1.substring(0,s1.lastIndexOf(","));
+		s2 = s2.substring(0,s2.lastIndexOf(","));
+		map.put("brake_speed",s1 + "]");
+		map.put("speedup_speed",s2 + "]");
+		return map;
+	}
 }

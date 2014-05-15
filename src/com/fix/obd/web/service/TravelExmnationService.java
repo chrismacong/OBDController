@@ -25,4 +25,7 @@ public interface TravelExmnationService {
 	public Map exmnationScoreAmongFriends(String terminalId);
 	public Map statisticOfSpeedAndHour(String terminalId);
 	public Map statisticOfHour(String terminalId);
+	public Map statisticOfBrakeAndHour(String terminalId);
+	public Map statisticOfSpeedupAndHour(String terminalId);
+	public Map speedPlan(String terminalId);
 }	
