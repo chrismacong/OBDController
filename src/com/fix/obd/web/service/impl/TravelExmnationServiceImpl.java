@@ -1,5 +1,6 @@
 package com.fix.obd.web.service.impl;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,8 +13,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.fix.obd.web.dao.PositionDataDao;
 import com.fix.obd.web.dao.TravelExmnationDao;
 import com.fix.obd.web.dao.TravelInfoDao;
+import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.TravelExmnation;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.service.TravelExmnationService;
@@ -42,6 +45,16 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		this.travelExmnationDao = travelExmnationDao;
 	}
 
+	@Resource
+	private PositionDataDao positionDataDao;
+	public PositionDataDao getPositionDataDao() {
+		return positionDataDao;
+	}
+
+	public void setPositionDataDao(PositionDataDao positionDataDao) {
+		this.positionDataDao = positionDataDao;
+	}
+
 	private TravelExmnationServiceImpl(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MONTH, -1);
@@ -63,7 +76,6 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 					if(infoStr.indexOf("距离")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("距离"));
 						temp = temp.split(";")[1];
-						System.out.println(temp);
 						totalDistance += Integer.parseInt(temp);
 					}
 				}
@@ -426,8 +438,8 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 					}
 				}
 			}
-			
-			
+
+
 			t.setTerminalId(terminalId);
 			t.setTotalDistance(this.getTotalDistance(info_list));
 			t.setLongestDistance(this.getLongestDistance(info_list));
@@ -644,6 +656,66 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		}
 
 
+		return map;
+	}
+
+	@Override
+	public Map statisticOfSpeedAndHour(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		try {
+			List<PositionData> info_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' and date > '" + lineOfDate.substring(2) + "'");
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						PositionData info1 = info_list.get(i);
+						PositionData info2 = info_list.get(j);
+						String info1_str = info1.getDate();
+						String info2_str = info2.getDate();
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+			}
+			int[] speed_of_hour = new int[24];
+			int[] max_speed_of_hour = new int[24];
+			int count[] = new int[24];
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size();i++){
+					String date_str = info_list.get(i).getDate();
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					java.util.Date date = sdf.parse(date_str);
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(date);
+					int hour = calendar.get(Calendar.HOUR_OF_DAY);
+					String infoStr = info_list.get(i).getInfo();
+					if(infoStr.indexOf("OBD速度")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("OBD速度"));
+						temp = temp.split(":")[1];
+						temp = temp.split(";")[0];
+						temp = temp.split("km/h")[0];
+						int speed = Integer.parseInt(temp);
+						if(speed!=0){
+							speed_of_hour[hour] += speed;
+							if(speed>max_speed_of_hour[hour])
+								max_speed_of_hour[hour] = speed;
+							count[hour]++;
+						}
+					}
+				}
+				for(int i=0;i<speed_of_hour.length;i++){
+					if(count[i]==0)
+						speed_of_hour[i] = 0;
+					else
+						speed_of_hour[i] = speed_of_hour[i]/count[i];
+				}
+			}
+			map.put("speed_of_hour", speed_of_hour);
+			map.put("max_speed_of_hour", max_speed_of_hour);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return map;
 	}
 }

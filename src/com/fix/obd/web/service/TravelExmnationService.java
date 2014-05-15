@@ -23,4 +23,5 @@ public interface TravelExmnationService {
 	String getTotalTiredDrivingMinutes(List<TravelInfo> list);
 	public TravelExmnation exmnationAndRecord(String terminalId);
 	public Map exmnationScoreAmongFriends(String terminalId);
+	public Map statisticOfSpeedAndHour(String terminalId);
 }	

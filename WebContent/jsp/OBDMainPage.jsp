@@ -58,27 +58,27 @@
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "2\","
-					+ "\"menuname\" : \"参数设置与查询\","
+					+ "\"menuname\" : \"地理位置和驾驶习惯\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/character.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "3\","
-					+ "\"menuname\" : \"OBD状态查询\","
+					+ "\"menuname\" : \"车辆健康体检\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "4\","
-					+ "\"menuname\" : \"地理位置和驾驶习惯\","
+					+ "\"menuname\" : \"参数设置与查询\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/character.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
@@ -94,9 +94,9 @@
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "6\","
-					+ "\"menuname\" : \"配置升级服务器信息\","
+					+ "\"menuname\" : \"OBD状态查询\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/updateconfig.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
@@ -121,9 +121,9 @@
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "9\","
-					+ "\"menuname\" : \"车辆健康体检\","
+					+ "\"menuname\" : \"配置升级服务器信息\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/updateconfig.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-13
-			13:40 V1.1.2.6</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-15
+			00:05 V1.1.2.7</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,9 +243,13 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.6</div>
-				<br/>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.7</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.2.7</h2>
+				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的驾驶速度的图表统计</div>
+				<div>修改了系统管理员主界面的tab顺序</div>
+				<br/>
 				<h2>1.1.2.6</h2>
 				<div>对登陆界面在不同分辨率的IE浏览器下的展示效果BUG进行了修复</div>
 				<div>修正了无法获取最近一次行程记录的问题</div>
@@ -259,9 +263,6 @@
 				<h2>1.1.2.3</h2>
 				<div>修复了session不记录terminalId的问题</div>
 				<br/>
-				<h2>1.1.2.2</h2>
-				<div>增加了手机号码登录的功能</div>
-				<div>修改了注册界面的效果，包括密码强度提示和用户信息错误的图标</div>
 
 			</div>
 		</div>

@@ -9,6 +9,8 @@
 <link href="${pageContext.request.contextPath}/css/global.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/travelExm.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery.blockUI.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/travelexm.js"></script>
 <script type="text/javascript">
 $(function () {
 	$('#container').highcharts({
@@ -26,7 +28,11 @@ $(function () {
 	    pane: {
 	    	size: '80%'
 	    },
-	    
+
+    	credits: {
+            enabled: false
+        },
+        
 	    xAxis: {
 	        categories: ['节油', '里程', '稳定性', '速度', 
 	                '疲劳控制'],
@@ -98,5 +104,11 @@ $(function () {
 			</tr>
 		</c:forEach>
 	</table>
+	<a id="speed_hour_btn"></a>
+	<div id="graphBlock" style="display: none; cursor: default;"
+		align="center">
+		<a class="block_close_btn"></a> <br />
+		<iframe id="iframe" src="${pageContext.request.contextPath}/travelexm/speedhour.html?terminalId=${terminalId}" width="100%" height="500px" scrolling="no" frameborder="0"></iframe>
+	</div>
 	</body>
 </html>

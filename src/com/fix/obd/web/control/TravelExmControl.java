@@ -143,4 +143,27 @@ public class TravelExmControl {
 		model.put("tired_control_text", reply_map.get("tired_control_text"));
 		return new ModelAndView("TravelExmPage",model);
 	}
+	@RequestMapping(value = "/speedhour", method = RequestMethod.GET)
+	public ModelAndView speedHour(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------get graph of hour and speed:" + terminalId + "--------");
+		Map map = travelExmnationService.statisticOfSpeedAndHour(terminalId);
+		int[] speed_of_hour = (int[]) map.get("speed_of_hour");
+		int[] max_speed_of_hour = (int[]) map.get("max_speed_of_hour");
+		Map<String,Object> model = new HashMap<String,Object>();
+		String speedOfHour = "[";
+		for(int i=0;i<speed_of_hour.length;i++)
+			speedOfHour += "" + speed_of_hour[i] + ",";
+		speedOfHour = speedOfHour.substring(0,speedOfHour.lastIndexOf(","));
+		speedOfHour += "]";
+		String maxSpeedOfHour = "[";
+		for(int i=0;i<max_speed_of_hour.length;i++)
+			maxSpeedOfHour += "" + max_speed_of_hour[i] + ",";
+		maxSpeedOfHour = maxSpeedOfHour.substring(0,maxSpeedOfHour.lastIndexOf(","));
+		maxSpeedOfHour += "]";
+		model.put("speed_of_hour", speedOfHour);
+		model.put("max_speed_of_hour", maxSpeedOfHour);
+		return new ModelAndView("SpeedHourStatistics",model);
+	}
 }
