@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-15
-			16:44 V1.1.2.12</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-21
+			01:43 V1.1.2.13</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,8 +243,11 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.12</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.13</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.2.13</h2>
+				<div>在行程记录中增加了近期行程的显示，包括行程时间和起点终点。</div>
 				<br/>
 				<h2>1.1.2.12</h2>
 				<div>修改了管理界面的车辆显示阈值，因进入正式测试阶段，现只会显示24小时内连接过服务器的终端</div>
@@ -258,9 +261,6 @@
 				<br/>
 				<h2>1.1.2.9</h2>
 				<div>修复了驾驶时间统计图表偏移的问题，需要设置pointPlacement为between</div>
-				<br/>
-				<h2>1.1.2.8</h2>
-				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的驾车时间的图表统计</div>
 				<br/>
 			</div>
 		</div>

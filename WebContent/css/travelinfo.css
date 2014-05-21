@@ -4,8 +4,11 @@
 	font-size:15px;
 	font-family:Tahoma,Verdana,微软雅黑,新宋体;
 	position:absolute;
-	top:90px;
+	top:80px;
 	left:50px;
+}
+#travel_info_table td{
+	font-size:10px;
 }
 #refresh_button{
 	position:absolute;
@@ -36,4 +39,19 @@
 	left:900px;
 	top:20px;
 	height:40px;
+}
+#review_travel_info_div{
+	position:absolute;
+	left:50px;
+	top:590px;
+}
+#review_travel_info_table{
+	font-size:15px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+	position:absolute;
+	top:620px;
+	left:50px;
+}
+#review_travel_info_table td{
+	font-size:10px;
 }

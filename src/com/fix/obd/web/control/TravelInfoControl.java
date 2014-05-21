@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.model.util.OBDSeperateUtilModel;
+import com.fix.obd.web.service.PositionInfoService;
 import com.fix.obd.web.service.TravelInfoService;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -36,6 +38,14 @@ public class TravelInfoControl {
 	}
 	public void setTravelInfoService(TravelInfoService travelInfoService) {
 		this.travelInfoService = travelInfoService;
+	}
+	@Resource
+	private PositionInfoService positionInfoService;
+	public PositionInfoService getPositionInfoService() {
+		return positionInfoService;
+	}
+	public void setPositionInfoService(PositionInfoService positionInfoService) {
+		this.positionInfoService = positionInfoService;
 	}
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listResult(HttpServletRequest request,HttpSession session,HttpServletResponse response){
@@ -64,6 +74,25 @@ public class TravelInfoControl {
 			model.put("travelinfo_date", latest_data.getDate());
 		}
 		model.put("character_list", list);
+		List<TravelInfo> review_list = travelInfoService.reviewTravelInfo(terminalId);
+		if(review_list.size()>0){
+			TravelInfo[] reviews = new TravelInfo[review_list.size()];
+			String review_position_info_str = "";
+			for(int i=0;i<reviews.length;i++){
+				reviews[i] = review_list.get(i);
+				String start_time = reviews[i].getInfo().substring(26,38);
+				String stop_time = reviews[i].getInfo().substring(5,17);
+//				System.out.println("From:" + start_time + " to " + stop_time);
+				Map map = positionInfoService.getStartandStopByGPS(terminalId, start_time,stop_time);
+				if(map!=null){
+					review_position_info_str += map.get("start_time_in_format") + " ~ " + map.get("stop_time_in_format") + 
+							";" + map.get("start_point") + ";" + map.get("stop_point") + "@";
+				}
+			}
+			model.put("review_position_info_str", review_position_info_str.substring(0,review_position_info_str.lastIndexOf("@")));
+//			System.out.println(review_position_info_str);
+			model.put("reviews", reviews);
+		}
 		return new ModelAndView("TravelInfoPage",model);
 	}
 	@RequestMapping(value = "/askLatestTravelInfo", method = RequestMethod.GET)

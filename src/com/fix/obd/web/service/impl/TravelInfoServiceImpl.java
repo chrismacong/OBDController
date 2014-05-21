@@ -1,5 +1,6 @@
 package com.fix.obd.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -43,8 +44,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		try {
 			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by date desc");
 			if(info_list.size()>0){
-				TravelInfo travelinfo = info_list.get(0);
-				return travelinfo;
+				return info_list.get(0);
 			}
 			else
 				return null;
@@ -98,6 +98,29 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public List<TravelInfo> reviewTravelInfo(String terminalId) {
+		// TODO Auto-generated method stub
+		try {
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by SUBSTR(info,9,21) desc");
+			if(info_list.size()>0){
+				if(info_list.size()>10){
+					List<TravelInfo> info_list_in_10 = new ArrayList<TravelInfo>();
+					for(int i=0;i<10;i++)
+						info_list_in_10.add(info_list.get(i));
+					return info_list_in_10;
+				}
+				return info_list;
+			}
+			else
+				return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
