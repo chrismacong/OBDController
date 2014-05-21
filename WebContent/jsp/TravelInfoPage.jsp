@@ -73,6 +73,30 @@
 					review_travel_info_table.append("<tr><td>" + array_date[i] + "</td><td>未识别的GPS</td><td>未识别的GPS</td></tr>");
 				}
 			}
+			setTimeout(function(){
+				var rows = $("#review_travel_info_table tbody tr").length;
+				for(var i=0;i<rows;i++){
+					var row_str = $("#review_travel_info_table tbody tr")[i].innerHTML;
+					if(row_str==null||row_str==""){
+						$("#review_travel_info_table")[0].deleteRow(i+1);
+						rows = $("#review_travel_info_table tbody tr").length;
+						i--;
+					}
+				}
+				for(var i=0;i<rows;i++){
+					for(var j=i+1;j<rows;j++){
+						var html1 = $("#review_travel_info_table tbody tr")[i].innerText;
+						var html2 = $("#review_travel_info_table tbody tr")[j].innerText;
+						var date1 = html1.substring(0,17);
+						var date2 = html2.substring(0,17);
+						if(date1<date2){
+							var tmp = $("#review_travel_info_table tbody tr")[i].innerHTML;
+							$("#review_travel_info_table tbody tr")[i].innerHTML = $("#review_travel_info_table tbody tr")[j].innerHTML;
+							$("#review_travel_info_table tbody tr")[j].innerHTML = tmp;
+						}
+					}
+				}
+			},1000)
 		}
 	}
 	setTimeout(function() {
@@ -197,6 +221,12 @@
 		align="center">
 		<div id="operating">正在操作..</div>
 		<p id="waiting"></p>
+	</div>
+	<div id="reviewBlock" style="display: none; cursor: default;"
+		align="center">
+		<div>历史行程</div>
+		<a class="block_close_btn"></a> <br />
+		<div id="review_content"></div>
 	</div>
 </body>
 </html>
