@@ -108,7 +108,8 @@ $(function () {
 	<a id="speed_hour_btn" title="速度/时钟统计图"></a>
 	<a id="brake_hour_btn" title="刹车/时钟统计图"></a>
 	<a id="speedup_hour_btn" title="加速/时钟统计图"></a>
-	<a id="speedplan_btn" title="加速/时钟统计图"></a>
+	<a id="speedplan_btn" title="车速规划统计图"></a>
+	<a id="hotspot_btn" target="_blank" title="热区图" href="${pageContext.request.contextPath}/positioninfo/gethgraph.html?terminalId=${terminalId}"></a>
 	<div id="hour_graphBlock" style="display: none; cursor: default;"
 		align="center">
 		<a class="block_close_btn"></a> <br />

@@ -13,4 +13,5 @@ public interface PositionInfoService {
 	public int getPositionDataRefreshMinute();
 	public List<PositionData> getLatest10GpsPositionInfo(String terminalId);
 	public Map getStartandStopByGPS(String terminalId, String start_time, String stop_time);
+	public Map getPointsForHotArea(String terminalId);
 }

@@ -231,4 +231,15 @@ public class PositionInfoControl {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/gethgraph", method = RequestMethod.GET)
+	public ModelAndView getHGraph(HttpServletRequest request,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		Map<String,Object> model = new HashMap<String,Object>();		
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		Map map = positionInfoService.getPointsForHotArea(terminalId);
+		model.put("terminalId", terminalId);
+		model.put("lngs",map.get("lngs"));
+		model.put("lats",map.get("lats"));
+		return new ModelAndView("HotSpotGraphPage",model);
+	}
 }

@@ -131,6 +131,24 @@ table{
 	background: url(../images/speedplan.png) top left no-repeat;
 	cursor:pointer;
 }
+#hotspot_btn{
+	position:absolute;
+	top:540px;
+	left:1150px;
+	height:80px;
+	width:80px;
+	background: url(../images/hotspot.png) top left no-repeat;
+	cursor:pointer;
+}
+#hotspot_btn{
+	position:absolute;
+	top:540px;
+	left:1150px;
+	height:80px;
+	width:80px;
+	background: url(../images/hotspot.png) top left no-repeat;
+	cursor:pointer;
+}
 .block_close_btn {
 	position:absolute;
 	width:32px;

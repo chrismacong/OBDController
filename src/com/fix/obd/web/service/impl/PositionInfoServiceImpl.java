@@ -196,4 +196,55 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 			return null;
 		}
 	}
+	@Override
+	public Map getPointsForHotArea(String terminalId) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		String lngs = "";
+		String lats = "";
+		try {
+			List<PositionData> info_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' order by date desc limit 2000");
+			for(int i=0;i<info_list.size();i++){
+				if(info_list.get(i).getInfo().contains("GPS状态:GPS不定位;")){
+					info_list.remove(i);
+					i--;
+				}
+			}
+			List<PositionData> position_list = new ArrayList<PositionData>();
+			for(int i=0;i<(info_list.size()>2000?2000:info_list.size());i++){
+				position_list.add(info_list.get(i));
+			}
+			for(int i=0;i<position_list.size();i++){
+				String point_latitude = position_list.get(i).getInfo().substring(position_list.get(i).getInfo().lastIndexOf("纬度:"));
+				point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+				point_latitude = point_latitude.split(":")[1];
+				point_latitude = point_latitude.replaceAll("\\.", "");
+				point_latitude = point_latitude.replaceAll("°", ".");
+				String tempStrPart1 = point_latitude.split("\\.")[1];
+				tempStrPart1 = "0." + tempStrPart1;
+				double tempD1 = Double.parseDouble(tempStrPart1)/60*100;
+				point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD1 + "";
+				lats += point_latitude + ",";
+				
+				String point_longitute = position_list.get(i).getInfo().substring(position_list.get(i).getInfo().lastIndexOf("经度:"));
+				point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
+				point_longitute = point_longitute.split(":")[1];
+				point_longitute = point_longitute.replaceAll("\\.", "");
+				point_longitute = point_longitute.replaceAll("°", ".");
+				String tempStrPart2 = point_longitute.split("\\.")[1];
+				tempStrPart2 = "0." + tempStrPart2;
+				double tempD2 = Double.parseDouble(tempStrPart2)/60*100;
+				point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + tempD2 + "";
+				lngs += point_longitute + ",";
+			}
+			map.put("lngs",lngs.subSequence(0, lngs.lastIndexOf(",")));
+			map.put("lats",lats.subSequence(0, lats.lastIndexOf(",")));
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
 }
