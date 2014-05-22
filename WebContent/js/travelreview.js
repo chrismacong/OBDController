@@ -61,55 +61,31 @@ function callback(xyResults) {
 				cells[3*i+2].innerText = "未识别的GPS";
 			}
 		} 
-		setTimeout(function(){
-			var rows = $("#review_travel_info_table tbody tr").length;
-			for(var i=0;i<rows;i++){
-				var row_str = $("#review_travel_info_table tbody tr")[i].innerHTML;
-				if(row_str==null||row_str==""){
-					$("#review_travel_info_table")[0].deleteRow(i+1);
-					rows = $("#review_travel_info_table tbody tr").length;
-					i--;
-				}
-			}
-			for(var i=0;i<rows;i++){
-				for(var j=i+1;j<rows;j++){
-					var html1 = $("#review_travel_info_table tbody tr")[i].innerText;
-					var html2 = $("#review_travel_info_table tbody tr")[j].innerText;
-					var date1 = html1.substring(0,17);
-					var date2 = html2.substring(0,17);
-					if(date1<date2){
-						var tmp = $("#review_travel_info_table tbody tr")[i].innerHTML;
-						$("#review_travel_info_table tbody tr")[i].innerHTML = $("#review_travel_info_table tbody tr")[j].innerHTML;
-						$("#review_travel_info_table tbody tr")[j].innerHTML = tmp;
+		$("#review_travel_info_table tbody tr").click(function(){
+			var $params="terminalId=" + terminal_id + "&starttime=" + this.innerText.substring(0,17);
+			$.ajax({
+				type:'GET',
+				contentType: 'application/json',  
+				url:"travelinfo/getreviewedinfo.html",
+				data: $params,
+				dataType: "json",
+				success:function(data){
+					if (data && data.success == "true") {
+						$.blockUI({
+							message: $('#reviewBlock'),
+							css:{
+								top:'2%',
+								width:'70%',
+								left:'10%'
+							}
+						});
 					}
 				}
-			}
-			$("#review_travel_info_table tbody tr").click(function(){
-				var $params="terminalId=" + terminal_id + "&starttime=" + this.innerText.substring(0,17);
-				$.ajax({
-					type:'GET',
-					contentType: 'application/json',  
-					url:"travelinfo/getreviewedinfo.html",
-					data: $params,
-					dataType: "json",
-					success:function(data){
-						if (data && data.success == "true") {
-							$.blockUI({
-								message: $('#reviewBlock'),
-								css:{
-									top:'2%',
-									width:'70%',
-									left:'10%'
-								}
-							});
-						}
-					}
-				}); 
-			});
-			$(".block_close_btn").click(function(){
-				$.unblockUI();
-			});
-		},1000)
+			}); 
+		});
+		$(".block_close_btn").click(function(){
+			$.unblockUI();
+		});
 	}
 }
 setTimeout(function() {
