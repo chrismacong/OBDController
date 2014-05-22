@@ -11,6 +11,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jQuery/jquery.blockUI.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/terminallog.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/remove_loading.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var str = "${terminalId}";

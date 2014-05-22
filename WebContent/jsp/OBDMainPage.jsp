@@ -227,7 +227,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-22
-			11:02 V1.1.2.16</div>
+			12:25 V1.1.2.17</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,8 +243,11 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.16</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.17</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.2.17</h2>
+				<div>在一些需要响应的界面添加了等待提醒。这将是1.1.2的最后一个版本</div>
 				<br/>
 				<h2>1.1.2.16</h2>
 				<div>去掉了行程记录里的一些冗余JS代码，消除了1秒的等待时间。</div>
@@ -257,9 +260,6 @@
 				<br/>
 				<h2>1.1.2.13</h2>
 				<div>在行程记录中增加了近期行程的显示，包括行程时间和起点终点。</div>
-				<br/>
-				<h2>1.1.2.12</h2>
-				<div>修改了管理界面的车辆显示阈值，因进入正式测试阶段，现只会显示24小时内连接过服务器的终端</div>
 				<br/>
 			</div>
 		</div>

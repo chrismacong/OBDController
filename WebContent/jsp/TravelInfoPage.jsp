@@ -197,6 +197,8 @@
 </script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/travelinfo.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/remove_loading.js"></script>
 <title>行程记录信息</title>
 </head>
 <body>
