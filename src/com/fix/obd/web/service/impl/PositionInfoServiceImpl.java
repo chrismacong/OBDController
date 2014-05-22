@@ -134,6 +134,12 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 				map.put("start_time_in_format", start_time_in_format);
 				map.put("stop_time_in_format", stop_time_in_format);
 				List<PositionData> position_between = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' and date>'" + start_time_in_format + "' and date<'" + stop_time_in_format + "' order by date desc");
+				for(int i=0;i<position_between.size();i++){
+					if(position_between.get(i).getInfo().contains("GPS状态:GPS不定位;")){
+						position_between.remove(i);
+						i--;
+					}
+				}
 				String start_point = "Nil";
 				String stop_point = "Nil";
 				if(position_between.size()>0){
@@ -158,6 +164,7 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 					stop_point = stop_point_longitute + "," + stop_point_latitude;
 					
 					String start_point_latitude = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("纬度:"));
+					System.out.println(position_between.get(position_between.size()-1).getInfo());
 					start_point_latitude = start_point_latitude.substring(0,start_point_latitude.indexOf(";"));
 					start_point_latitude = start_point_latitude.split(":")[1];
 					start_point_latitude = start_point_latitude.replaceAll("\\.", "");

@@ -78,6 +78,7 @@ public class TravelInfoControl {
 		if(review_list.size()>0){
 			TravelInfo[] reviews = new TravelInfo[review_list.size()];
 			String review_position_info_str = "";
+			System.out.println(review_list.size());
 			for(int i=0;i<reviews.length;i++){
 				reviews[i] = review_list.get(i);
 				String start_time = reviews[i].getInfo().substring(26,38);

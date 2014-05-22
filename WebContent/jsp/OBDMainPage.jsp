@@ -227,7 +227,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-22
-			12:25 V1.1.2.17</div>
+			14:22 V1.1.3.0</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,8 +243,12 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.17</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.3.0</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.3.0</h2>
+				<div>修复了由于行程起止地理位置为基站定位造成的BUG</div>
+				<div>优化了一些代码细节</div>
 				<br/>
 				<h2>1.1.2.17</h2>
 				<div>在一些需要响应的界面添加了等待提醒。这将是1.1.2的最后一个版本</div>
@@ -257,9 +261,6 @@
 				<br/>
 				<h2>1.1.2.14</h2>
 				<div>修复了由于回调函数异步执行，导致的最近行程顺序错误的问题</div>
-				<br/>
-				<h2>1.1.2.13</h2>
-				<div>在行程记录中增加了近期行程的显示，包括行程时间和起点终点。</div>
 				<br/>
 			</div>
 		</div>

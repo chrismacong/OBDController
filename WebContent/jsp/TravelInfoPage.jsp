@@ -52,13 +52,9 @@
 		}
 		if (latitude_list.length > 0) {
 			var review_travel_info_table = $("#review_travel_info_table");
-			var count = 0;
 			for ( var i = 0; i < latitude_list.length / 2; i++) {
-				if(latitude_list[i]!=null&&longitute_list[i]!=null){
-					var str = "<tr><td>" + array_date[i] + "</td><td>" + array_start_point[i] + "</td><td>" + array_stop_point[i] + "</td></tr>";
-					review_travel_info_table.append(str);
-					count++;
-				}
+				var str = "<tr><td>" + array_date[i] + "</td><td>" + array_start_point[i] + "</td><td>" + array_stop_point[i] + "</td></tr>";
+				review_travel_info_table.append(str);
 			}
 			var cells = $("#review_travel_info_table tbody tr td");
 			for ( var i = 0; i < latitude_list.length / 2; i++) {
