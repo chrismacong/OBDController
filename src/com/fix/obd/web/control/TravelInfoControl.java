@@ -140,4 +140,31 @@ public class TravelInfoControl {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/getreviewedinfo", method = RequestMethod.GET)
+	public void getReviewedInfo(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+		try {
+			logger.debug("--------getReviewedInfo--------");
+			String terminalId = request.getParameter("terminalId");
+			String starttime = request.getParameter("starttime");
+//			terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+//			boolean temp = travelInfoService.askLastestTravelInfo(terminalId);
+//			Map<String,Object> model = new HashMap<String,Object>();
+//			model.put("terminalId", terminalId);
+			Map map = travelInfoService.getTravelInfoHtmlByStartTime(terminalId, starttime);
+			String review_result_str = map.get("resultStr") + "";
+			String score = map.get("score") + "";
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			jsonObject.put("success", "true");
+			jsonObject.put("review_result_str", review_result_str);
+			jsonObject.put("score", score);
+			pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

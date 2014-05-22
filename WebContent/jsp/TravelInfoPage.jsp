@@ -52,27 +52,36 @@
 		}
 		if (latitude_list.length > 0) {
 			var review_travel_info_table = $("#review_travel_info_table");
+			var count = 0;
 			for ( var i = 0; i < latitude_list.length / 2; i++) {
 				if(latitude_list[i]!=null&&longitute_list[i]!=null){
-					var this_date = array_date[i];
-					var split_length = split_reviews.length;
-					(function(x,date,split_l){
-						myGeo.getLocation(new BMap.Point(base64decode(longitute_list[x]), base64decode(latitude_list[x])),function(singleresult1){
-							var geocoder1 = singleresult1.address;
-							var str = "<tr><td>" + date + "</td><td>" + geocoder1 + "</td>";
-							(function(x,split_l,str){
-								myGeo.getLocation(new BMap.Point(base64decode(longitute_list[x+split_l]), base64decode(latitude_list[x+split_l])),function(singleresult2){
-									var geocoder2 = singleresult2.address;
-									review_travel_info_table.append(str + "<td>" + geocoder2 + "</td><tr/>");
-								});   
-							})(x,split_l,str);	
-						});  
-					})(i,this_date,split_length);
-				}
-				else{
-					review_travel_info_table.append("<tr><td>" + array_date[i] + "</td><td>未识别的GPS</td><td>未识别的GPS</td></tr>");
+					var str = "<tr><td>" + array_date[i] + "</td><td>" + array_start_point[i] + "</td><td>" + array_stop_point[i] + "</td></tr>";
+					review_travel_info_table.append(str);
+					count++;
 				}
 			}
+			var cells = $("#review_travel_info_table tbody tr td");
+			for ( var i = 0; i < latitude_list.length / 2; i++) {
+				if(latitude_list[i]!=null&&longitute_list[i]!=null){
+					var split_length = split_reviews.length;
+					(function(x,split_l){
+						myGeo.getLocation(new BMap.Point(base64decode(longitute_list[x]), base64decode(latitude_list[x])),function(singleresult1){
+							var geocoder1 = singleresult1.address;
+							cells[3*x+1].innerText = geocoder1;
+							(function(x,split_l){
+								myGeo.getLocation(new BMap.Point(base64decode(longitute_list[x+split_l]), base64decode(latitude_list[x+split_l])),function(singleresult2){
+									var geocoder2 = singleresult2.address;
+									cells[3*x+2].innerText = geocoder2;
+								});   
+							})(x,split_l); 
+						});  
+					})(i,split_length);
+				}
+				else{
+					cells[3*i+1].innerText = "未识别的GPS";
+					cells[3*i+2].innerText = "未识别的GPS";
+				}
+			} 
 			setTimeout(function(){
 				var rows = $("#review_travel_info_table tbody tr").length;
 				for(var i=0;i<rows;i++){
@@ -96,6 +105,33 @@
 						}
 					}
 				}
+				$("#review_travel_info_table tbody tr").click(function(){
+					var $params="terminalId=" + terminal_id + "&starttime=" + this.innerText.substring(0,17);
+					$.ajax({
+						type:'GET',
+						contentType: 'application/json',  
+						url:"travelinfo/getreviewedinfo.html",
+						data: $params,
+						dataType: "json",
+						success:function(data){
+							if (data && data.success == "true") {
+								$("#review_content")[0].innerHTML = data.review_result_str;
+								$("#score_content")[0].innerHTML = "当次行程驾驶评分：<font style='font-weight:bold;font-style:italic;font-size:20px;'>" + data.score + "</font> 分";
+								$.blockUI({
+									message: $('#reviewBlock'),
+									css:{
+										top:'2%',
+										width:'60%',
+										left:'20%'
+									}
+								});
+							}
+						}
+					}); 
+				});
+				$(".block_close_btn").click(function(){
+					$.unblockUI();
+				});
 			},1000)
 		}
 	}
@@ -227,6 +263,7 @@
 		<div>历史行程</div>
 		<a class="block_close_btn"></a> <br />
 		<div id="review_content"></div>
+		<div id="score_content"></div>
 	</div>
 </body>
 </html>

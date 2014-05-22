@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-21
-			10:42 V1.1.2.14</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-22
+			10:51 V1.1.2.15</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,8 +243,11 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.2.14</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.2.15</div>
 				<h1>近期版本更新说明</h1>
+				<br/>
+				<h2>1.1.2.15</h2>
+				<div>用户现在可以通过点击最近行程来查看每次行程的相关数据和驾驶评分了</div>
 				<br/>
 				<h2>1.1.2.14</h2>
 				<div>修复了由于回调函数异步执行，导致的最近行程顺序错误的问题</div>
@@ -257,10 +260,6 @@
 				<br/>
 				<h2>1.1.2.11</h2>
 				<div>在驾驶习惯分析中 ，增加了车速规划功能</div>
-				<br/>
-				<h2>1.1.2.10</h2>
-				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的急刹车次数的图表统计</div>
-				<div>在驾驶习惯分析中 ，增加了根据时钟分析用户在不同时间段的急加速次数的图表统计</div>
 				<br/>
 			</div>
 		</div>

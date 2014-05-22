@@ -52,6 +52,38 @@
 	top:620px;
 	left:50px;
 }
+#review_travel_info_table tr{
+	cursor:pointer;
+}
 #review_travel_info_table td{
 	font-size:10px;
+}
+#reviewBlock {
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border: 1px solid #536376;
+	-webkit-box-shadow: rgba(0, 0, 0, .6) 0px 2px 12px;
+	-moz-box-shadow: rgba(0, 0, 0, .6) 0px 2px 12px;;
+	padding: 14px 22px;
+	display: none;
+	background: white;
+	font-size:16px;
+}
+.block_close_btn {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete.png) no-repeat center;
+	cursor:pointer;
+}
+.block_close_btn:hover {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete_hover.png) no-repeat center;
+	cursor:pointer;
 }
