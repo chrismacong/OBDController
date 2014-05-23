@@ -86,3 +86,19 @@
 	top:490px;
 	left:350px;
 }
+#send_agps{
+	position:absolute;
+	width:150px;
+	top:430px;
+	left:500px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#check_agps{
+	position:absolute;
+	width:200px;
+	top:490px;
+	left:500px;
+	height:40px;
+	background-color: #dce9f9;
+}

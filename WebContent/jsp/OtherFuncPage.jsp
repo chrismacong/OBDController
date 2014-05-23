@@ -19,6 +19,12 @@
 			var times = $("#times_input").get(0).value;
 			window.location.href="${pageContext.request.contextPath}/other/call.html?terminalId=" + terminal_id + "&interval=" + interval + "&times=" + times;
 		})
+		$("#send_agps").click(function(){
+			window.location.href = "${pageContext.request.contextPath}/agps/sendagps.html?terminalId=${terminalId}";
+		})
+		$("#check_agps").click(function(){
+			window.location.href = "${pageContext.request.contextPath}/agps/checkagps.html?terminalId=${terminalId}";
+		})
 	})
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/other.js"></script>
@@ -60,6 +66,8 @@
 	<button id="arm_button">设防</button>
 	<button id="disarm_button">撤防</button>
 	<button id="restore_button">恢复出厂设置</button>
+	<button id="send_agps">发送AGPS数据包</button>
+	<button id="check_agps">判断AGPS数据包是否最新</button>
 	<div id="waitBlock" style="display:none; cursor:default;" align="center">
 		<div id="operating">正在操作..</div>
 		<p id="waiting"></p>

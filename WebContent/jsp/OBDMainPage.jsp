@@ -103,9 +103,9 @@
 					+ "\"menuid\" : \"1"
 					+ i
 					+ "7\","
-					+ "\"menuname\" : \"AGPS\","
+					+ "\"menuname\" : \"车险风险分析\","
 					+ "\"icon\" : \"icon-nav\","
-					+ "\"url\" : \"${pageContext.request.contextPath}/agps.html?terminalId="
+					+ "\"url\" : \"${pageContext.request.contextPath}/insurance.html?terminalId="
 					+ terminals[i]
 					+ "\""
 					+ "}, {"
@@ -226,8 +226,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-22
-			16:33 V1.1.3.1</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-23
+			14:56 V1.1.3.3</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -243,8 +243,15 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.3.1</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.3.3</div>
 				<h1>近期版本更新说明</h1>
+				<h2>1.1.3.2</h2>
+				<div>将AGPS界面与其他功能界面合并，新增加了车险风险分析界面，暂无内容</div>
+				<div>合并了部分代码</div>
+				<br/>
+				<br/>
+				<h2>1.1.3.2</h2>
+				<div>修改热力图密度max值为30</div>
 				<br/>
 				<h2>1.1.3.1</h2>
 				<div>在驾驶习惯分析中新增了热区功能,用来查看某用户的习惯驾驶区域</div>
@@ -256,12 +263,6 @@
 				<br/>
 				<h2>1.1.2.17</h2>
 				<div>在一些需要响应的界面添加了等待提醒。这将是1.1.2的最后一个版本</div>
-				<br/>
-				<h2>1.1.2.16</h2>
-				<div>去掉了行程记录里的一些冗余JS代码，消除了1秒的等待时间。</div>
-				<br/>
-				<h2>1.1.2.15</h2>
-				<div>用户现在可以通过点击最近行程来查看每次行程的相关数据和驾驶评分了</div>
 				<br/>
 			</div>
 		</div>

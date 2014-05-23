@@ -46,7 +46,7 @@ public class AGPSControl {
 		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
 		model.put("terminalId", terminalId);
 		agpsService.askSendAGPS(terminalId);
-		return new ModelAndView("AGPSPage",model);
+		return new ModelAndView("OtherFuncPage",model);
  	}
 	@RequestMapping(value = "/checkagps", method = RequestMethod.GET)
 	public ModelAndView checkagps(HttpServletRequest request,HttpServletResponse response){
@@ -55,6 +55,6 @@ public class AGPSControl {
 		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
 		model.put("terminalId", terminalId);
 		agpsService.askCheckAGPS(terminalId);
-		return new ModelAndView("AGPSPage",model);
+		return new ModelAndView("OtherFuncPage",model);
 	}
 }

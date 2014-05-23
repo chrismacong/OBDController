@@ -1,6 +1,10 @@
 package com.fix.obd.web.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -211,4 +215,84 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		return null;
 	}
 	
+	//加速、减速分析
+	public Map getBrakesAndSpeedUpsByTravel(String terminalId) {
+		List<TravelInfo> totalInfo=getTotalTravelInfo(terminalId);
+		HashMap<String, Long[]> map=new HashMap<String,Long[]>();
+		if(totalInfo!=null){
+			List<String> eachTravel=getEachTravel(totalInfo);
+			for(String info:eachTravel){
+				String[] a=info.split("@");
+				String beginTime=getBeginTime(a);
+				String endTime=getEndTime(a);
+				String speedUp=getSpeedUp(a);
+				String brake=getBrake(a);
+				long mill=getTimeDiff(beginTime,endTime);
+				long speedUpPerHour=toPerHour(speedUp,mill);
+				long brakePerHour=toPerHour(brake,mill);
+				map.put(beginTime+"-"+endTime, new Long[]{speedUpPerHour,brakePerHour});
+			}
+		}
+		return map;
+	}
+	
+	private List<TravelInfo> getTotalTravelInfo(String terminalId) {
+		try {
+			String hql="from TravelInfo where tid ='"+terminalId+"'";
+			return travelInfoDao.findByHQL(hql);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private List<String> getEachTravel(List<TravelInfo> totalInfo) {
+		List<String> eachTravelInfo = new ArrayList<String>();
+		for(TravelInfo info:totalInfo){
+			eachTravelInfo.add(info.getInfo());
+		}
+		return eachTravelInfo;
+	}
+
+	private String getSpeedUp(String[] list) {
+		String speedup=list[7];
+		return speedup.split(";")[1];
+	}
+
+	private String getBrake(String[] list) {
+		String brake=list[5];
+		return brake.split(";")[1];
+	}
+
+	private String getBeginTime(String[] list) {
+		String beginStr=list[1];
+		return beginStr.split(";")[1];
+	}
+
+	private String getEndTime(String[] list) {
+		String endStr=list[0];
+		return endStr.split(";")[1];
+	}
+	
+	private long getTimeDiff(String begin,String end){
+		SimpleDateFormat df=new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
+		try {
+			Date beginDate=df.parse(begin);
+			Date endDate=df.parse(end);
+			Calendar cbegin = Calendar.getInstance();
+			cbegin.setTime(beginDate);
+			Calendar cend = Calendar.getInstance();
+			cend.setTime(endDate);
+			long diff=cend.getTimeInMillis() - cbegin.getTimeInMillis();
+			return diff;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public long toPerHour(String num, long mill) {
+		int n=Integer.parseInt(num);
+		return n*60*60/mill;
+	}
 }

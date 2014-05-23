@@ -177,7 +177,7 @@ textarea:focus {
 			map.addOverlay(heatmapOverlay);
 			heatmapOverlay.setDataSet({
 				data : area_points,
-				max : 100
+				max : 30
 			});
 
 		}
