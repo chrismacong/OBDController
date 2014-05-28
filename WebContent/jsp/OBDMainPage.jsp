@@ -25,6 +25,8 @@
 	src='${pageContext.request.contextPath}/js/outlook.js'></script>
 <script type="text/javascript">
 	onlineId_list = "${onlineId_list}";
+	refresh_Time = "${online_terminal_refresh_minute}";
+	var count_interval;
 	function ff(onlineId_list) {
 		var terminals = onlineId_list.split(";");
 		var jsonStr = "[{";
@@ -33,6 +35,123 @@
 					+ i
 					+ "\","
 					+ "\"icon\" : \"icon-sys\","
+					+ "\"menuname\" : \""
+					+ terminals[i]
+					+ "\","
+					+ "\"menus\" : [{"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "0\","
+					+ "\"menuname\" : \"设备信息\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/terminalinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "1\","
+					+ "\"menuname\" : \"OBD日志\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/terminallog.html?terminalId="
+					+ terminals[i]
+					+ "&pageSize=50\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "2\","
+					+ "\"menuname\" : \"地理位置和驾驶习惯\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/positioninfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "3\","
+					+ "\"menuname\" : \"车辆健康体检\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/vehicleexm.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "4\","
+					+ "\"menuname\" : \"参数设置与查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/character.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "5\","
+					+ "\"menuname\" : \"行程记录查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/travelinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "6\","
+					+ "\"menuname\" : \"OBD状态查询\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/obdinfo.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "7\","
+					+ "\"menuname\" : \"车险风险分析\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/insurance.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "8\","
+					+ "\"menuname\" : \"故障码操作\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/dtc.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "9\","
+					+ "\"menuname\" : \"配置升级服务器信息\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/updateconfig.html?terminalId="
+					+ terminals[i]
+					+ "\""
+					+ "}, {"
+					+ "\"menuid\" : \"1"
+					+ i
+					+ "10\","
+					+ "\"menuname\" : \"其他功能\","
+					+ "\"icon\" : \"icon-nav\","
+					+ "\"url\" : \"${pageContext.request.contextPath}/other.html?terminalId="
+					+ terminals[i] + "\"" + "}]" + "},{";
+		}
+		jsonStr = jsonStr.substring(0, jsonStr.lastIndexOf(','));
+		jsonStr += "]";
+		return eval(jsonStr);
+	}
+	function fg(onlineId_list,online_b) {
+		var terminals = onlineId_list.split(";");
+		var jsonStr = "[{";
+		for ( var i = 0; i < terminals.length; i++) {
+			var icon_str = "icon-sys";
+			if(online_b[i]=="0")
+				icon_str = "icon-away";
+			jsonStr += "\"menuid\" : \"1"
+					+ i
+					+ "\","
+					+ "\"icon\" : \"" + icon_str + "\","
 					+ "\"menuname\" : \""
 					+ terminals[i]
 					+ "\","
@@ -170,22 +289,29 @@
 		$('#btnCancel').click(function() {
 			closePwd();
 		})
-		$('#loginOut').click(function() {
-			$.messager.confirm('系统提示','您确定要退出本次登录吗?',function(r) {
-				if (r) {
-					$.cookie('email', null, {
-						path : "/"
-					});
-					$.cookie('rolename', null,
-					{
-						path : "/"
-					});
-					window.location.href = "${pageContext.request.contextPath}/login.html";
-				}
-			});
-		})
+		$('#loginOut')
+				.click(
+						function() {
+							$.messager
+									.confirm(
+											'系统提示',
+											'您确定要退出本次登录吗?',
+											function(r) {
+												if (r) {
+													$.cookie('email', null, {
+														path : "/"
+													});
+													$.cookie('rolename', null,
+															{
+																path : "/"
+															});
+													window.location.href = "${pageContext.request.contextPath}/login.html";
+												}
+											});
+						})
 		var refresh_T = "${online_terminal_refresh_minute}";
-		window.setInterval("initEvery5Second()", parseInt(refresh_T));
+		count_interval = window.setInterval("initEvery5Second()",
+				parseInt(refresh_T));
 	});
 </script>
 <Style>
@@ -214,7 +340,8 @@
 	<div region="north" split="true" border="false"
 		style="overflow: hidden; height: 30px; background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%; line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑, 黑体">
 		<span style="float: right; padding-right: 20px;" class="head">欢迎
-			-${useremail}- <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">安全退出</a>
+			-${useremail}- <a href="#" id="editpass">修改密码</a> <a href="#"
+			id="loginOut">安全退出</a>
 		</span> <span style="padding-left: 10px; font-size: 16px; float: left;"><img
 			src="images/blocks.gif" width="20" height="20" align="absmiddle" />
 			OBD在线支持系统</span>
@@ -226,14 +353,15 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-23
-			14:56 V1.1.3.3</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-28
+			13:06 V1.1.3.4</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
+		<div id="scan_button"></div>
+		<div id="search_button"></div>
 		<div id='wnav' class="easyui-accordion" fit="true" border="false">
-			<!--  导航内容 -->
-
+			<!--导航内容-->
 		</div>
 
 	</div>
@@ -243,27 +371,28 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.3.3</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.3.4</div>
 				<h1>近期版本更新说明</h1>
-				<h2>1.1.3.2</h2>
+				<br />
+				<h2>1.1.3.4</h2>
+				<div>在管理员主界面中添加了查找功能，用户可以在查找设备和查看所有终端设备中进行切换，以查看离线设备的相关信息</div>
+				<div>加入了车险分析界面，暂时为hardcode</div>
+				<br />
+				<h2>1.1.3.3</h2>
 				<div>将AGPS界面与其他功能界面合并，新增加了车险风险分析界面，暂无内容</div>
 				<div>合并了部分代码</div>
-				<br/>
-				<br/>
+				<br />
 				<h2>1.1.3.2</h2>
 				<div>修改热力图密度max值为30</div>
-				<br/>
+				<br />
 				<h2>1.1.3.1</h2>
 				<div>在驾驶习惯分析中新增了热区功能,用来查看某用户的习惯驾驶区域</div>
 				<div>该功能对服务器和本地浏览器的要求较高，请慎重使用</div>
-				<br/>
+				<br />
 				<h2>1.1.3.0</h2>
 				<div>修复了由于行程起止地理位置为基站定位造成的BUG</div>
 				<div>优化了一些代码细节</div>
-				<br/>
-				<h2>1.1.2.17</h2>
-				<div>在一些需要响应的界面添加了等待提醒。这将是1.1.2的最后一个版本</div>
-				<br/>
+				<br />
 			</div>
 		</div>
 	</div>

@@ -77,4 +77,27 @@ public class MainControl {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/getSearch", method = RequestMethod.GET)
+	public void getSearch(HttpServletRequest request,HttpServletResponse response){
+		try {
+			logger.debug("-----getSearch-----");
+			response.setCharacterEncoding("utf-8");
+			String search_str = new String(request.getParameter("search_str").getBytes("ISO8859-1"),"UTF-8");
+			Map map = mainService.getTerminalsByPartOfIdorUsername(search_str);
+			String terminals = (String) map.get("terminals");
+			String online_or_offline = (String) map.get("online_or_offline");
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			jsonObject.put("terminals", terminals);
+			jsonObject.put("online_or_offline", online_or_offline);
+			jsonObject.put("success", "true");
+			pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

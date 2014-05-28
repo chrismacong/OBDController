@@ -25,6 +25,52 @@ $(function() {
 	addNav(_menus[firstMenuName]);
 	InitLeftMenu();
 
+	$("#search_button").click(function(){
+	    $(function () {
+	        $.messager.prompt("设备查询", "请输入查询的设备ID或用户姓名", function (data) {
+	            if (data) {
+	            	Clearnav();
+	            	window.clearInterval(count_interval);
+	            	var $params="search_str=" + data;
+	            	$.ajax({
+	            		type:'GET',
+	            		contentType: 'application/json',  
+	            		url:"main/getSearch.html",
+	            		data: $params,
+	            		dataType: "json",
+	            		success:function(data){
+	            			if (data && data.success == "true") {
+	            				var terminals = data.terminals;
+	            				var online_or_offline = data.online_or_offline;
+	            				var new_terminals = terminals.split(",");
+	            				var online_b = online_or_offline.split(",");
+	            				var pp = $('#wnav').accordion('panels');
+	            				for(var i=0;i<new_terminals.length;i++){
+	            					var this_menu = {
+	            							obd : fg(new_terminals[i],online_b[i])
+	            					}
+	            					var firstMenuName = $('#css3menu a:first').attr('name');
+	            					addOneNav(this_menu[firstMenuName]);
+	            				}
+	            				if(new_terminals.length>0){
+	            					$('#wnav').accordion('select', new_terminals[0]);
+	            				}
+	            			}
+	            		},
+	            		error: function(data){
+	            			alert("网络延时，请刷新界面");
+	            		}
+	            	});
+	            }
+	        });
+	    });
+	})
+	
+	$("#scan_button").click(function(){
+		Clearnav();
+		initEvery5Second();
+		count_interval = window.setInterval("initEvery5Second()", parseInt(refresh_Time));
+	})
 });
 function initEvery5Second(){
 	var spp = $('#wnav').accordion('getSelected');
@@ -80,6 +126,8 @@ function initEvery5Second(){
 	if(selected_still_there){
 		$('#wnav').accordion('select', selected_title);
 	}
+	else if(new_terminals.length>0)
+		$('#wnav').accordion('select', new_terminals[0]);
 	/* old method of update by MC 2013-10-09*/
 //	_menus = {
 //			obd : ff(onlineId_list),

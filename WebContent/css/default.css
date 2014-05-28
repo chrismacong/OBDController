@@ -22,7 +22,7 @@ a:hover{ color:Red; text-decoration:underline;}
 
 
 .icon{ background:url(../images/tabicons.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
-.icon-sys{ background-position:0px -200px;}
+.icon-sys{ background-position:-260px -40px;}
 .icon-set{ background-position:-380px -200px;}
 .icon-add{background-position: -20px 0px;}
 .icon-add1{background:url('icon/edit_add.png') no-repeat;}
@@ -38,3 +38,34 @@ a:hover{ color:Red; text-decoration:underline;}
 .icon-database{ background-position:-20px -140px;}
 .icon-expand{ background:url('/images/coll2.gif') no-repeat;}
 .icon-collapse{ background:url('/images/coll3.gif') no-repeat;}
+.icon-away{ background-position:-280px -40px;}
+
+#search_button{
+	position:absolute;
+	left:190px;
+	top:5px;
+	width:15px;
+	height:15px;
+	cursor: pointer;
+	opacity: 0.6;
+	background:url(../images/tools-sprites-trans.gif) -15px -315px no-repeat;
+}
+
+#search_button:hover{
+	opacity: 1;
+}
+
+#scan_button{
+	position:absolute;
+	left:167px;
+	top:5px;
+	width:15px;
+	height:15px;
+	cursor: pointer;
+	opacity: 0.6;
+	background:url(../images/tools-sprites-trans.gif) -15px -300px no-repeat;
+}
+
+#scan_button:hover{
+	opacity: 1;
+}

@@ -1,2 +1,188 @@
 @CHARSET "UTF-8";
 *{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+
+
+/*body {
+	font-family:  Comic Sans, Cursive;
+	font-size: 14px;
+}*/
+a {
+	color: #999;
+	text-decoration: none;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	-ms-transition: 0.5s;
+	transition: 0.5s;
+}
+
+a:hover,a.selected {
+	font-size: 24px;
+	color: #000;
+}
+
+table {
+	*border-collapse: collapse; /* IE7 and lower */
+	width:400px;
+	height:28px;
+	border-spacing: 0;
+	position:absolute;
+	left:55%;
+	top:70px;
+}
+
+/*------------content-----------------*/
+#content {
+	position:absolute;
+	left:50px;
+	top:70px;
+}
+
+
+#diagram {
+	float:left;
+	width: 400px;
+	height: 400px;
+}
+
+.legend {
+	float:left;
+}
+
+
+/* ratios */
+.ratios {
+	float: left;
+	clear: both;
+	margin-top: 5px;
+}
+
+.ratios ul,.ratios li {
+	display: block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ratios li {
+	float: left;
+	clear: both;
+	height: 20px;
+	line-height: 20px;
+	color: #EFEFEF;
+	margin-bottom: 1px;
+	font-size: 14px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.ratios .stable {
+	background: #97BE0D;
+}
+
+.ratios .crecord {
+	background: #D84F5F;
+}
+
+.ratios .age {
+	background: #2797E9;
+}
+
+.ratios .ttime {
+	background: #66c;
+}
+
+.ratios .dtime {
+	background: #424242;
+}
+
+
+.get {
+	display: none;
+}
+
+/*-----------btn------------------*/
+
+#hour_btn {
+	position: absolute;
+	top: 450px;
+	left: 50px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/hour.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#hour_btn:hover {
+	background: url(../images/hour_hover.png) top left no-repeat;
+}
+
+#speed_hour_btn {
+	position: absolute;
+	top: 450px;
+	left: 150px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/speed_hour.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#speed_hour_btn:hover {
+	background: url(../images/speed_hour_hover.png) top left no-repeat;
+}
+
+#brake_hour_btn {
+	position: absolute;
+	top: 450px;
+	left: 250px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/brake_hour.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#brake_hour_btn:hover {
+	background: url(../images/brake_hour_hover.png) top left no-repeat;
+}
+
+#speedup_hour_btn {
+	position: absolute;
+	top: 450px;
+	left: 350px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/speedup_hour.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#speedup_hour_btn:hover {
+	background: url(../images/speedup_hour_hover.png) top left no-repeat;
+}
+
+#speedplan_btn {
+	position: absolute;
+	top: 450px;
+	left: 450px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/speedplan.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#speedplan_btn:hover {
+	background: url(../images/speedplan_hover.png) top left no-repeat;
+}
+
+#hotspot_btn {
+	position: absolute;
+	top: 450px;
+	left: 550px;
+	height: 80px;
+	width: 80px;
+	background: url(../images/hotspot.png) top left no-repeat;
+	cursor: pointer;
+}
+
+#hotspot_btn:hover {
+	background: url(../images/hotspot_hover.png) top left no-repeat;
+}
