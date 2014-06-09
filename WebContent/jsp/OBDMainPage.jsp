@@ -266,12 +266,12 @@
 			"menuname" : "全局设置",
 			"menus" : [ {
 				"menuid" : "201",
-				"menuname" : "更新服务器设置",
+				"menuname" : "个人用户管理",
 				"icon" : "icon-nav",
 				"url" : "#"
 			}, {
 				"menuid" : "202",
-				"menuname" : "其他设置",
+				"menuname" : "行业用户管理",
 				"icon" : "icon-nav",
 				"url" : "#"
 			} ]
@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-05-28
-			13:06 V1.1.3.4</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-06-09
+			10:13 V1.1.3.6</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,16 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.3.4</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.3.6</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.3.6</h2>
+				<div>将个人用户界面的驾车习惯修改为了位置信息，修复了服务器读写使得内存溢出的问题</div>
+				<div>在个人用户界面中添加了行程记录的显示</div>
+				<div>修复了页面顶端菜单点击无效的问题</div>
+				<br />
+				<h2>1.1.3.5</h2>
+				<div>修复了姓名查找时是否离线显示错误的BUG</div>
 				<br />
 				<h2>1.1.3.4</h2>
 				<div>在管理员主界面中添加了查找功能，用户可以在查找设备和查看所有终端设备中进行切换，以查看离线设备的相关信息</div>
@@ -384,14 +392,6 @@
 				<br />
 				<h2>1.1.3.2</h2>
 				<div>修改热力图密度max值为30</div>
-				<br />
-				<h2>1.1.3.1</h2>
-				<div>在驾驶习惯分析中新增了热区功能,用来查看某用户的习惯驾驶区域</div>
-				<div>该功能对服务器和本地浏览器的要求较高，请慎重使用</div>
-				<br />
-				<h2>1.1.3.0</h2>
-				<div>修复了由于行程起止地理位置为基站定位造成的BUG</div>
-				<div>优化了一些代码细节</div>
 				<br />
 			</div>
 		</div>

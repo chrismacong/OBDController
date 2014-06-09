@@ -118,8 +118,13 @@ public class MainServiceImpl implements MainService{
 					if(terminal_list.get(j).getTerminalId().equals(user_list.get(i).getObdnumber()))
 						exist = true;
 				}
-				if(exist==false)
+				if(exist==false){
 					terminals += user_list.get(i).getObdnumber() + ",";
+					List<OnLineTerminal> this_terminal_list = onlineTerminalDao.findByHQL("from OnLineTerminal where terminalId = '" + user_list.get(i).getObdnumber() + "'");
+					if(this_terminal_list.size()>0){
+						terminal_list.add(this_terminal_list.get(0));
+					}
+				}
 			}
 			if(terminals.lastIndexOf(",")>0)
 				terminals = terminals.substring(0,terminals.lastIndexOf(","));

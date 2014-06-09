@@ -23,6 +23,7 @@ import com.fix.obd.web.service.TravelExmnationService;
 @Component
 public class TravelExmnationServiceImpl implements TravelExmnationService{
 	private String lineOfDate;
+	private String endlineOfDate;
 	@Resource
 	private TravelInfoDao travelInfoDao;
 
@@ -64,6 +65,16 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		String dayStr = (""+day).length()==2?""+day:"0"+day;
 		lineOfDate = year + "-" + monthStr + "-" + dayStr + " 00:00:00";
+		calendar = Calendar.getInstance();
+		year = calendar.get(Calendar.YEAR);
+		month = calendar.get(Calendar.MONTH)+1;
+		monthStr = (""+month).length()==2?""+month:"0"+month;
+		day = calendar.get(Calendar.DAY_OF_MONTH);
+		dayStr = (""+day).length()==2?""+day:"0"+day;
+		endlineOfDate = year + "-" + monthStr + "-" + dayStr + " 23:59:59";
+	}
+	private TravelExmnationServiceImpl(String date){
+		
 	}
 	@Override
 	public String getTotalDistance(List<TravelInfo> info_list) {
@@ -490,7 +501,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		final String TIRED_NORMAL = "您经常出现疲劳驾驶的情况，为了您的安全，请务必健康行车";
 		Map map = new HashMap();
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date >= '" + lineOfDate + "' and date<='" + endlineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){

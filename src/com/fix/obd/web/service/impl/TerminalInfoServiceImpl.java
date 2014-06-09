@@ -58,7 +58,10 @@ public class TerminalInfoServiceImpl implements TerminalInfoService{
 		// TODO Auto-generated method stub
 		try {
 			List<OnLineTerminal> list = onlineTerminalDao.findByHQL("from OnLineTerminal where tid = '" + terminalId + "'");
-			return list.get(0).getLastheartbeat();
+			if(list.size()>0)
+				return list.get(0).getLastheartbeat();
+			else
+				return null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

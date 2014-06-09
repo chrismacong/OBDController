@@ -25,6 +25,7 @@
 	<div id="scoreTxtDiv">您的车辆健康指数为</div>
 	<div id="scoreDiv">100</div>
 	<button id="exm_button" class="healthy_button">开始体检</button>
+	<button id="journal_button" class="healthy_button">生成当日健康报表</button>
 	<div id="totalsaying"></div>
 	<div id="totalreport">对车辆进行故障检查，以下0项存在问题</div>
 	<table class="bordered" id="error_table">

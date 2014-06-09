@@ -55,4 +55,26 @@ $(function(){
 			}
 		});
 	});
+	$("#journal_button").click(function(){
+		var $params="terminalId=" + terminal_id;
+		$.ajax({
+			type:'GET',
+			contentType: 'application/json',  
+			url:"vehicleexm/makejournal.html",
+			data: $params,
+			dataType: "json",
+			success:function(data){
+				if (data && data.success == "true") {
+				}
+				else{
+					$.unblockUI();
+					alert("操作失败，请确认已与终端建立连接")
+				}
+			},
+			error:function(){
+				$.unblockUI();
+				alert("操作失败，请确认已与终端建立连接")
+			}
+		});
+	});
 });

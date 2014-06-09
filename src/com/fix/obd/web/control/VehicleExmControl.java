@@ -73,4 +73,28 @@ public class VehicleExmControl {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/makejournal", method = RequestMethod.GET)
+	public void makeJournal(HttpServletRequest request,HttpSession session,HttpServletResponse response){
+		String terminalId = request.getParameter("terminalId");
+		terminalId = MessageUtil.frontCompWithZore(terminalId, 20);
+		logger.debug("--------making journal:" + terminalId + "--------");
+		boolean replyOrNot = vehicleExmnationService.askDTCDefect(terminalId);
+		PrintWriter pw = null;
+		try {
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			if(replyOrNot){
+				jsonObject.put("success", "true");
+			}
+			else{
+				jsonObject.put("success", "false");
+			}
+			pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

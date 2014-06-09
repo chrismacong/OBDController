@@ -6,7 +6,8 @@ $(function() {
 	tabClose();
 	tabCloseEven();
 
-	$('#logout_a').click(function() {
+	$('#css3menu a').click(function() {
+		var tagname = $(this).attr('name');
 		$('#css3menu a').removeClass('active');
 		$(this).addClass('active');
 
@@ -14,6 +15,13 @@ $(function() {
 		Clearnav();
 		addNav(d);
 		InitLeftMenu();
+		if(tagname=="config")
+			window.clearInterval(count_interval);
+		else if(tagname=="obd"){
+			Clearnav();
+			initEvery5Second();
+			count_interval = window.setInterval("initEvery5Second()", parseInt(refresh_Time));
+		}
 	});
 
 	// 导航菜单绑定初始化
@@ -431,7 +439,6 @@ function closePwd() {
 
 //修改密码
 function serverLogin() {
-	alert("0000")
     var $newpass = $('#txtNewPass');
     var $rePass = $('#txtRePass');
     if ($newpass.val() == '') {
