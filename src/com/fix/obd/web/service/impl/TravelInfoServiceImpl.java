@@ -312,7 +312,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			day = day.length()==1?"0"+day:day;
 			String today_date = year+month+day;
 			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,6)='" + today_date + "'");
-			ttr.setToday_travel_times(info_list.size()+"");
+			
 			int today_distance = 0;
 			double today_total_oil= 0.00;
 			int today_total_time= 0;
@@ -322,6 +322,17 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			int today_speedup_times= 0;
 			int today_emer_speedup_times= 0;
 			if(info_list.size()>0){
+				for(int i=0;i<info_list.size()-1;i++){
+					for(int j=info_list.size()-1;j>i;j--){
+						TravelInfo info1 = info_list.get(i);
+						TravelInfo info2 = info_list.get(j);
+						String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+						String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+						if(info1_str.equals(info2_str))
+							info_list.remove(j);
+					}
+				}
+				ttr.setToday_travel_times(info_list.size()+"");
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
 					if(infoStr.indexOf("¾àÀë")>-1){

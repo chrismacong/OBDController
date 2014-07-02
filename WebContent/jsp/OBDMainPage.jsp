@@ -354,7 +354,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-02
-			22:22 V1.1.4.0</div>
+			22:43 V1.1.4.1</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -373,6 +373,9 @@
 				<h1>Welcome to using The OBD Support System</h1>
 				<div>欢迎使用OBD在线支持系统 版本号1.1.3.11</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.1</h2>
+				<div>修复了todaytravelreport提取行程信息未查重的bug</div>
 				<br />
 				<h2>1.1.4.0</h2>
 				<div>更新了极光推送的Appkey和MarketId，开始新的Android端开发</div>
