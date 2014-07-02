@@ -164,7 +164,6 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 					stop_point = stop_point_longitute + "," + stop_point_latitude;
 					
 					String start_point_latitude = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("Î³¶È:"));
-					System.out.println(position_between.get(position_between.size()-1).getInfo());
 					start_point_latitude = start_point_latitude.substring(0,start_point_latitude.indexOf(";"));
 					start_point_latitude = start_point_latitude.split(":")[1];
 					start_point_latitude = start_point_latitude.replaceAll("\\.", "");
@@ -184,8 +183,8 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 					start_point_longitute = Integer.parseInt(start_point_longitute.split("\\.")[0]) + _tempD1 + "";
 					start_point = start_point_longitute + "," + start_point_latitude;
 //					System.out.println(start_point + "-->" + stop_point);
-					map.put("start_point",start_point);
-					map.put("stop_point", stop_point);
+//					map.put("start_point",start_point);
+//					map.put("stop_point", stop_point);
 				}
 				return map;
 			}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.fix.obd.web.dao.DTCDefectDao;
@@ -27,6 +28,7 @@ import com.fix.obd.web.model.ParameterResponse;
 import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.service.TerminalServerService;
+import com.fix.obd.web.util.JSONHelper;
 @Component
 public class TerminalServerServiceImpl implements TerminalServerService{
 	@Resource
@@ -47,6 +49,8 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 	private DTCDefectDao dtcDefectDao;
 	@Resource
 	private TravelInfoDao travelInfoDao;
+	
+	private final String API_KEY = "15cf002106718ce6a60a7841ea39f127";
 	public TravelInfoDao getTravelInfoDao() {
 		return travelInfoDao;
 	}
@@ -265,6 +269,99 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String now = df.format(new Date());
 			travelInfo.setDate(now);
+			String infoStr = info.substring(0,info.lastIndexOf("@"));
+			String[] characters = infoStr.split("@");
+			String start_time = characters[1].split(";")[1];
+			String start_time_in_format = start_time.substring(0,2) + "-" + start_time.substring(2,4) + "-" + start_time.substring(4,6) + " " + start_time.substring(6,8) + ":" + start_time.substring(8,10) + ":" + start_time.substring(10,12);
+			String stop_time = characters[0].split(";")[1];
+			String stop_time_in_format = stop_time.substring(0,2) + "-" + stop_time.substring(2,4) + "-" + stop_time.substring(4,6) + " " + stop_time.substring(6,8) + ":" + stop_time.substring(8,10) + ":" + stop_time.substring(10,12);
+			System.out.println("from PositionData where tid = '" + clientId + "' and date>'" + start_time_in_format + "' and date<'" + stop_time_in_format + "' order by date desc");
+			List<PositionData> position_between = positiondataDao.findByHQL("from PositionData where tid = '" + clientId + "' and date>'" + start_time_in_format + "' and date<'" + stop_time_in_format + "' order by date desc");
+			System.out.println(position_between.size());
+			for(int i=0;i<position_between.size();i++){
+				if(position_between.get(i).getInfo().contains("GPS状态:GPS不定位;")){
+					position_between.remove(i);
+					i--;
+				}
+			}
+			String start_point = "Nil";
+			String stop_point = "Nil";
+			String start_address = "缺失有效DPS信息";
+			String stop_address = "缺失有效GPS信息";
+			System.out.println(position_between.size());
+			if(position_between.size()>0){
+				String stop_point_latitude = position_between.get(0).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("纬度:"));
+				stop_point_latitude = stop_point_latitude.substring(0,stop_point_latitude.indexOf(";"));
+				stop_point_latitude = stop_point_latitude.split(":")[1];
+				stop_point_latitude = stop_point_latitude.replaceAll("\\.", "");
+				stop_point_latitude = stop_point_latitude.replaceAll("°", ".");
+				String tempStrPart = stop_point_latitude.split("\\.")[1];
+				tempStrPart = "0." + tempStrPart;
+				double tempD = Double.parseDouble(tempStrPart)/60*100;
+				stop_point_latitude = Integer.parseInt(stop_point_latitude.split("\\.")[0]) + tempD + "";
+				
+				String stop_point_longitute = position_between.get(0).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("经度:"));
+				stop_point_longitute = stop_point_longitute.substring(0,stop_point_longitute.indexOf(";"));
+				stop_point_longitute = stop_point_longitute.split(":")[1];
+				stop_point_longitute = stop_point_longitute.replaceAll("\\.", "");
+				stop_point_longitute = stop_point_longitute.replaceAll("°", ".");
+				String _tempStrPart = "0." + stop_point_longitute.split("\\.")[1];
+				double _tempD = Double.parseDouble(_tempStrPart)/60*100;
+				stop_point_longitute = Integer.parseInt(stop_point_longitute.split("\\.")[0]) + _tempD + "";
+				stop_point = stop_point_longitute + "," + stop_point_latitude;
+				
+				String start_point_latitude = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("纬度:"));
+				start_point_latitude = start_point_latitude.substring(0,start_point_latitude.indexOf(";"));
+				start_point_latitude = start_point_latitude.split(":")[1];
+				start_point_latitude = start_point_latitude.replaceAll("\\.", "");
+				start_point_latitude = start_point_latitude.replaceAll("°", ".");
+				String tempStrPart1 = start_point_latitude.split("\\.")[1];
+				tempStrPart1 = "0." + tempStrPart1;
+				double tempD1 = Double.parseDouble(tempStrPart1)/60*100;
+				start_point_latitude = Integer.parseInt(start_point_latitude.split("\\.")[0]) + tempD1 + "";
+				
+				String start_point_longitute = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("经度:"));
+				start_point_longitute = start_point_longitute.substring(0,start_point_longitute.indexOf(";"));
+				start_point_longitute = start_point_longitute.split(":")[1];
+				start_point_longitute = start_point_longitute.replaceAll("\\.", "");
+				start_point_longitute = start_point_longitute.replaceAll("°", ".");
+				String _tempStrPart1 = "0." + start_point_longitute.split("\\.")[1];
+				double _tempD1 = Double.parseDouble(_tempStrPart1)/60*100;
+				start_point_longitute = Integer.parseInt(start_point_longitute.split("\\.")[0]) + _tempD1 + "";
+				start_point = start_point_longitute + "," + start_point_latitude;
+				String start_point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + start_point + "&from=1&to=5&ak=" + API_KEY;
+				JSONObject start_json1 = JSONHelper.readJsonFromUrl(start_point_str_for_api);
+				String start_point_after = (String) (start_json1.getJSONArray("result").getString(0));
+				JSONObject start_json_after = new JSONObject(start_point_after);
+				String start_x = start_json_after.getString("x");
+				String start_y = start_json_after.getString("y");
+				String start_str = start_y + "," + start_x;
+				String start_point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + start_str + "&output=json&ak=" + API_KEY;
+				JSONObject start_json2 = JSONHelper.readJsonFromUrl(start_point_str2_for_api);
+				String start_address_after = (String) (start_json2.getString("result"));
+				System.out.println(start_address_after);
+				String start_temp_str = start_address_after.split("\"formatted_address\":\"")[1];
+				start_address = start_temp_str.substring(0,start_temp_str.indexOf("\""));
+				if("".equals(start_address))
+					start_address = "无效地理位置";
+				String stop_point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + stop_point + "&from=1&to=5&ak=" + API_KEY;
+				JSONObject stop_json1 = JSONHelper.readJsonFromUrl(stop_point_str_for_api);
+				String stop_point_after = (String) (stop_json1.getJSONArray("result").getString(0));
+				JSONObject stop_json_after = new JSONObject(stop_point_after);
+				String stop_x = stop_json_after.getString("x");
+				String stop_y = stop_json_after.getString("y");
+				String stop_str = stop_y + "," + stop_x;
+				String stop_point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + stop_str + "&output=json&ak=" + API_KEY;
+				JSONObject stop_json2 = JSONHelper.readJsonFromUrl(stop_point_str2_for_api);
+				String stop_address_after = (String) (stop_json2.getString("result"));
+				System.out.println(stop_address_after);
+				String stop_temp_str = stop_address_after.split("\"formatted_address\":\"")[1];
+				stop_address = stop_temp_str.substring(0,stop_temp_str.indexOf("\""));
+				if("".equals(stop_address))
+					stop_address = "无效地理位置";
+			}
+			travelInfo.setStart_address(start_address);
+			travelInfo.setStop_address(stop_address);
 			travelInfoDao.addTravelInfo(travelInfo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -20,6 +20,7 @@ import com.fix.obd.web.dao.OBDTerminalInfoDao;
 import com.fix.obd.web.dao.TravelInfoDao;
 import com.fix.obd.web.model.OBDTerminalInfo;
 import com.fix.obd.web.model.TravelInfo;
+import com.fix.obd.web.model.util.TodayTravelReport;
 import com.fix.obd.web.service.TravelInfoService;
 
 @Component
@@ -113,6 +114,8 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		try {
 			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by SUBSTR(info,27,12) desc");
 			if(info_list.size()>0){
+				if(info_list.size()==1)
+					return info_list;
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
 						TravelInfo info1 = info_list.get(i);
@@ -153,9 +156,9 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 					String infoStr = info.getInfo().substring(0,info.getInfo().lastIndexOf("@"));
 					String[] characters = infoStr.split("@");
 					String resultStr = "";
-					String start_time = characters[0].split(";")[1];
+					String start_time = characters[1].split(";")[1];
 					resultStr += "开始时间： " + start_time.substring(0,2) + "-" + start_time.substring(2,4) + "-" + start_time.substring(4,6) + " " + start_time.substring(6,8) + ":" + start_time.substring(8,10) + ":" + start_time.substring(10,12) + "<br/>";
-					String stop_time = characters[1].split(";")[1];
+					String stop_time = characters[0].split(";")[1];
 					resultStr += "结束时间： " + stop_time.substring(0,2) + "-" + stop_time.substring(2,4) + "-" + stop_time.substring(4,6) + " " + stop_time.substring(6,8) + ":" + stop_time.substring(8,10) + ":" + stop_time.substring(10,12) + "<br/>";
 					int COUNT_IF_EXCEED_TIME = 0;
 					int COUNT_IF_TIRED = 0;
@@ -214,7 +217,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		}
 		return null;
 	}
-	
+
 	//加速、减速分析
 	public Map getBrakesAndSpeedUpsByTravel(String terminalId) {
 		List<TravelInfo> totalInfo=getTotalTravelInfo(terminalId);
@@ -235,7 +238,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		}
 		return map;
 	}
-	
+
 	private List<TravelInfo> getTotalTravelInfo(String terminalId) {
 		try {
 			String hql="from TravelInfo where tid ='"+terminalId+"'";
@@ -273,7 +276,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 		String endStr=list[0];
 		return endStr.split(";")[1];
 	}
-	
+
 	private long getTimeDiff(String begin,String end){
 		SimpleDateFormat df=new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
 		try {
@@ -290,9 +293,112 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			return 0;
 		}
 	}
-	
+
 	public long toPerHour(String num, long mill) {
 		int n=Integer.parseInt(num);
 		return n*60*60/mill;
+	}
+
+	@Override
+	public TodayTravelReport getTodayTravelReport(String terminalId) {
+		// TODO Auto-generated method stub
+		TodayTravelReport ttr = new TodayTravelReport();
+		try {
+			Calendar calendar = Calendar.getInstance();
+			String year = (calendar.get(Calendar.YEAR)+"").substring(2);
+			String month = calendar.get(Calendar.MONTH)+1+"";
+			month = month.length()==1?"0"+month:month;
+			String day = calendar.get(Calendar.DAY_OF_MONTH)+"";
+			day = day.length()==1?"0"+day:day;
+			String today_date = year+month+day;
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,6)='" + today_date + "'");
+			ttr.setToday_travel_times(info_list.size()+"");
+			int today_distance = 0;
+			double today_total_oil= 0.00;
+			int today_total_time= 0;
+			int today_max_speed= 0;
+			int today_brake_times= 0;
+			int today_emer_brake_times= 0;
+			int today_speedup_times= 0;
+			int today_emer_speedup_times= 0;
+			if(info_list.size()>0){
+				for(int i=0;i<info_list.size();i++){
+					String infoStr = info_list.get(i).getInfo();
+					if(infoStr.indexOf("距离")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("距离"));
+						temp = temp.split(";")[1];
+						today_distance += Integer.parseInt(temp);
+					}
+					if(infoStr.indexOf("总油耗")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("总油耗"));
+						temp = temp.split(";")[1];
+						today_total_oil += Double.parseDouble(temp)*0.01;
+					}
+					if(infoStr.indexOf("最大速度")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("最大速度"));
+						temp = temp.split(";")[1];
+						int speed = Integer.parseInt(temp);
+						if(speed>today_max_speed)
+							today_max_speed = speed;
+					}
+					
+					if(infoStr.indexOf("急刹车次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("急刹车次数"));
+						temp = temp.split(";")[1];
+						today_brake_times += Integer.parseInt(temp);
+					}
+					
+					if(infoStr.indexOf("紧急刹车次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("紧急刹车次数"));
+						temp = temp.split(";")[1];
+						today_emer_brake_times += Integer.parseInt(temp);
+					}
+					
+					if(infoStr.indexOf("急加速次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("急加速次数"));
+						temp = temp.split(";")[1];
+						today_speedup_times += Integer.parseInt(temp);
+					}
+					
+					if(infoStr.indexOf("紧急加速次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("紧急加速次数"));
+						temp = temp.split(";")[1];
+						today_emer_speedup_times += Integer.parseInt(temp);
+					}
+
+					String start_date_str = infoStr.split("@")[1].split(";")[1];
+					String end_date_str = infoStr.split("@")[0].split(";")[1];
+					if(start_date_str.length()==12){
+						String start_date_format_str = start_date_str.substring(0,2) + "-" + start_date_str.substring(2,4) + "-" + start_date_str.substring(4,6) + " " + start_date_str.substring(6,8) + ":" + start_date_str.substring(8,10) + ":" + start_date_str.substring(10,12);
+						String end_date_format_str = end_date_str.substring(0,2) + "-" + end_date_str.substring(2,4) + "-" + end_date_str.substring(4,6) + " " + end_date_str.substring(6,8) + ":" + end_date_str.substring(8,10) + ":" + end_date_str.substring(10,12);
+						SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+						Date start_date = sdf.parse(start_date_format_str);
+						Date end_date = sdf.parse(end_date_format_str);
+						long s = end_date.getTime() - start_date.getTime();
+						today_total_time += s/60;
+					}
+				}
+			}
+			if(today_distance>0)
+				ttr.setToday_avg_oil((today_total_oil*1.00/today_distance*100.00) + "");
+			else
+				ttr.setToday_avg_oil("0");
+			ttr.setToday_distance(today_distance+"");
+			ttr.setToday_total_oil(today_total_oil+"");
+			ttr.setToday_max_speed(today_max_speed+"");
+			ttr.setToday_total_time(today_total_time+"");
+			if(today_total_time>0)
+				ttr.setToday_avg_speed((today_distance*60.00/today_total_time) + "");
+			else
+				ttr.setToday_avg_speed("0");
+			ttr.setToday_brake_times(today_brake_times + "");
+			ttr.setToday_emer_brake_times(today_emer_brake_times + "");
+			ttr.setToday_speedup_times(today_speedup_times + "");
+			ttr.setToday_emer_speedup_times(today_emer_speedup_times + "");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ttr;
 	}
 }

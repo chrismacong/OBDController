@@ -2,15 +2,10 @@ package com.fix.obd.web.control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.fix.obd.util.MessageUtil;
+import com.fix.obd.web.model.util.TodayTravelReport;
+import com.fix.obd.web.model.util.VehicleExmnationReport;
+import com.fix.obd.web.service.TravelInfoService;
+import com.fix.obd.web.service.VehicleExmnationService;
 import com.fix.obd.web.service.YY_EditPasswordService;
 import com.fix.obd.web.service.YY_LoginService;
+import com.fix.obd.web.util.MD5Util;
 @Controller 
 @RequestMapping("/login") 
 public class YY_LogControl {
@@ -39,6 +38,23 @@ public class YY_LogControl {
 	}
 	public void setLoginService(YY_LoginService loginService) {
 		this.loginService = loginService;
+	}
+	@Resource
+	private VehicleExmnationService vehicleExmnationService;
+	public VehicleExmnationService getVehicleExmnationService() {
+		return vehicleExmnationService;
+	}
+	public void setVehicleExmnationService(
+			VehicleExmnationService vehicleExmnationService) {
+		this.vehicleExmnationService = vehicleExmnationService;
+	}
+	@Resource
+	private TravelInfoService travelInfoService;
+	public TravelInfoService getTravelInfoService() {
+		return travelInfoService;
+	}
+	public void setTravelInfoService(TravelInfoService travelInfoService) {
+		this.travelInfoService = travelInfoService;
 	}
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listResult(HttpServletRequest request,HttpSession session,HttpServletResponse response){
@@ -314,20 +330,26 @@ public class YY_LogControl {
 		return new ModelAndView("YY_PasswordRegetPage");
 	}
    */
-	@RequestMapping(value = "/mobilelogin", method = RequestMethod.GET)
+	@RequestMapping(value = "/mobilelogin", method = RequestMethod.POST)
 	public void mobileLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		 String email = request.getParameter("email");
-		 String password = request.getParameter("password");
+		 String password = request.getParameter("pwd");
+		 password = MD5Util.MD5(password);
 		 String result = null;
 	    if(loginService.askCheckUser(email,password)){
 			 String terminalId = loginService.getTerminalIdByEmail(email);
 			 if(terminalId==null){
 				 terminalId = "Œ¥∞Û∂®…Ë±∏";
 			 }
-   	        result = "1,";
-			result = result + terminalId;
+   	        result = "1;";
+			result = result + terminalId + ";";
+			VehicleExmnationReport vp = vehicleExmnationService.getVehicleExmnationReport(terminalId);
+			result += vp.getVehicle_exm_score() + ";";
+			result += vp.getVehicle_exm_main_solution() + ";";
+			TodayTravelReport ttp = travelInfoService.getTodayTravelReport(terminalId);
+			result += ttp.buildReportStr();
 		}else{
-			result = "0,null";
+			result = "0;null";
 		}
 	    try {
 			response.getWriter().write(result);

@@ -9,7 +9,7 @@ public class SignedByteDecoder extends ByteDecoder{
 		if(isNegative(source)){
 			for(int i = 0 ; i < source.length() ; i++){
 				int cInteger = changeHexadecimalToDecimal(source.charAt(i));
-				cInteger = 16 - cInteger;
+				cInteger = 15 - cInteger;
 				result += cInteger * Math.pow(16, source.length()-1-i);
 			}
 			result += 1;
@@ -33,5 +33,4 @@ public class SignedByteDecoder extends ByteDecoder{
 		else
 			return false;
 	}
-
 }

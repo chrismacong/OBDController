@@ -62,7 +62,7 @@ public class TerminalLogControl {
 		logger.debug("--------remove all logs of " + terminalId + "--------");
 		terminalLogService.deleteAllLogsById(terminalId);
 		model.put("terminalId", terminalId);
-		return new ModelAndView("redirect:/terminallog.html",model);
+		return new ModelAndView("redirect:/terminallog.html?terminalId=" + terminalId + "&pageSize=50",model);
 	}
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
 	public void analysis(HttpServletRequest request,HttpServletResponse response){

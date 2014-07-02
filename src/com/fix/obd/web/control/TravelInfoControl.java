@@ -87,7 +87,7 @@ public class TravelInfoControl {
 				Map map = positionInfoService.getStartandStopByGPS(terminalId, start_time,stop_time);
 				if(map!=null){
 					review_position_info_str += map.get("start_time_in_format") + " ~ " + map.get("stop_time_in_format") + 
-							";" + map.get("start_point") + ";" + map.get("stop_point") + "@";
+							";" + review_list.get(i).getStart_address() + ";" + review_list.get(i).getStop_address() + "@";
 				}
 			}
 			model.put("review_position_info_str", review_position_info_str.substring(0,review_position_info_str.lastIndexOf("@")));

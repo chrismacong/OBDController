@@ -390,7 +390,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	public String getAvgOilExpend(List<TravelInfo> info_list) {
 		// TODO Auto-generated method stub
 		try {
-			if(info_list.size()>0){
+			if(info_list.size()>0&&Double.parseDouble(this.getTotalDistance(info_list))>0){
 				double avgOilExpend = Double.parseDouble(this.getTotalOilExpend(info_list))/Double.parseDouble(this.getTotalDistance(info_list))*100.00;
 				return avgOilExpend + "";
 			}

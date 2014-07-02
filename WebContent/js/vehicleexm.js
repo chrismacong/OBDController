@@ -29,7 +29,11 @@ $(function(){
 						var b = "00".toString(16);
 						$("#scoreDiv")[0].style.color = "#"+r+g+b;
 					}
-
+					
+					var pchildren = $("#error_table")[0].rows.length;
+					for(var i=1;i<pchildren;i++){
+						$("#error_table")[0].deleteRow(i);
+					}
 					$("#totalsaying")[0].innerHTML = data.solution;
 					var errors = data.errors.split("@@@");
 					for(var i=0;i<errors.length;i++){

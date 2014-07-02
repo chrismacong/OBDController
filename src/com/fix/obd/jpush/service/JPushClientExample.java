@@ -14,9 +14,9 @@ import com.fix.obd.jpush.api.MessageResult;
 
 public class JPushClientExample {
 
-	private static final String appKey ="ee73c46290de0ffaafe65a1c";	//必填，例如466f7032ac604e02fb7bda89
+	private static final String appKey ="7b9b7c06cd527c63e4cd298b";	//必填，例如466f7032ac604e02fb7bda89
 
-	private static final String masterSecret = "621508697148594a45e581a9";//"13ac09b17715bd117163d8a1";//必填，每个应用都对应一个masterSecret
+	private static final String masterSecret = "d7a3628e7d2e92f06469cb3f";//"13ac09b17715bd117163d8a1";//必填，每个应用都对应一个masterSecret
 
 	private JPushClient jpush = null;
 

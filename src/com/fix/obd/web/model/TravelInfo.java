@@ -20,6 +20,22 @@ public class TravelInfo {
 	private String date;
 	@Column(name="info",columnDefinition="varchar(1000)")
 	private String info;
+	@Column(name="start_address",columnDefinition="varchar(500)")
+	private String start_address;
+	@Column(name="stop_address",columnDefinition="varchar(500)")
+	private String stop_address;
+	public String getStart_address() {
+		return start_address;
+	}
+	public void setStart_address(String start_address) {
+		this.start_address = start_address;
+	}
+	public String getStop_address() {
+		return stop_address;
+	}
+	public void setStop_address(String stop_address) {
+		this.stop_address = stop_address;
+	}
 	public int getId() {
 		return id;
 	}
