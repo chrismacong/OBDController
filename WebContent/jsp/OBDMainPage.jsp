@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-02
-			22:43 V1.1.4.1</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-04
+			12:10 V1.1.4.4</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,18 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.3.11</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.4</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.4</h2>
+				<div>修改了jpush向手机端推送的信息格式。精简了推送流程。</div>
+				<br />
+				<h2>1.1.4.3</h2>
+				<div>现在管理员可以在log文件中查看新增连接的设备ID号了</div>
+				<div>在手机用户登录时，拼接了车辆所在城市和中国天气网城市编号的信息</div>
+				<br />
+				<h2>1.1.4.2</h2>
+				<div>修复了没有travelinfo显示500错误的bug</div>
 				<br />
 				<h2>1.1.4.1</h2>
 				<div>修复了todaytravelreport提取行程信息未查重的bug</div>
@@ -380,21 +390,6 @@
 				<h2>1.1.4.0</h2>
 				<div>更新了极光推送的Appkey和MarketId，开始新的Android端开发</div>
 				<div>加入了今日驾驶行程统计功能，在手机用户登录时进行计算并反馈给用户，用于手机端主页显示。</div>
-				<br />
-				<h2>1.1.3.11</h2>
-				<div>修复了重复体检table不清空的bug</div>
-				<br />
-				<h2>1.1.3.10</h2>
-				<div>修复了清除日志后跳integerformatexception的bug</div>
-				<br />
-				<h2>1.1.3.9</h2>
-				<div>将行程开始地点和结束地点作为字段保存在了travelinfo表中，不再在访问近期行程时进行批量转换，进而缩短访问时间，访问手机端调用service</div>
-				<div>修复了单一行程信息中开始时间和结束时间对调的问题</div>
-				<br />
-				<h2>1.1.3.8</h2>
-				<div>添加了BusinessInfo的信息表和Personal_Business的关系映射表</div>
-				<div>修改了无法修改企业用户信息的bug</div>
-				<div>本版本将作为一个相对稳定的版本，短期内不再进行更新</div>
 				<br />
 			</div>
 		</div>

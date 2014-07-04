@@ -260,8 +260,10 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 	}
 
 	@Override
-	public void updateTravelInfo(String clientId, String info) {
+	public String updateTravelInfo(String clientId, String info) {
 		// TODO Auto-generated method stub
+		String start_address = "缺失有效DPS信息";
+		String stop_address = "缺失有效GPS信息";
 		try {
 			TravelInfo travelInfo = new TravelInfo();
 			travelInfo.setTerminalId(clientId);
@@ -286,8 +288,6 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			}
 			String start_point = "Nil";
 			String stop_point = "Nil";
-			String start_address = "缺失有效DPS信息";
-			String stop_address = "缺失有效GPS信息";
 			System.out.println(position_between.size());
 			if(position_between.size()>0){
 				String stop_point_latitude = position_between.get(0).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("纬度:"));
@@ -367,5 +367,6 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return start_address + ";" + stop_address;
 	}
 }

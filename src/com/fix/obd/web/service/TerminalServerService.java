@@ -9,5 +9,5 @@ public interface TerminalServerService {
 	public void addParameterResponse(String clientId,String info);
 	public void updateOBDDefect(String clientId, String info);
 	public void updateDTCDefect(String clientId, String info);
-	public void updateTravelInfo(String clientId, String info);
+	public String updateTravelInfo(String clientId, String info);
 }

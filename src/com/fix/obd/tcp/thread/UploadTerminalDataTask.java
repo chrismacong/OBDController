@@ -614,6 +614,7 @@ public class UploadTerminalDataTask implements Runnable {
 				String str = stringBuilder.toString();
 				str = str.substring(str.indexOf("aa")+2);
 				String clientId = str.substring(0,20);
+				logger.info("¡¨Ω”÷’∂ÀId£∫" + clientId);
 				TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 				t.updateTerminalInfo(clientId, terminalAddress.toString().substring(1));
 				str = str.substring(0,str.lastIndexOf("aa"));

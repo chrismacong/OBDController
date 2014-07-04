@@ -298,11 +298,21 @@ public class UploadOBDInfo_CWKJ extends ODBProtocolParser implements ODBProtocol
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
-        for(int i=0;i<characters.length;i++){
-        	String character_sep[] = characters[i].split(";"); 
-        	if(character_sep.length>=3){
-        		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")", this.getId());
-        	}
-        }
+		String obdMessage = "";
+		for(int i=0;i<characters.length;i++){
+			String character_sep[] = characters[i].split(";"); 
+			if(character_sep.length>=3){
+				if(character_sep[0].equals("Obd速度"))
+					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+				if(character_sep[0].equals("电池电压"))
+					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+				if(character_sep[0].equals("发动机转速"))
+					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+				if(character_sep[0].equals("发动机冷却液温度"))
+					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+			}
+				jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")", this.getId());
+		}
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", obdMessage, this.getId());
 	}
 }

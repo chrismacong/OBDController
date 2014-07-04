@@ -13,23 +13,28 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.fix.obd.util.CityNumPropertiesUtil;
+import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.util.TodayTravelReport;
 import com.fix.obd.web.model.util.VehicleExmnationReport;
+import com.fix.obd.web.service.PositionInfoService;
 import com.fix.obd.web.service.TravelInfoService;
 import com.fix.obd.web.service.VehicleExmnationService;
 import com.fix.obd.web.service.YY_EditPasswordService;
 import com.fix.obd.web.service.YY_LoginService;
+import com.fix.obd.web.util.JSONHelper;
 import com.fix.obd.web.util.MD5Util;
 @Controller 
 @RequestMapping("/login") 
 public class YY_LogControl {
-	
+	private final String API_KEY = "15cf002106718ce6a60a7841ea39f127";
 	//login
 	@Resource
 	private YY_LoginService loginService;
@@ -55,6 +60,14 @@ public class YY_LogControl {
 	}
 	public void setTravelInfoService(TravelInfoService travelInfoService) {
 		this.travelInfoService = travelInfoService;
+	}
+	@Resource
+	private PositionInfoService positionInfoService;
+	public PositionInfoService getPositionInfoService() {
+		return positionInfoService;
+	}
+	public void setPositionInfoService(PositionInfoService positionInfoService) {
+		this.positionInfoService = positionInfoService;
 	}
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listResult(HttpServletRequest request,HttpSession session,HttpServletResponse response){
@@ -346,8 +359,56 @@ public class YY_LogControl {
 			VehicleExmnationReport vp = vehicleExmnationService.getVehicleExmnationReport(terminalId);
 			result += vp.getVehicle_exm_score() + ";";
 			result += vp.getVehicle_exm_main_solution() + ";";
+			PositionData pd = positionInfoService.getLatestPositionInfo(terminalId);
+			
+			String point_latitude = pd.getInfo().substring(pd.getInfo().lastIndexOf("纬度:"));
+			point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+			point_latitude = point_latitude.split(":")[1];
+			point_latitude = point_latitude.replaceAll("\\.", "");
+			point_latitude = point_latitude.replaceAll("°", ".");
+			String tempStrPart = point_latitude.split("\\.")[1];
+			tempStrPart = "0." + tempStrPart;
+			double tempD = Double.parseDouble(tempStrPart)/60*100;
+			point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD + "";
+			
+			String point_longitute = pd.getInfo().substring(pd.getInfo().lastIndexOf("经度:"));
+			point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
+			point_longitute = point_longitute.split(":")[1];
+			point_longitute = point_longitute.replaceAll("\\.", "");
+			point_longitute = point_longitute.replaceAll("°", ".");
+			String _tempStrPart = "0." + point_longitute.split("\\.")[1];
+			double _tempD = Double.parseDouble(_tempStrPart)/60*100;
+			point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + _tempD + "";
+			String point = point_longitute + "," + point_latitude;
+			String city = "";
+			String cityNum = "";
+			try {
+				String point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + point + "&from=1&to=5&ak=" + API_KEY;
+				org.json.JSONObject json1 = JSONHelper.readJsonFromUrl(point_str_for_api);
+				String point_after = (String) (json1.getJSONArray("result").getString(0));
+				org.json.JSONObject json_after = new org.json.JSONObject(point_after);
+				String _x = json_after.getString("x");
+				String _y = json_after.getString("y");
+				String _str = _y + "," + _x;
+				String point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + _str + "&output=json&ak=" + API_KEY;
+				org.json.JSONObject json2 = JSONHelper.readJsonFromUrl(point_str2_for_api);
+				String address_after = (String) (json2.getString("result"));
+				String temp_str = address_after.split("\"city\":\"")[1];
+				city = temp_str.substring(0,temp_str.indexOf("\""));
+				city = city.replaceAll("市", "");
+				CityNumPropertiesUtil p = new CityNumPropertiesUtil();
+				cityNum = p.getCityNumByCity(city);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			TodayTravelReport ttp = travelInfoService.getTodayTravelReport(terminalId);
-			result += ttp.buildReportStr();
+			result += ttp.buildReportStr() + ";";
+			result += city + ";";
+			result += cityNum;
 		}else{
 			result = "0;null";
 		}

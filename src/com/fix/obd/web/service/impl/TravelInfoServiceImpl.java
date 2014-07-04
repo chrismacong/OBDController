@@ -111,8 +111,9 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 	@Override
 	public List<TravelInfo> reviewTravelInfo(String terminalId) {
 		// TODO Auto-generated method stub
+		List<TravelInfo> info_list = new ArrayList<TravelInfo>();
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by SUBSTR(info,27,12) desc");
+			info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' order by SUBSTR(info,27,12) desc");
 			if(info_list.size()>0){
 				if(info_list.size()==1)
 					return info_list;
@@ -321,6 +322,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			int today_emer_brake_times= 0;
 			int today_speedup_times= 0;
 			int today_emer_speedup_times= 0;
+			int today_travel_times = 0;
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -332,7 +334,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 							info_list.remove(j);
 					}
 				}
-				ttr.setToday_travel_times(info_list.size()+"");
+				today_travel_times = info_list.size();
 				for(int i=0;i<info_list.size();i++){
 					String infoStr = info_list.get(i).getInfo();
 					if(infoStr.indexOf("¾àÀë")>-1){
@@ -386,7 +388,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 						Date start_date = sdf.parse(start_date_format_str);
 						Date end_date = sdf.parse(end_date_format_str);
 						long s = end_date.getTime() - start_date.getTime();
-						today_total_time += s/60;
+						today_total_time += s/60000;
 					}
 				}
 			}
@@ -394,6 +396,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 				ttr.setToday_avg_oil((today_total_oil*1.00/today_distance*100.00) + "");
 			else
 				ttr.setToday_avg_oil("0");
+			ttr.setToday_travel_times(today_travel_times+"");
 			ttr.setToday_distance(today_distance+"");
 			ttr.setToday_total_oil(today_total_oil+"");
 			ttr.setToday_max_speed(today_max_speed+"");

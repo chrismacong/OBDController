@@ -50,14 +50,23 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			alertInBinary = MessageUtil.reverseStr(alertInBinary);
 			System.out.println("-----------------------");
 			String[] alerts = {"急加速","超速报警","电池供电","电池欠压","电池过压","进矩阵区域报警","出矩阵区域报警","碰撞报警","保养期报警","温高报警","紧急加速","Obd故障严重报警","震动报警","gsm经纬度格式","急刹车","紧急刹车"};
+			boolean sendAlert = false;
+			String alertMessage = "";
 			for(int i=0;i<alerts.length;i++){
 				if(alertInBinary.charAt(i)=='1'){
 					strForDiv += MessageUtil.printAndToDivContent(alerts[i], true);
 					alertStr += alerts[i] + ":1;";
+					alertMessage += alerts[i] + "%%%";
+					sendAlert = true;
 				}
 				else
 					alertStr += alerts[i] + ":0;";
 			}
+			JPushClientExample j = new JPushClientExample();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String now = df.format(new Date());
+			if(sendAlert)
+				j.sendMessageToRandomSendNo("Alert(" + now + ")", alertMessage, terminalId);
 			String gpsState = message.substring(16,18);
 			String statusInBinary = Integer.toBinaryString(Integer.valueOf(gpsState,16));
 			statusInBinary = String.format("%08d", Integer.parseInt(statusInBinary));
@@ -135,21 +144,22 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 	public static void sentByXML(String alertStr, String dbStr) throws FileNotFoundException, IOException{
 		String[] alertcharacters = alertStr.split(";");
 		String[] dbcharacters = dbStr.split(";");
-        JPushClientExample j = new JPushClientExample();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		JPushClientExample j = new JPushClientExample();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String now = df.format(new Date());
-    	StackTraceElement[] stacks = new Throwable().getStackTrace(); 
+		StackTraceElement[] stacks = new Throwable().getStackTrace(); 
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
-//        for(int i=0;i<alertcharacters.length;i++){
-//	        j.sendMessageToRandomSendNo(operationId + "(" + now + ")", alertcharacters[i]);
-//        }
-//        for(int i=0;i<dbcharacters.length;i++){
-//        	j.sendMessageToRandomSendNo(operationId + "(" + now + ")", dbcharacters[i]);
-//        }
+		//        for(int i=0;i<alertcharacters.length;i++){
+		//	        j.sendMessageToRandomSendNo(operationId + "(" + now + ")", alertcharacters[i]);
+		//        }
+		//        for(int i=0;i<dbcharacters.length;i++){
+		//        	j.sendMessageToRandomSendNo(operationId + "(" + now + ")", dbcharacters[i]);
+		//        }
 		String lat = "";
 		String lon = "";
+		String corner = "";
 		boolean containsLat = false;
 		boolean containsLon = false;
 		for(int i=0;i<dbcharacters.length;i++){
@@ -162,6 +172,12 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			if(dbcharacters[i].contains("经度:")){
 				containsLon = true;
 				lon = dbcharacters[i].split(":")[1];
+			}
+		}
+		for(int i=0;i<dbcharacters.length;i++){
+			if(dbcharacters[i].contains("方向角:")){
+				containsLon = true;
+				corner = dbcharacters[i].split(":")[1];
 			}
 		}
 		if(containsLat==true&&containsLon==true){
@@ -177,7 +193,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			tempStrPart2 = "0." + tempStrPart2;
 			double tempD2 = Double.parseDouble(tempStrPart2)/60*100;
 			lon = Integer.parseInt(lon.split("\\.")[0]) + tempD2 + "";
-			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon, terminalId);
+			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon + "," + corner, terminalId);
 		}
 	}
 	private class GPSOrientate{
@@ -255,30 +271,30 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			}
 		}
 	}
-//	private class Celiid7Orientate{
-//		private String partOfStr;
-//		public Celiid7Orientate(String str){
-//			this.partOfStr = str;
-//			this.print();
-//		}
-//		public void print(){
-//			String GSMInfo = "";
-//			String GSMMessage = partOfStr.substring(0,14);
-//			for(int i=0;i<7;i++){
-//				String temp_GSM = GSMMessage.substring(i*2,(i+1)*2);
-//				if(i==0)
-//					GSMInfo += "主CellID S:" + Integer.valueOf(temp_GSM,16) + "\t";
-//				else
-//					GSMInfo += "N" + i + ":" + Integer.valueOf(temp_GSM,16) + "\t";
-//			}
-//			System.out.println(GSMInfo);String OBDSpeed = Integer.valueOf(partOfStr.substring(14,16),16).toString();
-//			System.out.println("OBD速度:" + OBDSpeed + "km/h");
-//			String engineWaterTp = Integer.valueOf(partOfStr.substring(16,18),16).toString();
-//			System.out.println("发动机水温:" + engineWaterTp + "摄氏度");
-//			String extra = partOfStr.substring(18);
-//			System.out.println("附加位置信息:" + extra);
-//		}
-//	}
+	//	private class Celiid7Orientate{
+	//		private String partOfStr;
+	//		public Celiid7Orientate(String str){
+	//			this.partOfStr = str;
+	//			this.print();
+	//		}
+	//		public void print(){
+	//			String GSMInfo = "";
+	//			String GSMMessage = partOfStr.substring(0,14);
+	//			for(int i=0;i<7;i++){
+	//				String temp_GSM = GSMMessage.substring(i*2,(i+1)*2);
+	//				if(i==0)
+	//					GSMInfo += "主CellID S:" + Integer.valueOf(temp_GSM,16) + "\t";
+	//				else
+	//					GSMInfo += "N" + i + ":" + Integer.valueOf(temp_GSM,16) + "\t";
+	//			}
+	//			System.out.println(GSMInfo);String OBDSpeed = Integer.valueOf(partOfStr.substring(14,16),16).toString();
+	//			System.out.println("OBD速度:" + OBDSpeed + "km/h");
+	//			String engineWaterTp = Integer.valueOf(partOfStr.substring(16,18),16).toString();
+	//			System.out.println("发动机水温:" + engineWaterTp + "摄氏度");
+	//			String extra = partOfStr.substring(18);
+	//			System.out.println("附加位置信息:" + extra);
+	//		}
+	//	}
 	private class CeliidLACOrientate{
 		private String partOfStr;
 		private String dbStr;

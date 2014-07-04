@@ -75,24 +75,26 @@ public class TravelInfoControl {
 		}
 		model.put("character_list", list);
 		List<TravelInfo> review_list = travelInfoService.reviewTravelInfo(terminalId);
-		if(review_list.size()>0){
-			TravelInfo[] reviews = new TravelInfo[review_list.size()];
-			String review_position_info_str = "";
-			System.out.println(review_list.size());
-			for(int i=0;i<reviews.length;i++){
-				reviews[i] = review_list.get(i);
-				String start_time = reviews[i].getInfo().substring(26,38);
-				String stop_time = reviews[i].getInfo().substring(5,17);
-//				System.out.println("From:" + start_time + " to " + stop_time);
-				Map map = positionInfoService.getStartandStopByGPS(terminalId, start_time,stop_time);
-				if(map!=null){
-					review_position_info_str += map.get("start_time_in_format") + " ~ " + map.get("stop_time_in_format") + 
-							";" + review_list.get(i).getStart_address() + ";" + review_list.get(i).getStop_address() + "@";
+		if(review_list!=null){
+			if(review_list.size()>0){
+				TravelInfo[] reviews = new TravelInfo[review_list.size()];
+				String review_position_info_str = "";
+				System.out.println(review_list.size());
+				for(int i=0;i<reviews.length;i++){
+					reviews[i] = review_list.get(i);
+					String start_time = reviews[i].getInfo().substring(26,38);
+					String stop_time = reviews[i].getInfo().substring(5,17);
+//					System.out.println("From:" + start_time + " to " + stop_time);
+					Map map = positionInfoService.getStartandStopByGPS(terminalId, start_time,stop_time);
+					if(map!=null){
+						review_position_info_str += map.get("start_time_in_format") + " ~ " + map.get("stop_time_in_format") + 
+								";" + review_list.get(i).getStart_address() + ";" + review_list.get(i).getStop_address() + "@";
+					}
 				}
+				model.put("review_position_info_str", review_position_info_str.substring(0,review_position_info_str.lastIndexOf("@")));
+//				System.out.println(review_position_info_str);
+				model.put("reviews", reviews);
 			}
-			model.put("review_position_info_str", review_position_info_str.substring(0,review_position_info_str.lastIndexOf("@")));
-//			System.out.println(review_position_info_str);
-			model.put("reviews", reviews);
 		}
 		return new ModelAndView("TravelInfoPage",model);
 	}

@@ -1,6 +1,9 @@
 package com.fix.obd.protocol.impl;
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;

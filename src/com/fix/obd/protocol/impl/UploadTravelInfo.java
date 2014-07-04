@@ -27,6 +27,7 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 	private String clientId;
 	private String bufferId;
 	private XMLReader xmlReader;
+	private String point_address_str = "";
 	
 	public UploadTravelInfo(String messageStr){
 		super(messageStr);
@@ -43,7 +44,7 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
 		String otherResult = readParameter(realMessage);
 		if(DBif){
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
-			t.updateTravelInfo(clientId, otherResult);
+			point_address_str = t.updateTravelInfo(clientId, otherResult);
 		}
 		String info = "收到行程信息";
 		if(DBif){
@@ -134,7 +135,7 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
         		character_str += character_sep[1] + ";";
         	}
 		}
-		System.out.println(character_str);
-		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str.substring(0,character_str.lastIndexOf(";")), this.getId());
+		character_str += point_address_str;
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str, this.getId());
 	}
 }
