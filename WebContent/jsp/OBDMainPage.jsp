@@ -354,7 +354,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-04
-			12:10 V1.1.4.4</div>
+			14:34 V1.1.4.5</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,11 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.4</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.5</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.5</h2>
+				<div>新设备发送的OBD信息已统一</div>
 				<br />
 				<h2>1.1.4.4</h2>
 				<div>修改了jpush向手机端推送的信息格式。精简了推送流程。</div>
@@ -386,10 +389,6 @@
 				<br />
 				<h2>1.1.4.1</h2>
 				<div>修复了todaytravelreport提取行程信息未查重的bug</div>
-				<br />
-				<h2>1.1.4.0</h2>
-				<div>更新了极光推送的Appkey和MarketId，开始新的Android端开发</div>
-				<div>加入了今日驾驶行程统计功能，在手机用户登录时进行计算并反馈给用户，用于手机端主页显示。</div>
 				<br />
 			</div>
 		</div>

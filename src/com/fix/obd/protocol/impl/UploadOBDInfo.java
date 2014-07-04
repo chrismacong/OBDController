@@ -313,7 +313,6 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 				if(character_sep[0].equals("发动机冷却液温度"))
 					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
 			}
-				jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_sep[0] + ":" + character_sep[1] + "(" + character_sep[2] + ")", this.getId());
 		}
 		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", obdMessage, this.getId());
 
