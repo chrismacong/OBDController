@@ -31,6 +31,7 @@ import com.fix.obd.web.service.YY_EditPasswordService;
 import com.fix.obd.web.service.YY_LoginService;
 import com.fix.obd.web.util.JSONHelper;
 import com.fix.obd.web.util.MD5Util;
+import com.opensymphony.xwork2.util.logging.Logger;
 @Controller 
 @RequestMapping("/login") 
 public class YY_LogControl {
@@ -71,53 +72,53 @@ public class YY_LogControl {
 	}
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listResult(HttpServletRequest request,HttpSession session,HttpServletResponse response){
-		 String email = "";
-		 String rolename = "";
+		String email = "";
+		String rolename = "";
 		Cookie[] cookies = request.getCookies();
-		 if(cookies!=null){
-		    for (int i = 0; i < cookies.length; i++) {
-		        Cookie c = cookies[i];
-		        if(c.getName().equalsIgnoreCase("email"))
-		         {
-		             email = c.getValue();
-		        }else if(c.getName().equalsIgnoreCase("rolename")){
-		    	     rolename = c.getValue();
-		    	}
-		     
-		 } //end for
-		 } //if
-		 if(email.equals("")||rolename.equals("")){
-			 return new ModelAndView("YY_LoginPage");
-		 }else if(rolename.equals("manager")||rolename.equals("member")){
-			 System.out.println("^^^^^^^^^^^^^" + email);
-			 session.setAttribute("email", email);
-			 
-			 Cookie emailCookie=new Cookie("email",email);
-			 emailCookie.setMaxAge(30 * 24 * 60 * 60); 
-			 emailCookie.setPath("/");
-		     response.addCookie(emailCookie);
-		     Cookie rolenameCookie=new Cookie("rolename",rolename);
-		     rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
-		     rolenameCookie.setPath("/");
-			 response.addCookie(rolenameCookie);
-			 String terminalId = loginService.getTerminalIdByEmail(email);
-			 if(terminalId!=null)
-				    session.setAttribute("terminalId", terminalId);
-			 else
-				 	session.setAttribute("terminalId","00000000000000000000");
-			 if(rolename.equals("manager")){
-				 	session.setAttribute("rolename", "manager");
-			    	return new ModelAndView(new RedirectView("/OBDController/main.html"));
-			  }else if(rolename.equals("member")){
-			    	session.setAttribute("rolename", "loggedmember");
-			    	return new ModelAndView(new RedirectView("/OBDController/personal.html"));
-			  }
-		     
-		        
-		        
-			 
-		 }
-		 return new ModelAndView("YY_LoginPage");
+		if(cookies!=null){
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie c = cookies[i];
+				if(c.getName().equalsIgnoreCase("email"))
+				{
+					email = c.getValue();
+				}else if(c.getName().equalsIgnoreCase("rolename")){
+					rolename = c.getValue();
+				}
+
+			} //end for
+		} //if
+		if(email.equals("")||rolename.equals("")){
+			return new ModelAndView("YY_LoginPage");
+		}else if(rolename.equals("manager")||rolename.equals("member")){
+			System.out.println("^^^^^^^^^^^^^" + email);
+			session.setAttribute("email", email);
+
+			Cookie emailCookie=new Cookie("email",email);
+			emailCookie.setMaxAge(30 * 24 * 60 * 60); 
+			emailCookie.setPath("/");
+			response.addCookie(emailCookie);
+			Cookie rolenameCookie=new Cookie("rolename",rolename);
+			rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
+			rolenameCookie.setPath("/");
+			response.addCookie(rolenameCookie);
+			String terminalId = loginService.getTerminalIdByEmail(email);
+			if(terminalId!=null)
+				session.setAttribute("terminalId", terminalId);
+			else
+				session.setAttribute("terminalId","00000000000000000000");
+			if(rolename.equals("manager")){
+				session.setAttribute("rolename", "manager");
+				return new ModelAndView(new RedirectView("/OBDController/main.html"));
+			}else if(rolename.equals("member")){
+				session.setAttribute("rolename", "loggedmember");
+				return new ModelAndView(new RedirectView("/OBDController/personal.html"));
+			}
+
+
+
+
+		}
+		return new ModelAndView("YY_LoginPage");
 	}
 	/*
 	@RequestMapping(value = "/login_check", method = RequestMethod.GET)
@@ -132,7 +133,7 @@ public class YY_LogControl {
 			session.setAttribute("rolename", rolename);
 			if(rememberMe.equals("on")){
 				System.out.println("email"+email);
-				 
+
 				 Cookie passwordCookie=new Cookie("password",password);
 				 Cookie emailCookie=new Cookie("email",email);
 				    emailCookie.setMaxAge(30 * 24 * 60 * 60); 
@@ -141,9 +142,9 @@ public class YY_LogControl {
 			        emailCookie.setPath("/");
 			        response.addCookie(emailCookie);
 			        response.addCookie(passwordCookie);
-			 
+
 			}
-		
+
 		    if(rolename.equals("manager")){
 		    	return new ModelAndView(new RedirectView("/OBDController/main.html"));
 		    }else if(rolename.equals("member")){
@@ -152,142 +153,142 @@ public class YY_LogControl {
 		    }else{
 		    	return new ModelAndView(new RedirectView("/OBDController/login.html"));
 		    }
-			
+
 		}
 		System.out.println(email+"?");
 		System.out.println(password+"?");
-		
+
 		model.put("email", email);
 	   model.put("password_message", "密码或邮箱错误，请重新输入");
 	    //return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
 		return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
 		//return new ModelAndView("YY_LoginPage",model);
-		
+
  	}
- 	*/
-	
+	 */
+
 	@RequestMapping(value = "/certcode_check", method = RequestMethod.GET)
 	public void certcode_check(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		
+
 		try {
-			 
-			 String certcode = request.getParameter("certcode");
-			 
-			 System.out.println("certcode:"+certcode);
-			 PrintWriter pw = null;
-			 pw=response.getWriter();
-			 JSONObject jsonObject = new JSONObject(); 
-			 String rand = (String) session.getAttribute("rand");
-			 
+
+			String certcode = request.getParameter("certcode");
+
+			System.out.println("certcode:"+certcode);
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			String rand = (String) session.getAttribute("rand");
+
 			if(rand.equals(certcode)){
-				      jsonObject.put("success", "true");
-					  pw.print(jsonObject.toString());
-				 	  pw.flush();
-				 	  pw.close();
-				 
-				 	  return;
-				    	
+				jsonObject.put("success", "true");
+				pw.print(jsonObject.toString());
+				pw.flush();
+				pw.close();
+
+				return;
+
 			}else{
-					 jsonObject.put("success", "false");
-					 pw.print(jsonObject.toString());
-				 	 pw.flush();
-				 	 pw.close();
-				 
-				 	 return;
+				jsonObject.put("success", "false");
+				pw.print(jsonObject.toString());
+				pw.flush();
+				pw.close();
+
+				return;
 			}
-				}catch(IOException e){
-					
-				}
+		}catch(IOException e){
+
+		}
 	}
-	
-	
+
+
 	@RequestMapping(value = "/login_check", method = RequestMethod.GET)
 	public void login(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		try {
-		 Map<String,Object> model = new HashMap<String,Object>();
-		 String email = request.getParameter("email");
-		 String password = request.getParameter("password");
-		 String rememberMe = request.getParameter("rememberMe");
-		 System.out.println("rememberMe:"+rememberMe);
-		 PrintWriter pw = null;
-		 pw=response.getWriter();
-		 JSONObject jsonObject = new JSONObject(); 
-		if(loginService.askCheckUser(email,password)){
-			String rolename = loginService.getRoleName(email);
-			session.setAttribute("email",email);
-			session.setAttribute("rolename", rolename);
-			String terminalId = loginService.getTerminalIdByEmail(email);
-			 if(terminalId!=null)
-				    session.setAttribute("terminalId", terminalId);
-			 else
-				 	session.setAttribute("terminalId","00000000000000000000");			
-			if(rememberMe.equals("on")){
-				
-				System.out.println("记住密码！");
-				 
-				// Cookie passwordCookie=new Cookie("password",password);
-				 Cookie emailCookie=new Cookie("email",email);
-				    emailCookie.setMaxAge(30 * 24 * 60 * 60); 
-				    //passwordCookie.setMaxAge(30 * 24 * 60 * 60);
-				   // passwordCookie.setPath("/");
-			        emailCookie.setPath("/");
-			        response.addCookie(emailCookie);
-			       // response.addCookie(passwordCookie);
-			        Cookie rolenameCookie=new Cookie("rolename",rolename);
-				     rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
-				     rolenameCookie.setPath("/");
-					 response.addCookie(rolenameCookie);
-			 
+			Map<String,Object> model = new HashMap<String,Object>();
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String rememberMe = request.getParameter("rememberMe");
+			System.out.println("rememberMe:"+rememberMe);
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
+			if(loginService.askCheckUser(email,password)){
+				String rolename = loginService.getRoleName(email);
+				session.setAttribute("email",email);
+				session.setAttribute("rolename", rolename);
+				String terminalId = loginService.getTerminalIdByEmail(email);
+				if(terminalId!=null)
+					session.setAttribute("terminalId", terminalId);
+				else
+					session.setAttribute("terminalId","00000000000000000000");			
+				if(rememberMe.equals("on")){
+
+					System.out.println("记住密码！");
+
+					// Cookie passwordCookie=new Cookie("password",password);
+					Cookie emailCookie=new Cookie("email",email);
+					emailCookie.setMaxAge(30 * 24 * 60 * 60); 
+					//passwordCookie.setMaxAge(30 * 24 * 60 * 60);
+					// passwordCookie.setPath("/");
+					emailCookie.setPath("/");
+					response.addCookie(emailCookie);
+					// response.addCookie(passwordCookie);
+					Cookie rolenameCookie=new Cookie("rolename",rolename);
+					rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
+					rolenameCookie.setPath("/");
+					response.addCookie(rolenameCookie);
+
+				}
+				try{
+					if(rolename.equals("manager")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "manager");
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						return;
+
+					}else if(rolename.equals("member")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "member");
+						session.setAttribute("rolename", "loggedmember");
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						// RequestDispatcher dispatcher = request.getRequestDispatcher("/OBDController/personal.html");
+						// dispatcher.forward(request, response);
+
+						return;
+
+					}
+				}catch(NullPointerException e){
+
+				}
+
+
 			}
-			try{
-			 if(rolename.equals("manager")){
-				  jsonObject.put("success", "true");
-				  jsonObject.put("rolename", "manager");
-				  pw.print(jsonObject.toString());
-				  pw.flush();
-				  pw.close();
-				  return;
-			    	
-			 }else if(rolename.equals("member")){
-				  jsonObject.put("success", "true");
-				  jsonObject.put("rolename", "member");
-			      session.setAttribute("rolename", "loggedmember");
-			      pw.print(jsonObject.toString());
-			 	  pw.flush();
-			 	  pw.close();
-			 	 // RequestDispatcher dispatcher = request.getRequestDispatcher("/OBDController/personal.html");
-			 	  // dispatcher.forward(request, response);
-				
-			 	  return;
-			    	
-			 }
-			}catch(NullPointerException e){
-				
-			}
-			
-		
-		}
-		
-		jsonObject.put("success", "false");
-		model.put("email", email);
-	    model.put("password_message", "密码或邮箱错误，请重新输入");
-	    pw.print(jsonObject.toString());
-		pw.flush();
-		pw.close();
-		return ;
-	    //return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
-		//return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
-		//return new ModelAndView("YY_LoginPage",model);
-			
+
+			jsonObject.put("success", "false");
+			model.put("email", email);
+			model.put("password_message", "密码或邮箱错误，请重新输入");
+			pw.print(jsonObject.toString());
+			pw.flush();
+			pw.close();
+			return ;
+			//return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
+			//return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
+			//return new ModelAndView("YY_LoginPage",model);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
-		
- 	}
-	
+
+
+
+	}
+
 	/*
 	//logout
 	@RequestMapping(value = "/yy_logout", method = RequestMethod.POST)
@@ -302,14 +303,14 @@ public class YY_LogControl {
 		Map<String,Object> model = new HashMap<String,Object>();
 		return new ModelAndView("YY_LoginPage",model);
  	}
-	*/
+	 */
 	//welcome
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public ModelAndView welcome(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> model = new HashMap<String,Object>();
 		return new ModelAndView(new RedirectView("login.html"),model);
- 	}
-	
+	}
+
 	//editpassword
 	@Resource
 	private YY_EditPasswordService editPasswordService;
@@ -319,10 +320,10 @@ public class YY_LogControl {
 	public void setEditPasswordService(YY_EditPasswordService editPasswordService) {
 		this.editPasswordService = editPasswordService;
 	}
-	
+
 	@RequestMapping(value = "/editpassword", method = RequestMethod.POST)
 	public void changepsw(HttpServletRequest request,HttpServletResponse response){
-		
+
 		//Map<String,Object> model = new HashMap<String,Object>();
 		String newpass = request.getParameter("newpass");
 		String email = request.getParameter("email");
@@ -334,33 +335,33 @@ public class YY_LogControl {
 		    newpasswordCookie.setMaxAge(30 * 24 * 60 * 60);
 		    newpasswordCookie.setPath("/");
 	        response.addCookie(newpasswordCookie);
-	
-		*/
- 	}
+
+		 */
+	}
 	/*
 	@RequestMapping(value = "/password_reget", method = RequestMethod.GET)
 	public ModelAndView passwordReget(HttpServletRequest request,HttpServletResponse response){
 		return new ModelAndView("YY_PasswordRegetPage");
 	}
-   */
+	 */
 	@RequestMapping(value = "/mobilelogin", method = RequestMethod.POST)
 	public void mobileLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		 String email = request.getParameter("email");
-		 String password = request.getParameter("pwd");
-		 password = MD5Util.MD5(password);
-		 String result = null;
-	    if(loginService.askCheckUser(email,password)){
-			 String terminalId = loginService.getTerminalIdByEmail(email);
-			 if(terminalId==null){
-				 terminalId = "未绑定设备";
-			 }
-   	        result = "1;";
+		String email = request.getParameter("email");
+		String password = request.getParameter("pwd");
+		password = MD5Util.MD5(password);
+		String result = null;
+		if(loginService.askCheckUser(email,password)){
+			String terminalId = loginService.getTerminalIdByEmail(email);
+			if(terminalId==null){
+				terminalId = "未绑定设备";
+			}
+			result = "1;";
 			result = result + terminalId + ";";
 			VehicleExmnationReport vp = vehicleExmnationService.getVehicleExmnationReport(terminalId);
 			result += vp.getVehicle_exm_score() + ";";
 			result += vp.getVehicle_exm_main_solution() + ";";
 			PositionData pd = positionInfoService.getLatestPositionInfo(terminalId);
-			
+
 			String point_latitude = pd.getInfo().substring(pd.getInfo().lastIndexOf("纬度:"));
 			point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
 			point_latitude = point_latitude.split(":")[1];
@@ -370,7 +371,7 @@ public class YY_LogControl {
 			tempStrPart = "0." + tempStrPart;
 			double tempD = Double.parseDouble(tempStrPart)/60*100;
 			point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD + "";
-			
+
 			String point_longitute = pd.getInfo().substring(pd.getInfo().lastIndexOf("经度:"));
 			point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
 			point_longitute = point_longitute.split(":")[1];
@@ -384,20 +385,23 @@ public class YY_LogControl {
 			String cityNum = "";
 			try {
 				String point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + point + "&from=1&to=5&ak=" + API_KEY;
+				System.out.println(point_str_for_api);
 				org.json.JSONObject json1 = JSONHelper.readJsonFromUrl(point_str_for_api);
-				String point_after = (String) (json1.getJSONArray("result").getString(0));
-				org.json.JSONObject json_after = new org.json.JSONObject(point_after);
-				String _x = json_after.getString("x");
-				String _y = json_after.getString("y");
-				String _str = _y + "," + _x;
-				String point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + _str + "&output=json&ak=" + API_KEY;
-				org.json.JSONObject json2 = JSONHelper.readJsonFromUrl(point_str2_for_api);
-				String address_after = (String) (json2.getString("result"));
-				String temp_str = address_after.split("\"city\":\"")[1];
-				city = temp_str.substring(0,temp_str.indexOf("\""));
-				city = city.replaceAll("市", "");
-				CityNumPropertiesUtil p = new CityNumPropertiesUtil();
-				cityNum = p.getCityNumByCity(city);
+				if(json1.getJSONArray("result").length()>0){
+					String point_after = (String) (json1.getJSONArray("result").getString(0));
+					org.json.JSONObject json_after = new org.json.JSONObject(point_after);
+					String _x = json_after.getString("x");
+					String _y = json_after.getString("y");
+					String _str = _y + "," + _x;
+					String point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + _str + "&output=json&ak=" + API_KEY;
+					org.json.JSONObject json2 = JSONHelper.readJsonFromUrl(point_str2_for_api);
+					String address_after = (String) (json2.getString("result"));
+					String temp_str = address_after.split("\"city\":\"")[1];
+					city = temp_str.substring(0,temp_str.indexOf("\""));
+					city = city.replaceAll("市", "");
+					CityNumPropertiesUtil p = new CityNumPropertiesUtil();
+					cityNum = p.getCityNumByCity(city);
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -409,95 +413,96 @@ public class YY_LogControl {
 			result += ttp.buildReportStr() + ";";
 			result += city + ";";
 			result += cityNum;
+			System.out.println(result);
 		}else{
 			result = "0;null";
 		}
-	    try {
+		try {
 			response.getWriter().write(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 	}
+	}
 	@RequestMapping(value = "/login_check_by_tel", method = RequestMethod.GET)
 	public void loginByTel(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-			try {
-			 Map<String,Object> model = new HashMap<String,Object>();
-			 String tel = request.getParameter("tel");
-			 String password = request.getParameter("password");
-			 String rememberMe = request.getParameter("rememberMe");
-			 System.out.println("rememberMe:"+rememberMe);
-			 PrintWriter pw = null;
-			 pw=response.getWriter();
-			 JSONObject jsonObject = new JSONObject(); 
+		try {
+			Map<String,Object> model = new HashMap<String,Object>();
+			String tel = request.getParameter("tel");
+			String password = request.getParameter("password");
+			String rememberMe = request.getParameter("rememberMe");
+			System.out.println("rememberMe:"+rememberMe);
+			PrintWriter pw = null;
+			pw=response.getWriter();
+			JSONObject jsonObject = new JSONObject(); 
 			if(loginService.askCheckUserByTel(tel,password)){
 				String email = loginService.getEmail(tel);
 				String rolename = loginService.getRoleName(email);
 				session.setAttribute("email",email);
 				session.setAttribute("rolename", rolename);
 				String terminalId = loginService.getTerminalIdByEmail(email);
-				 if(terminalId!=null)
-					    session.setAttribute("terminalId", terminalId);
-				 else
-					 	session.setAttribute("terminalId","00000000000000000000");
+				if(terminalId!=null)
+					session.setAttribute("terminalId", terminalId);
+				else
+					session.setAttribute("terminalId","00000000000000000000");
 				if(rememberMe.equals("on")){
 					System.out.println("记住密码！");
-					 Cookie emailCookie=new Cookie("email",email);
-					    emailCookie.setMaxAge(30 * 24 * 60 * 60); 
-				        emailCookie.setPath("/");
-				        response.addCookie(emailCookie);
-				        Cookie rolenameCookie=new Cookie("rolename",rolename);
-					     rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
-					     rolenameCookie.setPath("/");
-						 response.addCookie(rolenameCookie);
-				 
+					Cookie emailCookie=new Cookie("email",email);
+					emailCookie.setMaxAge(30 * 24 * 60 * 60); 
+					emailCookie.setPath("/");
+					response.addCookie(emailCookie);
+					Cookie rolenameCookie=new Cookie("rolename",rolename);
+					rolenameCookie.setMaxAge(30 * 24 * 60 * 60);
+					rolenameCookie.setPath("/");
+					response.addCookie(rolenameCookie);
+
 				}
 				try{
-				 if(rolename.equals("manager")){
-					  jsonObject.put("success", "true");
-					  jsonObject.put("rolename", "manager");
-					  pw.print(jsonObject.toString());
-					  pw.flush();
-					  pw.close();
-					  System.out.println("444444");
-					  return;
-				    	
-				 }else if(rolename.equals("member")){
-					  jsonObject.put("success", "true");
-					  jsonObject.put("rolename", "member");
-				      session.setAttribute("rolename", "loggedmember");
-				      pw.print(jsonObject.toString());
-				 	  pw.flush();
-				 	  pw.close();
-				 	  System.out.println("333333");
-					
-				 	  return;
-				    	
-				 }
+					if(rolename.equals("manager")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "manager");
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						System.out.println("444444");
+						return;
+
+					}else if(rolename.equals("member")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "member");
+						session.setAttribute("rolename", "loggedmember");
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						System.out.println("333333");
+
+						return;
+
+					}
 				}catch(NullPointerException e){
-					
+
 				}
-				
-			
+
+
 			}
-			
+
 			jsonObject.put("success", "false");
 			model.put("tel", tel);
-		    model.put("password_message", "密码或手机号错误，请重新输入");
-		    pw.print(jsonObject.toString());
+			model.put("password_message", "密码或手机号错误，请重新输入");
+			pw.print(jsonObject.toString());
 			pw.flush();
 			pw.close();
 			return ;
-		    //return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
+			//return new ModelAndView(new RedirectView("/OBDController/login.html"),model);
 			//return new ModelAndView(new RedirectView("/OBDController/login.html?email="+email+"&password_message=密码或邮箱错误，请重新输入"));
 			//return new ModelAndView("YY_LoginPage",model);
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
 
 

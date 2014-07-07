@@ -1,7 +1,11 @@
 package com.fix.obd.web.service.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 
@@ -215,5 +219,37 @@ public class DTCServiceImpl implements DTCService{
 		}
 		return result_list;
 	}
-	
+
+	@Override
+	public Map askDTCDefectInRespond(String terminalId) {
+		// TODO Auto-generated method stub
+		HashMap map = new HashMap();
+		boolean isActual = false;
+		boolean hasData = false;
+		try {
+			List<OBDTerminalInfo> list = obdTerminalInfoDao.findByHQL("from OBDTerminalInfo where tid = '" + MessageUtil.frontCompWithZore(terminalId, 20) + "'");
+			if(list.size()>0){
+				hasData = true;
+				OBDTerminalInfo obd = list.get(0);
+				String ipAndPort = obd.getTerminalIp();
+				String ip = ipAndPort.split(":")[0];
+				String port = ipAndPort.split(":")[1];
+				UploadTerminalDataTask u = ThreadMap.threadNameMap.get("/" + ip);				
+				String bufferId = "78";
+				Properties p = new Properties();
+				InputStream is=this.getClass().getResourceAsStream("/system.properties"); 
+				p.load(is);  
+				is.close();
+				isActual = u.SentReadDTCInSeconds(terminalId, bufferId, p.getProperty("dtc_response_wait_time"));
+				DTCDefect dtc = this.getDTCDefect(terminalId);
+				map.put("dtc", dtc);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("isActual", isActual);
+		map.put("hasData", hasData);
+		return map;
+	}
 }

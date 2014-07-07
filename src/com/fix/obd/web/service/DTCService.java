@@ -1,6 +1,7 @@
 package com.fix.obd.web.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.fix.obd.web.model.DTCDefect;
 import com.fix.obd.web.model.OBDDefect;
@@ -14,4 +15,5 @@ public interface DTCService {
 	public boolean askOBDDefect(String terminalId);
 	public boolean askClearDTC(String terminalId);
 	public ArrayList<FaultCodeIterator> getFaultCodeIteratorList(String info);
+	public Map askDTCDefectInRespond(String terminalId);
 }

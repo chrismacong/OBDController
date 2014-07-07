@@ -688,4 +688,36 @@ public class UploadTerminalDataTask implements Runnable {
 			}
 		}
 	}
+	public boolean SentReadDTCInSeconds(String terminalId, String bufferId,
+			String seconds) {
+		// TODO Auto-generated method stub
+		try{
+			os = socket.getOutputStream();
+			ReadDTC r = new ReadDTC(terminalId, bufferId);
+			boolean opTemp = r.DBOperation(true);
+			byte[] responseBytes = r.replyToClient();
+			if(responseBytes!=null&&opTemp)
+				writeToOutputStream(responseBytes);
+			ACCEPT_DTC = false;
+			int waitSec = 0;
+			while(ACCEPT_DTC==false){
+				Thread.sleep(1000);
+				waitSec++;
+				logger.info("<²éÑ¯¹ÊÕÏÂë>µÈ´ýÖÕ¶Ë·µ»Ø¹ÊÕÏÂëµÄÊ±¼ä:" + waitSec + "s");
+				if(waitSec>Integer.parseInt(seconds)){
+					return false;
+				}
+			}
+			ACCEPT_DTC = false;
+			return true;
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} 
+	}
 }
