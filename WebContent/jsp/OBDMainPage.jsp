@@ -354,7 +354,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-07
-			10:37 V1.1.4.6</div>
+			16:43 V1.1.4.8</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,14 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.6</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.8</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.8</h2>
+				<div>修复了手机体检无法连接的问题</div>
+				<br />
+				<h2>1.1.4.7</h2>
+				<div>增加了为手机体检提供的webservice接口</div>
 				<br />
 				<h2>1.1.4.6</h2>
 				<div>修复了由于地理位置信息无法获取造成的手机端无法登陆的问题</div>
@@ -386,9 +392,6 @@
 				<h2>1.1.4.3</h2>
 				<div>现在管理员可以在log文件中查看新增连接的设备ID号了</div>
 				<div>在手机用户登录时，拼接了车辆所在城市和中国天气网城市编号的信息</div>
-				<br />
-				<h2>1.1.4.2</h2>
-				<div>修复了没有travelinfo显示500错误的bug</div>
 				<br />
 			</div>
 		</div>

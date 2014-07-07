@@ -227,6 +227,7 @@ public class DTCServiceImpl implements DTCService{
 		boolean isActual = false;
 		boolean hasData = false;
 		try {
+			System.out.println("---" + terminalId + "---");
 			List<OBDTerminalInfo> list = obdTerminalInfoDao.findByHQL("from OBDTerminalInfo where tid = '" + MessageUtil.frontCompWithZore(terminalId, 20) + "'");
 			if(list.size()>0){
 				hasData = true;
@@ -240,9 +241,14 @@ public class DTCServiceImpl implements DTCService{
 				InputStream is=this.getClass().getResourceAsStream("/system.properties"); 
 				p.load(is);  
 				is.close();
-				isActual = u.SentReadDTCInSeconds(terminalId, bufferId, p.getProperty("dtc_response_wait_time"));
+				if(u!=null){
+					isActual = u.SentReadDTCInSeconds(terminalId, bufferId, p.getProperty("dtc_response_wait_time"));
+				}
 				DTCDefect dtc = this.getDTCDefect(terminalId);
-				map.put("dtc", dtc);
+				if(dtc!=null){
+					map.put("dtc", dtc);
+					System.out.println(dtc.getInfo());
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
