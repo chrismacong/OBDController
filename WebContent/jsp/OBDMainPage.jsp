@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-07
-			16:43 V1.1.4.8</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-10
+			09:25 V1.1.4.10</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,14 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.8</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.10</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.10</h2>
+				<div>修复了某些行程记录信息没有记录到数据库的bug</div>
+				<br />
+				<h2>1.1.4.9</h2>
+				<div>修复了地理位置信息中负值水温的bug</div>
 				<br />
 				<h2>1.1.4.8</h2>
 				<div>修复了手机体检无法连接的问题</div>
@@ -382,16 +388,6 @@
 				<br />
 				<h2>1.1.4.6</h2>
 				<div>修复了由于地理位置信息无法获取造成的手机端无法登陆的问题</div>
-				<br />
-				<h2>1.1.4.5</h2>
-				<div>新设备发送的OBD信息已统一</div>
-				<br />
-				<h2>1.1.4.4</h2>
-				<div>修改了jpush向手机端推送的信息格式。精简了推送流程。</div>
-				<br />
-				<h2>1.1.4.3</h2>
-				<div>现在管理员可以在log文件中查看新增连接的设备ID号了</div>
-				<div>在手机用户登录时，拼接了车辆所在城市和中国天气网城市编号的信息</div>
 				<br />
 			</div>
 		</div>

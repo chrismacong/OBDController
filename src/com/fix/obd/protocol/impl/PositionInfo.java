@@ -18,6 +18,7 @@ import com.fix.obd.protocol.ODBProtocol;
 import com.fix.obd.protocol.ODBProtocolParser;
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.util.ProtocolPropertiesUtil;
+import com.fix.obd.util.obd.SignedByteDecoder;
 import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
@@ -227,7 +228,8 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			String OBDSpeed = Integer.valueOf(partOfStr.substring(22,24),16).toString();
 			dbStr += "OBD速度:" + OBDSpeed + "km/h" + ";";
 			strForDiv += MessageUtil.printAndToDivContent("OBD速度:" + OBDSpeed + "km/h", true);
-			String engineWaterTp = Integer.valueOf(partOfStr.substring(24,26),16).toString();
+			SignedByteDecoder sbd = new SignedByteDecoder();
+			String engineWaterTp = Integer.valueOf(sbd.decode(partOfStr.substring(24,26), 2)).toString();
 			dbStr += "发动机水温:" + engineWaterTp + "摄氏度" + ";";
 			strForDiv += MessageUtil.printAndToDivContent("发动机水温:" + engineWaterTp + "摄氏度", true);
 			if(partOfStr.length()>=30){

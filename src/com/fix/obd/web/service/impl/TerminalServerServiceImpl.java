@@ -310,7 +310,7 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 				stop_point_longitute = Integer.parseInt(stop_point_longitute.split("\\.")[0]) + _tempD + "";
 				stop_point = stop_point_longitute + "," + stop_point_latitude;
 				
-				String start_point_latitude = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("纬度:"));
+				String start_point_latitude = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(position_between.size()-1).getInfo().lastIndexOf("纬度:"));
 				start_point_latitude = start_point_latitude.substring(0,start_point_latitude.indexOf(";"));
 				start_point_latitude = start_point_latitude.split(":")[1];
 				start_point_latitude = start_point_latitude.replaceAll("\\.", "");
@@ -320,7 +320,7 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 				double tempD1 = Double.parseDouble(tempStrPart1)/60*100;
 				start_point_latitude = Integer.parseInt(start_point_latitude.split("\\.")[0]) + tempD1 + "";
 				
-				String start_point_longitute = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(0).getInfo().lastIndexOf("经度:"));
+				String start_point_longitute = position_between.get(position_between.size()-1).getInfo().substring(position_between.get(position_between.size()-1).getInfo().lastIndexOf("经度:"));
 				start_point_longitute = start_point_longitute.substring(0,start_point_longitute.indexOf(";"));
 				start_point_longitute = start_point_longitute.split(":")[1];
 				start_point_longitute = start_point_longitute.replaceAll("\\.", "");
@@ -369,4 +369,5 @@ public class TerminalServerServiceImpl implements TerminalServerService{
 		}
 		return start_address + ";" + stop_address;
 	}
+	
 }
