@@ -3,6 +3,7 @@ package com.fix.obd.web.control;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -31,7 +32,6 @@ import com.fix.obd.web.service.YY_EditPasswordService;
 import com.fix.obd.web.service.YY_LoginService;
 import com.fix.obd.web.util.JSONHelper;
 import com.fix.obd.web.util.MD5Util;
-import com.opensymphony.xwork2.util.logging.Logger;
 @Controller 
 @RequestMapping("/login") 
 public class YY_LogControl {
@@ -350,6 +350,9 @@ public class YY_LogControl {
 		String password = request.getParameter("pwd");
 		password = MD5Util.MD5(password);
 		String result = null;
+
+		String city = "";
+		String cityNum = "";
 		if(loginService.askCheckUser(email,password)){
 			String terminalId = loginService.getTerminalIdByEmail(email);
 			if(terminalId==null){
@@ -360,60 +363,67 @@ public class YY_LogControl {
 			VehicleExmnationReport vp = vehicleExmnationService.getVehicleExmnationReport(terminalId);
 			result += vp.getVehicle_exm_score() + ";";
 			result += vp.getVehicle_exm_main_solution() + ";";
-			PositionData pd = positionInfoService.getLatestPositionInfo(terminalId);
+			List<PositionData> list = positionInfoService.getLatest10GpsPositionInfo(terminalId);
+			if(list.size()>0){
+				PositionData pd = list.get(0);
+				if(pd.getInfo().lastIndexOf("纬度:")>0){
+					String point_latitude = pd.getInfo().substring(pd.getInfo().lastIndexOf("纬度:"));
+					point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+					point_latitude = point_latitude.split(":")[1];
+					point_latitude = point_latitude.replaceAll("\\.", "");
+					point_latitude = point_latitude.replaceAll("°", ".");
+					String tempStrPart = point_latitude.split("\\.")[1];
+					tempStrPart = "0." + tempStrPart;
+					double tempD = Double.parseDouble(tempStrPart)/60*100;
+					point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD + "";
 
-			String point_latitude = pd.getInfo().substring(pd.getInfo().lastIndexOf("纬度:"));
-			point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
-			point_latitude = point_latitude.split(":")[1];
-			point_latitude = point_latitude.replaceAll("\\.", "");
-			point_latitude = point_latitude.replaceAll("°", ".");
-			String tempStrPart = point_latitude.split("\\.")[1];
-			tempStrPart = "0." + tempStrPart;
-			double tempD = Double.parseDouble(tempStrPart)/60*100;
-			point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD + "";
-
-			String point_longitute = pd.getInfo().substring(pd.getInfo().lastIndexOf("经度:"));
-			point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
-			point_longitute = point_longitute.split(":")[1];
-			point_longitute = point_longitute.replaceAll("\\.", "");
-			point_longitute = point_longitute.replaceAll("°", ".");
-			String _tempStrPart = "0." + point_longitute.split("\\.")[1];
-			double _tempD = Double.parseDouble(_tempStrPart)/60*100;
-			point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + _tempD + "";
-			String point = point_longitute + "," + point_latitude;
-			String city = "";
-			String cityNum = "";
-			try {
-				String point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + point + "&from=1&to=5&ak=" + API_KEY;
-				System.out.println(point_str_for_api);
-				org.json.JSONObject json1 = JSONHelper.readJsonFromUrl(point_str_for_api);
-				if(json1.getJSONArray("result").length()>0){
-					String point_after = (String) (json1.getJSONArray("result").getString(0));
-					org.json.JSONObject json_after = new org.json.JSONObject(point_after);
-					String _x = json_after.getString("x");
-					String _y = json_after.getString("y");
-					String _str = _y + "," + _x;
-					String point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + _str + "&output=json&ak=" + API_KEY;
-					org.json.JSONObject json2 = JSONHelper.readJsonFromUrl(point_str2_for_api);
-					String address_after = (String) (json2.getString("result"));
-					String temp_str = address_after.split("\"city\":\"")[1];
-					city = temp_str.substring(0,temp_str.indexOf("\""));
-					city = city.replaceAll("市", "");
-					CityNumPropertiesUtil p = new CityNumPropertiesUtil();
-					cityNum = p.getCityNumByCity(city);
+					String point_longitute = pd.getInfo().substring(pd.getInfo().lastIndexOf("经度:"));
+					point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
+					point_longitute = point_longitute.split(":")[1];
+					point_longitute = point_longitute.replaceAll("\\.", "");
+					point_longitute = point_longitute.replaceAll("°", ".");
+					String _tempStrPart = "0." + point_longitute.split("\\.")[1];
+					double _tempD = Double.parseDouble(_tempStrPart)/60*100;
+					point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + _tempD + "";
+					String point = point_longitute + "," + point_latitude;
+					try {
+						String point_str_for_api = "http://api.map.baidu.com/geoconv/v1/?coords=" + point + "&from=1&to=5&ak=" + API_KEY;
+						System.out.println(point_str_for_api);
+						org.json.JSONObject json1 = JSONHelper.readJsonFromUrl(point_str_for_api);
+						if(json1.getJSONArray("result").length()>0){
+							String point_after = (String) (json1.getJSONArray("result").getString(0));
+							org.json.JSONObject json_after = new org.json.JSONObject(point_after);
+							String _x = json_after.getString("x");
+							String _y = json_after.getString("y");
+							String _str = _y + "," + _x;
+							String point_str2_for_api =  "http://api.map.baidu.com/geocoder?location=" + _str + "&output=json&ak=" + API_KEY;
+							org.json.JSONObject json2 = JSONHelper.readJsonFromUrl(point_str2_for_api);
+							String address_after = (String) (json2.getString("result"));
+							String temp_str = address_after.split("\"city\":\"")[1];
+							city = temp_str.substring(0,temp_str.indexOf("\""));
+							city = city.replaceAll("市", "");
+							CityNumPropertiesUtil p = new CityNumPropertiesUtil();
+							cityNum = p.getCityNumByCity(city);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				else{
+					city = "无有效GPS信息";
+					cityNum = "无有效GPS信息";
+				}
+				TodayTravelReport ttp = travelInfoService.getTodayTravelReport(terminalId);
+				result += ttp.buildReportStr() + ";";
+				result += city + ";";
+				result += cityNum;
+				System.out.println(result);
 			}
-			TodayTravelReport ttp = travelInfoService.getTodayTravelReport(terminalId);
-			result += ttp.buildReportStr() + ";";
-			result += city + ";";
-			result += cityNum;
-			System.out.println(result);
+
 		}else{
 			result = "0;null";
 		}
