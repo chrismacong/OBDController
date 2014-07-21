@@ -279,7 +279,8 @@ public class PositionInfoControl {
 					point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + _tempD + "";
 					
 					String corner = pd.getInfo().substring(pd.getInfo().lastIndexOf("·½Ïò½Ç:"));
-					corner = point_longitute.substring(0,point_longitute.indexOf(";"));
+					corner = corner.substring(0,corner.indexOf(";"));
+					corner = corner.split(":")[1];
 
 					result += point_latitude + ";" + point_longitute + ";" + corner + "@";
 				}
