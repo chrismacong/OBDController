@@ -246,4 +246,20 @@ public class PositionInfoServiceImpl implements PositionInfoService{
 		}
 		return map;
 	}
+	@Override
+	public List<PositionData> getPositionDataBetweenTime(String terminalId,
+			String start_time, String stop_time) {
+		// TODO Auto-generated method stub
+		List<PositionData> position_between = new ArrayList<PositionData>();
+		try {
+			String start_time_in_format = start_time.substring(0,2) + "-" + start_time.substring(2,4) + "-" + start_time.substring(4,6) + " " + start_time.substring(6,8) + ":" + start_time.substring(8,10) + ":" + start_time.substring(10,12);
+			String stop_time_in_format = stop_time.substring(0,2) + "-" + stop_time.substring(2,4) + "-" + stop_time.substring(4,6) + " " + stop_time.substring(6,8) + ":" + stop_time.substring(8,10) + ":" + stop_time.substring(10,12);
+			position_between = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' and date>'" + start_time_in_format + "' and date<'" + stop_time_in_format + "' order by date desc");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return position_between;
+	}
 }

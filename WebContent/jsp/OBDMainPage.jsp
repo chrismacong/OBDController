@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-12
-			14:27 V1.1.4.11</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-21
+			10:51 V1.1.4.13</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,14 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.11</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.13</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.4.13</h2>
+				<div>为手机端提供了查询一段时间内某辆汽车的地理位置信息（经纬度，方向角）的webservice</div>
+				<br />
+				<h2>1.1.4.12</h2>
+				<div>修改了故障码文件的内容</div>
 				<br />
 				<h2>1.1.4.11</h2>
 				<div>修复了非GPS定位导致手机端无法登陆的问题</div>
@@ -383,12 +389,6 @@
 				<br />
 				<h2>1.1.4.9</h2>
 				<div>修复了地理位置信息中负值水温的bug</div>
-				<br />
-				<h2>1.1.4.8</h2>
-				<div>修复了手机体检无法连接的问题</div>
-				<br />
-				<h2>1.1.4.7</h2>
-				<div>增加了为手机体检提供的webservice接口</div>
 				<br />
 			</div>
 		</div>

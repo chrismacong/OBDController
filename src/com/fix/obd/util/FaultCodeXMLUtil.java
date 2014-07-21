@@ -17,7 +17,7 @@ private Document document;
 	public FaultCodeXMLUtil(){
 		SAXReader saxReader = new SAXReader();
 		try {
-			document = saxReader.read(new File(getClass().getClassLoader().getResource("obdfaultcode.xml").getPath()));
+			document = saxReader.read(new File(getClass().getClassLoader().getResource("faultcode_beta1.0.xml").getPath()));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

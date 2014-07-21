@@ -3,6 +3,7 @@ package com.fix.obd.web.service;
 import java.util.List;
 import java.util.Map;
 
+import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.model.util.TodayTravelReport;
 

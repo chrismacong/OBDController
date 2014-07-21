@@ -19,6 +19,7 @@ import com.fix.obd.util.ThreadMap;
 import com.fix.obd.web.dao.OBDTerminalInfoDao;
 import com.fix.obd.web.dao.TravelInfoDao;
 import com.fix.obd.web.model.OBDTerminalInfo;
+import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.model.util.TodayTravelReport;
 import com.fix.obd.web.service.TravelInfoService;

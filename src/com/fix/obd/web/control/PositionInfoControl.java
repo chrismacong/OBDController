@@ -14,16 +14,22 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fix.obd.util.CityNumPropertiesUtil;
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.model.OBDData;
 import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.util.PositionSeperateUtilModel;
+import com.fix.obd.web.model.util.TodayTravelReport;
+import com.fix.obd.web.model.util.VehicleExmnationReport;
 import com.fix.obd.web.service.PositionInfoService;
+import com.fix.obd.web.util.JSONHelper;
+import com.fix.obd.web.util.MD5Util;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
@@ -241,5 +247,52 @@ public class PositionInfoControl {
 		model.put("lngs",map.get("lngs"));
 		model.put("lats",map.get("lats"));
 		return new ModelAndView("HotSpotGraphPage",model);
+	}
+	@RequestMapping(value = "/mobilegetposition", method = RequestMethod.POST)
+	public void mobileLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		String terminalId = request.getParameter("terminalId");
+		String start_time = request.getParameter("start_time");
+		String stop_time = request.getParameter("stop_time");
+		List<PositionData> list = positionInfoService.getPositionDataBetweenTime(terminalId, start_time, stop_time);
+		String result = "";
+		for(int i=0;i<list.size();i++){
+			PositionData pd = list.get(i);
+			if(pd.getInfo().contains("GPS定位")){
+				if(pd.getInfo().lastIndexOf("纬度:")>0){
+					String point_latitude = pd.getInfo().substring(pd.getInfo().lastIndexOf("纬度:"));
+					point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+					point_latitude = point_latitude.split(":")[1];
+					point_latitude = point_latitude.replaceAll("\\.", "");
+					point_latitude = point_latitude.replaceAll("°", ".");
+					String tempStrPart = point_latitude.split("\\.")[1];
+					tempStrPart = "0." + tempStrPart;
+					double tempD = Double.parseDouble(tempStrPart)/60*100;
+					point_latitude = Integer.parseInt(point_latitude.split("\\.")[0]) + tempD + "";
+
+					String point_longitute = pd.getInfo().substring(pd.getInfo().lastIndexOf("经度:"));
+					point_longitute = point_longitute.substring(0,point_longitute.indexOf(";"));
+					point_longitute = point_longitute.split(":")[1];
+					point_longitute = point_longitute.replaceAll("\\.", "");
+					point_longitute = point_longitute.replaceAll("°", ".");
+					String _tempStrPart = "0." + point_longitute.split("\\.")[1];
+					double _tempD = Double.parseDouble(_tempStrPart)/60*100;
+					point_longitute = Integer.parseInt(point_longitute.split("\\.")[0]) + _tempD + "";
+					
+					String corner = pd.getInfo().substring(pd.getInfo().lastIndexOf("方向角:"));
+					corner = point_longitute.substring(0,point_longitute.indexOf(";"));
+
+					result += point_latitude + ";" + point_longitute + ";" + corner + "@";
+				}
+			}
+		}
+		if(result.lastIndexOf("@")>=0){
+			result = result.substring(0,result.lastIndexOf("@"));
+		}
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
