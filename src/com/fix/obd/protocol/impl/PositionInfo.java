@@ -108,7 +108,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 				TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 				t.addOBDLog(clientId, info, messageStr);
 				try {
-					PositionInfo.sentByXML(alertStr, dbStr);
+					PositionInfo.sentByXML(alertStr, dbStr, gpsDate);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -142,12 +142,10 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 	//		PositionInfo p = new PositionInfo("0000000861825486344109001500040010100016100004410067c951d901cc00005fa3");
 	//		p.DBOperation();
 	//	}
-	public static void sentByXML(String alertStr, String dbStr) throws FileNotFoundException, IOException{
+	public static void sentByXML(String gpsDate, String alertStr, String dbStr) throws FileNotFoundException, IOException{
 		String[] alertcharacters = alertStr.split(";");
 		String[] dbcharacters = dbStr.split(";");
 		JPushClientExample j = new JPushClientExample();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String now = df.format(new Date());
 		StackTraceElement[] stacks = new Throwable().getStackTrace(); 
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
@@ -194,7 +192,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			tempStrPart2 = "0." + tempStrPart2;
 			double tempD2 = Double.parseDouble(tempStrPart2)/60*100;
 			lon = Integer.parseInt(lon.split("\\.")[0]) + tempD2 + "";
-			j.sendMessageToRandomSendNo(operationId + "(" + now + ")", lat + "," + lon + "," + corner, terminalId);
+			j.sendMessageToRandomSendNo(operationId + "(" + gpsDate + ")", lat + "," + lon + "," + corner, terminalId);
 		}
 	}
 	private class GPSOrientate{
@@ -263,7 +261,7 @@ public class PositionInfo extends ODBProtocolParser implements ODBProtocol{
 			TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 			t.addPositionData(clientId, dbStr,gpsDate,alertStr);
 			try {
-				PositionInfo.sentByXML(alertStr, dbStr);
+				PositionInfo.sentByXML(gpsDate, alertStr, dbStr);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
