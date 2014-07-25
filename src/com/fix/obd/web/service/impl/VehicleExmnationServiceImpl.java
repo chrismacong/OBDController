@@ -93,7 +93,9 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 					COUNT_EMERGENCY++;
 					break;
 				default:
-					COUNT_NOTICE++;
+					if(!temp.getIndex().equals("P0000")){
+						COUNT_NOTICE++;
+					}
 				}
 			}
 		}
