@@ -97,7 +97,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_QUERY_PARAMETER==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<参数查询>等待终端返回参数的时间:" + waitSec + "s");
+				System.out.println("<参数查询>等待终端返回参数的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -127,7 +127,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<参数设置>等待终端返回Ack的时间:" + waitSec + "s");
+				System.out.println("<参数设置>等待终端返回Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -157,7 +157,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_DTC==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<查询故障码>等待终端返回故障码的时间:" + waitSec + "s");
+				System.out.println("<查询故障码>等待终端返回故障码的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -187,7 +187,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_DTC_STATUS==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<查询故障状态>等待终端返回故障状态的时间:" + waitSec + "s");
+				System.out.println("<查询故障状态>等待终端返回故障状态的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -217,7 +217,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<清除故障码>等待终端返回Ack的时间:" + waitSec + "s");
+				System.out.println("<清除故障码>等待终端返回Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -248,7 +248,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_OBD_INFO==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<请求OBD数据>等待终端返回OBD数据的时间:" + waitSec + "s");
+				System.out.println("<请求OBD数据>等待终端返回OBD数据的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -279,7 +279,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TRAVEL_INFO==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<请求最近一次行程信息>等待终端返回行程信息的时间:" + waitSec + "s");
+				System.out.println("<请求最近一次行程信息>等待终端返回行程信息的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -310,7 +310,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TRAVEL_INFO==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<请求某次行程信息>等待终端返回行程信息的时间:" + waitSec + "s");
+				System.out.println("<请求某次行程信息>等待终端返回行程信息的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -343,7 +343,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<配置升级服务器>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<配置升级服务器>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -375,7 +375,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<监听>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<监听>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -405,7 +405,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<位置学习>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<位置学习>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -435,7 +435,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<重启终端>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<重启终端>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -465,7 +465,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<清除盲点数据>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<清除盲点数据>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -495,7 +495,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<设置布防撤防>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<设置布防撤防>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -525,7 +525,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_TERMINAL_ACK==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<恢复出厂设置>等待终端Ack的时间:" + waitSec + "s");
+				System.out.println("<恢复出厂设置>等待终端Ack的时间:" + waitSec + "s");
 				if(waitSec>WAIT_SECOND){
 					return false;
 				}
@@ -595,9 +595,7 @@ public class UploadTerminalDataTask implements Runnable {
 		try {
 			MessageUtil.printAndToDivContent("终端连接地址：" + terminalAddress, true);
 			System.out.println(terminalAddress.toString().split(":")[0]);
-			ThreadMap.threadNameMap.put(terminalAddress.toString(), this);
-			for(int i=0;i<ThreadMap.threadNameMap.size();i++)
-				System.out.println(ThreadMap.threadNameMap.get(i));
+			ThreadMap.threadNameMap.put(terminalAddress.toString().split(":")[0], this);
 			logger.info("HashMap size:" + ThreadMap.threadNameMap.size());
 			logger.info("New connection:" + terminalAddress.toString());
 			is = socket.getInputStream();
@@ -617,7 +615,6 @@ public class UploadTerminalDataTask implements Runnable {
 				String str = stringBuilder.toString();
 				str = str.substring(str.indexOf("aa")+2);
 				String clientId = str.substring(0,20);
-				logger.info("terminal Id:" + clientId);
 				TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 				t.updateTerminalInfo(clientId, terminalAddress.toString().substring(1));
 				if(str.indexOf("aa")>=0){
@@ -708,7 +705,7 @@ public class UploadTerminalDataTask implements Runnable {
 			while(ACCEPT_DTC==false){
 				Thread.sleep(1000);
 				waitSec++;
-				logger.info("<查询故障码>等待终端返回故障码的时间:" + waitSec + "s");
+				System.out.println("<查询故障码>等待终端返回故障码的时间:" + waitSec + "s");
 				if(waitSec>Integer.parseInt(seconds)){
 					return false;
 				}

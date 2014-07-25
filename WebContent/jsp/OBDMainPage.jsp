@@ -354,7 +354,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-25
-			14:51 V1.1.4.18</div>
+			15:31 V1.1.4.19</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,9 +371,12 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.18</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.19</div>
 				<h1>近期版本更新说明</h1>
 				<br />
+				<h2>1.1.4.19</h2>
+				<div>恢复了ThreadMap中只记录ip不记录port的修改</div>
+				<br/>
 				<h2>1.1.4.18</h2>
 				<div>恢复了对转义问题的修改</div>
 				<br/>
