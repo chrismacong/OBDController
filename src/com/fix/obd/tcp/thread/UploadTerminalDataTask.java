@@ -594,9 +594,12 @@ public class UploadTerminalDataTask implements Runnable {
 	public void run() {
 		try {
 			MessageUtil.printAndToDivContent("终端连接地址：" + terminalAddress, true);
-			ThreadMap.threadNameMap.put(terminalAddress.toString().split(":")[0], this);
+			System.out.println(terminalAddress.toString().split(":")[0]);
+			ThreadMap.threadNameMap.put(terminalAddress.toString(), this);
+			for(int i=0;i<ThreadMap.threadNameMap.size();i++)
+				System.out.println(ThreadMap.threadNameMap.get(i));
 			logger.info("HashMap size:" + ThreadMap.threadNameMap.size());
-			logger.info("新增连接:" + terminalAddress.toString().split(":")[0]);
+			logger.info("New connection:" + terminalAddress.toString());
 			is = socket.getInputStream();
 			os = socket.getOutputStream();
 
@@ -614,67 +617,67 @@ public class UploadTerminalDataTask implements Runnable {
 				String str = stringBuilder.toString();
 				str = str.substring(str.indexOf("aa")+2);
 				String clientId = str.substring(0,20);
-				logger.info("连接终端Id：" + clientId);
+				logger.info("terminal Id:" + clientId);
 				TerminalServerService t = (TerminalServerService) ThtApplicationContext.getBean("terminalServerServiceImpl");
 				t.updateTerminalInfo(clientId, terminalAddress.toString().substring(1));
-				str = str.substring(0,str.lastIndexOf("aa"));
-				str = str.replaceAll("aaaaa", "%aaaa");
-				String[] messages = str.split("aaaa");
-				for(int i=0;i<messages.length;i++){
-					messages[i] = messages[i].replaceAll("55015501", "aa");
-					messages[i] = messages[i].replaceAll("55025502", "55");
-					messages[i] = messages[i].replaceAll("5501", "aa");
-					messages[i] = messages[i].replaceAll("5502", "55");
-				}
-				for(int i=0;i<messages.length;i++){
-					messages[i] = messages[i].replaceAll("%", "a");
-					System.out.println("Message:" + messages[i]);
-					try {
-						String operationId = messages[i].substring(26,30);
-						IdPropertiesUtil p = new IdPropertiesUtil();
-						String propertyName = p.getProtocolById(operationId);
-						if(propertyName!=null&&!"".equals(propertyName)){
-							Constructor con = Class.forName("com.fix.obd.protocol.impl." + propertyName).getConstructor(String.class);
-							ODBProtocol odbProtocol = (ODBProtocol) con.newInstance(messages[i]);
-							boolean opTemp = odbProtocol.DBOperation(true);
-							byte[] responseBytes = odbProtocol.replyToClient();
-							if(responseBytes!=null&&opTemp)
-								writeToOutputStream(responseBytes);
-							if(propertyName.equals("ParameterQueryResponse"))
-								this.ACCEPT_QUERY_PARAMETER = true;
-							if(propertyName.equals("TerminalAck"))
-								this.ACCEPT_TERMINAL_ACK = true;
-							if(propertyName.equals("UploadDTC"))
-								this.ACCEPT_DTC =true;
-							if(propertyName.equals("DTCStatus"))
-								this.ACCEPT_DTC_STATUS = true;
-							if(propertyName.equals("UploadOBDInfo")||propertyName.equals("UploadOBDInfo_CWKJ"))
-								this.ACCEPT_OBD_INFO = true;
-							if(propertyName.equals("UploadTravelInfo"))
-								this.ACCEPT_TRAVEL_INFO = true;
+				if(str.indexOf("aa")>=0){
+					str = str.substring(0,str.lastIndexOf("aa"));
+					str = str.replaceAll("aaaaa", "%aaaa");
+					String[] messages = str.split("aaaa");
+					for(int i=0;i<messages.length;i++){
+						messages[i] = messages[i].replaceAll("5501", "aa");
+						messages[i] = messages[i].replaceAll("5502", "55");
+					}
+					for(int i=0;i<messages.length;i++){
+						messages[i] = messages[i].replaceAll("%", "a");
+						System.out.println("Message:" + messages[i]);
+						try {
+							String operationId = messages[i].substring(26,30);
+							IdPropertiesUtil p = new IdPropertiesUtil();
+							String propertyName = p.getProtocolById(operationId);
+							if(propertyName!=null&&!"".equals(propertyName)){
+								Constructor con = Class.forName("com.fix.obd.protocol.impl." + propertyName).getConstructor(String.class);
+								ODBProtocol odbProtocol = (ODBProtocol) con.newInstance(messages[i]);
+								boolean opTemp = odbProtocol.DBOperation(true);
+								byte[] responseBytes = odbProtocol.replyToClient();
+								if(responseBytes!=null&&opTemp)
+									writeToOutputStream(responseBytes);
+								if(propertyName.equals("ParameterQueryResponse"))
+									this.ACCEPT_QUERY_PARAMETER = true;
+								if(propertyName.equals("TerminalAck"))
+									this.ACCEPT_TERMINAL_ACK = true;
+								if(propertyName.equals("UploadDTC"))
+									this.ACCEPT_DTC =true;
+								if(propertyName.equals("DTCStatus"))
+									this.ACCEPT_DTC_STATUS = true;
+								if(propertyName.equals("UploadOBDInfo")||propertyName.equals("UploadOBDInfo_CWKJ"))
+									this.ACCEPT_OBD_INFO = true;
+								if(propertyName.equals("UploadTravelInfo"))
+									this.ACCEPT_TRAVEL_INFO = true;
 
+							}
+						} catch (InstantiationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (NoSuchMethodException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NoSuchMethodException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SecurityException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 				}
 			}

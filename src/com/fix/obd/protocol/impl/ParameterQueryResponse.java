@@ -60,6 +60,7 @@ public class ParameterQueryResponse extends ODBProtocolParser implements ODBProt
 							}
 						}
 					}
+					System.out.println(message);
 					String real_character_message = message.substring(4,4+character_length*2);
 					decode = (Decode) con.newInstance(real_character_message);
 					decode.print(cha_iterator);

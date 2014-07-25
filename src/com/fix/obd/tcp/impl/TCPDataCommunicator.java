@@ -49,7 +49,7 @@ public class TCPDataCommunicator implements ITCPDataCommunicator {
 	/**
 	 * 连接超时时长
 	 */
-	private int timeOut = 60 * 3000;
+	private int timeOut = 60 * 1000 * 10;
 
 	/**
 	 * 运行状态
@@ -75,7 +75,7 @@ public class TCPDataCommunicator implements ITCPDataCommunicator {
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(serverPort);
-			logger.info("终端数据接收服务器启动。");
+			logger.info("Server start successfully!");
 			status = 1;
 
 			while (true) {
@@ -87,14 +87,14 @@ public class TCPDataCommunicator implements ITCPDataCommunicator {
 			}
 
 		} catch (IOException e) {
-			logger.error("启动端口[" + serverPort + "]失败。", e);
+			logger.error("Failed starting port [" + serverPort + "].", e);
 		}
 
 	}
 
 	@Override
 	public void stop() {
-		logger.info("终端数据接收服务器关闭。");
+		logger.info("The server connection server is down.");
 		serverSocket = null;
 		status = 0;
 	}
