@@ -19,7 +19,6 @@ import com.fix.obd.util.ThreadMap;
 import com.fix.obd.web.dao.OBDTerminalInfoDao;
 import com.fix.obd.web.dao.TravelInfoDao;
 import com.fix.obd.web.model.OBDTerminalInfo;
-import com.fix.obd.web.model.PositionData;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.model.util.TodayTravelReport;
 import com.fix.obd.web.service.TravelInfoService;
@@ -415,5 +414,30 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			e.printStackTrace();
 		}
 		return ttr;
+	}
+
+	@Override
+	public List<TravelInfo> getTravelInfoBetweenTime(String terminalId,
+			String from_time_point, String to_time_point) {
+		// TODO Auto-generated method stub
+			List<TravelInfo> info_list = new ArrayList<TravelInfo>();
+		try {
+			info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12)<='" + to_time_point + "' and SUBSTR(info,27,12)>='" + from_time_point + "'");
+			for(int i=0;i<info_list.size()-1;i++){
+				for(int j=info_list.size()-1;j>i;j--){
+					TravelInfo info1 = info_list.get(i);
+					TravelInfo info2 = info_list.get(j);
+					String info1_str = info1.getInfo().split("@")[0] + info1.getInfo().split("@")[1];
+					String info2_str = info2.getInfo().split("@")[0] + info2.getInfo().split("@")[1];
+					if(info1_str.equals(info2_str))
+						info_list.remove(j);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return info_list;
 	}
 }
