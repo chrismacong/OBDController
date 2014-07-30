@@ -355,11 +355,12 @@ public class YY_LogControl {
 		String cityNum = "";
 		if(loginService.askCheckUser(email,password)){
 			String terminalId = loginService.getTerminalIdByEmail(email);
+			String carNumber = loginService.getCarNumberByEmail(email);
 			if(terminalId==null){
 				terminalId = "Œ¥∞Û∂®…Ë±∏";
 			}
 			result = "1;";
-			result = result + terminalId + ";";
+			result = result + terminalId + ";" + carNumber + ";";
 			VehicleExmnationReport vp = vehicleExmnationService.getVehicleExmnationReport(terminalId);
 			result += vp.getVehicle_exm_score() + ";";
 			result += vp.getVehicle_exm_main_solution() + ";";

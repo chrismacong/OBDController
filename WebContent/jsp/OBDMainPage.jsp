@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-25
-			15:31 V1.1.4.19</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-30
+			14:30 V1.1.4.20</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,9 +371,13 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.19</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.4.20</div>
 				<h1>近期版本更新说明</h1>
 				<br />
+				<h2>1.1.4.20</h2>
+				<div>在手机端登录时提供了车辆的车牌号信息</div>
+				<div>这将使1.1.4的最后一个版本</div>
+				<br/>
 				<h2>1.1.4.19</h2>
 				<div>恢复了ThreadMap中只记录ip不记录port的修改</div>
 				<br/>
@@ -386,9 +390,6 @@
 				<h2>1.1.4.16</h2>
 				<div>发现了服务器在zhcon进程上占用过多内存的问题（接近99%），考虑可能是log4j中文输入带来的内存负担</div>
 				<div>修改了log4j的输入规则，进行负载测试</div>
-				<br />
-				<h2>1.1.4.15</h2>
-				<div>更改了手机获取一段时间内位置信息无反应的问题</div>
 				<br />
 			</div>
 		</div>

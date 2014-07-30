@@ -89,5 +89,21 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 		return userDao.getEmailByTel(tel);
 	}
 
+	@Override
+	public String getCarNumberByEmail(String email) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> user_list = userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0)
+				return user_list.get(0).getCarnumber();
+			else
+				return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 
 }
