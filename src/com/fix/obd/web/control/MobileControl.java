@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.model.DTCDefect;
+import com.fix.obd.web.model.OBDTerminalInfo;
 import com.fix.obd.web.model.TravelInfo;
+import com.fix.obd.web.model.YY_User;
 import com.fix.obd.web.service.DTCService;
+import com.fix.obd.web.service.TerminalInfoService;
 import com.fix.obd.web.service.TravelInfoService;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -40,6 +43,15 @@ public class MobileControl {
 	}
 	public void setTravelInfoService(TravelInfoService travelInfoService) {
 		this.travelInfoService = travelInfoService;
+	}
+	@Resource
+	private TerminalInfoService terminalInfoService;
+	
+	public TerminalInfoService getTerminalInfoService() {
+		return terminalInfoService;
+	}
+	public void setTerminalInfoService(TerminalInfoService terminalInfoService) {
+		this.terminalInfoService = terminalInfoService;
 	}
 	private static final Logger logger = LoggerFactory.getLogger(MobileControl.class);
 	@RequestMapping(value = "/vehicleexm", method = RequestMethod.POST)
@@ -96,4 +108,24 @@ public class MobileControl {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "/mobilegetterminalinfo", method = RequestMethod.POST)
+	public void mobileGetTerminalInfo(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		String terminalId = request.getParameter("terminalId");
+//		OBDTerminalInfo obdTerminalInfo = terminalInfoService.getTerminalInfo(terminalId);
+		YY_User yy_user = terminalInfoService.getTerminalUserInfo(terminalId);
+		String result = terminalId + ";";
+		result += yy_user.getEmail() + ";";
+		result += yy_user.getNickname() + ";";
+		result += yy_user.getCarnumber() + ";";
+		result += yy_user.getCartype() + ";";
+		result += yy_user.getTel();
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

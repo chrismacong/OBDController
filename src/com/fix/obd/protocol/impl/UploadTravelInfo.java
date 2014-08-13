@@ -23,7 +23,7 @@ import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
 public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
-	private static final Logger logger = Logger.getLogger(UploadOBDInfo.class);
+	private static final Logger logger = Logger.getLogger(UploadTravelInfo.class);
 	private String clientId;
 	private String bufferId;
 	private XMLReader xmlReader;
@@ -136,6 +136,6 @@ public class UploadTravelInfo extends ODBProtocolParser implements ODBProtocol{
         	}
 		}
 		character_str += point_address_str;
-		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str, this.getId());
+		//jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", character_str, this.getId());
 	}
 }

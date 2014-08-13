@@ -9,7 +9,7 @@ import com.fix.obd.util.ProtocolPropertiesUtil;
 import com.fix.obd.util.ResponseStrMaker;
 
 public class ReadDTCStatus extends ODBProtocolParser implements ODBProtocol {
-	private static final  Logger logger = Logger.getLogger(ReadDTC.class);
+	private static final  Logger logger = Logger.getLogger(ReadDTCStatus.class);
 	private String clientId;
 	private String bufferId;
 

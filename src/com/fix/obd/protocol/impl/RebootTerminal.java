@@ -9,7 +9,7 @@ import com.fix.obd.util.ProtocolPropertiesUtil;
 import com.fix.obd.util.ResponseStrMaker;
 
 public class RebootTerminal extends ODBProtocolParser implements ODBProtocol{
-	private static final  Logger logger = Logger.getLogger(QueryParameters.class);
+	private static final  Logger logger = Logger.getLogger(RebootTerminal.class);
 	private String protocolClientId;
 	private String protocolBufferId;
 	public RebootTerminal(String clientId, String bufferId){

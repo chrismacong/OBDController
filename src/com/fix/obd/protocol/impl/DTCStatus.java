@@ -20,7 +20,7 @@ import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
 public class DTCStatus extends ODBProtocolParser implements ODBProtocol{
-	private static final  Logger logger = Logger.getLogger(TerminalHeartbeat.class);
+	private static final  Logger logger = Logger.getLogger(DTCStatus.class);
 	private String clientId;
 	private String bufferId;
 	

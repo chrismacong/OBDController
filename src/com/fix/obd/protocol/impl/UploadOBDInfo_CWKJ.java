@@ -27,7 +27,7 @@ import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
 public class UploadOBDInfo_CWKJ extends ODBProtocolParser implements ODBProtocol{
-	private static final Logger logger = Logger.getLogger(UploadOBDInfo.class);
+	private static final Logger logger = Logger.getLogger(UploadOBDInfo_CWKJ.class);
 	private String clientId;
 	private String bufferId;
 	private XMLReader reader;

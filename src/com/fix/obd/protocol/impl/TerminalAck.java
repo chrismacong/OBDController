@@ -9,7 +9,7 @@ import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
 public class TerminalAck extends ODBProtocolParser implements ODBProtocol{
-	private static final  Logger logger = Logger.getLogger(ServerAck.class);
+	private static final  Logger logger = Logger.getLogger(TerminalAck.class);
 	private String clientId;
 	private String bufferId;
 	public TerminalAck(String messageStr){

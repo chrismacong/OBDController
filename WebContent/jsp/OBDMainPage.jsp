@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-07-30
-			14:30 V1.1.4.20</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-13
+			10:26 V1.1.5.0</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,9 +371,15 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.4.20</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.0</div>
 				<h1>近期版本更新说明</h1>
 				<br />
+				<h2>1.1.5.0</h2>
+				<div>增加了手机端请求设备信息的接口</div>
+				<div>新增0015协议，用来区分服务端请求后回复的故障码信息和终端主动推送的故障码信息</div>
+				<div>服务器不会再向手机端推送行程信息了，改为主动请求</div>
+				<div>服务端不会再根据0005协议推送故障码信息了，只有在收到0015消息的时候才会推送故障码信息</div>
+				<br/>
 				<h2>1.1.4.20</h2>
 				<div>在手机端登录时提供了车辆的车牌号信息</div>
 				<div>这将使1.1.4的最后一个版本</div>
@@ -387,10 +393,6 @@
 				<h2>1.1.4.17</h2>
 				<div>修改socket的超时时间为10分钟，再试</div>
 				<br/>
-				<h2>1.1.4.16</h2>
-				<div>发现了服务器在zhcon进程上占用过多内存的问题（接近99%），考虑可能是log4j中文输入带来的内存负担</div>
-				<div>修改了log4j的输入规则，进行负载测试</div>
-				<br />
 			</div>
 		</div>
 	</div>

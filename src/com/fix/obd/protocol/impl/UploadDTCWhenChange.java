@@ -18,12 +18,13 @@ import com.fix.obd.web.model.util.FaultCodeIterator;
 import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
-public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
-	private static final  Logger logger = Logger.getLogger(UploadDTC.class);
+//当设备检测到车辆出现故障码信息时，使用这个消息来进行通讯，以区别于主动请求后得到的故障码信息
+public class UploadDTCWhenChange extends ODBProtocolParser implements ODBProtocol{
+	private static final  Logger logger = Logger.getLogger(UploadDTCWhenChange.class);
 	private String clientId;
 	private String bufferId;
 
-	public UploadDTC(String messageStr){
+	public UploadDTCWhenChange(String messageStr){
 		super(messageStr);
 		MessageUtil.printAndToDivContent("收到来自终端" + this.getId() + "上传故障码",true);
 	}
@@ -109,6 +110,6 @@ public class UploadDTC extends ODBProtocolParser implements ODBProtocol{
 		String classname =  stacks[0].getClassName().substring(stacks[0].getClassName().lastIndexOf(".")+1);
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
-		//jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr, this.getId());
+		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", faultStr, this.getId());
 	}
 }

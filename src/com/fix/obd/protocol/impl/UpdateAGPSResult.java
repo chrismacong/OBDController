@@ -13,7 +13,7 @@ import com.fix.obd.web.service.TerminalServerService;
 import com.fix.obd.web.util.ThtApplicationContext;
 
 public class UpdateAGPSResult extends ODBProtocolParser implements ODBProtocol {
-	private static final Logger logger = Logger.getLogger(RemoteUpdateResult.class);
+	private static final Logger logger = Logger.getLogger(UpdateAGPSResult.class);
 	private String clientId;
 	private String bufferId;
 	private final Map<String , String> updateResult = new HashMap<String ,String>();
