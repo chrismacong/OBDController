@@ -59,19 +59,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 	private TravelExmnationServiceImpl(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MONTH, -1);
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH)+1;
-		String monthStr = (""+month).length()==2?""+month:"0"+month;
-		int day = calendar.get(Calendar.DAY_OF_MONTH);
-		String dayStr = (""+day).length()==2?""+day:"0"+day;
-		lineOfDate = year + "-" + monthStr + "-" + dayStr + " 00:00:00";
+		SimpleDateFormat df = new SimpleDateFormat("yyMMdd");
+		lineOfDate = df.format(calendar.getTime()) + "000000";
 		calendar = Calendar.getInstance();
-		year = calendar.get(Calendar.YEAR);
-		month = calendar.get(Calendar.MONTH)+1;
-		monthStr = (""+month).length()==2?""+month:"0"+month;
-		day = calendar.get(Calendar.DAY_OF_MONTH);
-		dayStr = (""+day).length()==2?""+day:"0"+day;
-		endlineOfDate = year + "-" + monthStr + "-" + dayStr + " 23:59:59";
+		endlineOfDate = df.format(calendar.getTime()) + "235959";
 	}
 	private TravelExmnationServiceImpl(String date){
 		
@@ -436,7 +427,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		// TODO Auto-generated method stub
 		TravelExmnation t = new TravelExmnation();
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -501,7 +492,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		final String TIRED_NORMAL = "您经常出现疲劳驾驶的情况，为了您的安全，请务必健康行车";
 		Map map = new HashMap();
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date >= '" + lineOfDate + "' and date<='" + endlineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) >= '" + lineOfDate + "' and SUBSTR(info,27,12) <='" + endlineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -675,7 +666,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
 		try {
-			List<PositionData> info_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' and date > '" + lineOfDate.substring(2) + "'");
+			List<PositionData> info_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate.substring(2) + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -736,7 +727,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		Map map = new HashMap();
 		int[] hour_count = new int[24];
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -817,7 +808,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		int[] emer_brake_hour = new int[24];
 		double[] emer_brake_hour_double = new double[24];
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -927,7 +918,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		int[] emer_speedup_hour = new int[24];
 		double[] emer_speedup_hour_double = new double[24];
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -1034,7 +1025,7 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		String s1 = "[";
 		String s2 = "[";
 		try {
-			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and date > '" + lineOfDate + "'");
+			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12) > '" + lineOfDate + "'");
 			if(info_list.size()>0){
 				for(int i=0;i<info_list.size()-1;i++){
 					for(int j=info_list.size()-1;j>i;j--){
@@ -1067,8 +1058,10 @@ public class TravelExmnationServiceImpl implements TravelExmnationService{
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
-		s1 = s1.substring(0,s1.lastIndexOf(","));
-		s2 = s2.substring(0,s2.lastIndexOf(","));
+		if(s1.lastIndexOf(",")>-1)
+			s1 = s1.substring(0,s1.lastIndexOf(","));
+		if(s2.lastIndexOf(",")>-1)
+			s2 = s2.substring(0,s2.lastIndexOf(","));
 		map.put("brake_speed",s1 + "]");
 		map.put("speedup_speed",s2 + "]");
 		return map;
