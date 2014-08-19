@@ -354,7 +354,7 @@
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
 		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-19
-			10:56 V1.1.5.4</div>
+			15:20 V1.1.5.5</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,12 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.5.4</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.5</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.5.5</h2>
+				<div>修复了之前修改造成的时间-速度统计图显示错误的bug</div>
+				<div>为手机端添加了获取以月为单位的统计报表数据的接口</div>
 				<br />
 				<h2>1.1.5.4</h2>
 				<div>修改了习惯分析中时间戳的比较方式，改用截取info中的开始时间进行比较</div>
@@ -386,12 +390,6 @@
 				<h2>1.1.5.1</h2>
 				<div>在推送的OBD信息中恢复了进气歧管绝对压力数值</div>
 				<div>在收到汽车启动时里程的参数应答信息时，向手机端推送里程信息</div>
-				<br/>
-				<h2>1.1.5.0</h2>
-				<div>增加了手机端请求设备信息的接口</div>
-				<div>新增0015协议，用来区分服务端请求后回复的故障码信息和终端主动推送的故障码信息</div>
-				<div>服务器不会再向手机端推送行程信息了，改为主动请求</div>
-				<div>服务端不会再根据0005协议推送故障码信息了，只有在收到0015消息的时候才会推送故障码信息</div>
 				<br/>
 			</div>
 		</div>

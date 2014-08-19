@@ -1,7 +1,6 @@
 package com.fix.obd.web.control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -10,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fix.obd.util.MessageUtil;
 import com.fix.obd.web.model.DTCDefect;
-import com.fix.obd.web.model.OBDTerminalInfo;
+import com.fix.obd.web.model.TravelExmnation;
 import com.fix.obd.web.model.TravelInfo;
 import com.fix.obd.web.model.YY_User;
 import com.fix.obd.web.service.DTCService;
 import com.fix.obd.web.service.TerminalInfoService;
+import com.fix.obd.web.service.TravelExmnationService;
 import com.fix.obd.web.service.TravelInfoService;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
@@ -55,6 +53,15 @@ public class MobileControl {
 	}
 	public void setTerminalInfoService(TerminalInfoService terminalInfoService) {
 		this.terminalInfoService = terminalInfoService;
+	}
+	@Resource
+	private TravelExmnationService travelExmnationService;
+	public TravelExmnationService getTravelExmnationService() {
+		return travelExmnationService;
+	}
+	public void setTravelExmnationService(
+			TravelExmnationService travelExmnationService) {
+		this.travelExmnationService = travelExmnationService;
 	}
 	private static final Logger logger = LoggerFactory.getLogger(MobileControl.class);
 	@RequestMapping(value = "/vehicleexm", method = RequestMethod.POST)
@@ -144,19 +151,60 @@ public class MobileControl {
 		String[] average_speed_per_day = (String[]) map.get("average_speed_per_day");
 		String result = "";
 		result = this.makingStringSeperatedByComma(result, distance_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, oilspend_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, brake_times_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, speedup_times_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, driving_minutes_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, average_oilspend_per_day);
-		System.out.println(result);
 		result = this.makingStringSeperatedByComma(result, average_speed_per_day);
-		System.out.println(result);
+		result = result.substring(0,result.lastIndexOf("@"));
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		try {
+//			JSONObject jsonObject = new JSONObject(); 
+//			jsonObject.put("success", "true");
+//			jsonObject.put("result", result);
+//			PrintWriter pw = null;
+//			pw=response.getWriter();
+//			pw.print(jsonObject.toString());
+//			pw.flush();
+//			pw.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
+	@RequestMapping(value = "/mobilegetmonthlytravelexmbydate", method = RequestMethod.POST)
+	public void mobileGetMonthlyTravelExmbyDate(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		String terminalId = request.getParameter("terminalId");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		TravelExmnation te = travelExmnationService.exmnationAndRecordByMonth(terminalId, year, month);
+		Map map_hour = travelExmnationService.statisticOfHourByMonth(terminalId, year, month);
+		Map map_speed_hour = travelExmnationService.statisticOfSpeedAndHourByMonth(terminalId, year, month);
+		int[] hour_count = (int[]) map_hour.get("hour_count");
+		int[] speed_of_hour = (int[]) map_speed_hour.get("speed_of_hour");
+		String result = "";
+		result += te.getTotalDistance() + "@";
+		result += te.getLongestDistance() + "@";
+		result += te.getMaxSpeed() + "@";
+		result += te.getTotalExceedSeconds() + "@";
+		result += te.getTotalBrakeTimes() + "@";
+		result += te.getTotalEmerBrakeTimes() + "@";
+		result += te.getTotalSpeedUpTimes() + "@";
+		result += te.getTotalEmerSpeedUpTimes() + "@";
+		result += te.getAvgSpeed() + "@";
+		result += te.getMaxWaterTmp() + "@";
+		result += te.getMaxRevolution() + "@";
+		result += te.getTotalOilExpend() + "@";
+		result += te.getAvgOilExpend() + "@";
+		result += te.getTotalTiredDrivingMinutes() + "@";
+		result = this.makingStringSeperatedByComma(result, hour_count);
+		result = this.makingStringSeperatedByComma(result, speed_of_hour);
 		result = result.substring(0,result.lastIndexOf("@"));
 		try {
 			response.getWriter().write(result);

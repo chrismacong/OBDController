@@ -22,9 +22,12 @@ public interface TravelExmnationService {
 	String getAvgOilExpend(List<TravelInfo> list);
 	String getTotalTiredDrivingMinutes(List<TravelInfo> list);
 	public TravelExmnation exmnationAndRecord(String terminalId);
+	public TravelExmnation exmnationAndRecordByMonth(String terminalId, String year, String month);
 	public Map exmnationScoreAmongFriends(String terminalId);
 	public Map statisticOfSpeedAndHour(String terminalId);
+	public Map statisticOfSpeedAndHourByMonth(String terminalId, String year, String month);
 	public Map statisticOfHour(String terminalId);
+	public Map statisticOfHourByMonth(String terminalId, String year, String month);
 	public Map statisticOfBrakeAndHour(String terminalId);
 	public Map statisticOfSpeedupAndHour(String terminalId);
 	public Map speedPlan(String terminalId);
