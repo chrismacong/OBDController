@@ -1,6 +1,7 @@
 package com.fix.obd.web.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -127,5 +130,73 @@ public class MobileControl {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/mobilegetmonthlytravelinfobydate", method = RequestMethod.POST)
+	public void mobileGetMonthlyTravelInfobyDate(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		String terminalId = request.getParameter("terminalId");
+		String date = request.getParameter("date");
+		Map map = travelInfoService.getTravelInfoMapByDateForMobileStatistics(terminalId, date);
+		int[] distance_per_day = (int[]) map.get("distance_per_day");
+		String[] oilspend_per_day = (String[]) map.get("oilspend_per_day");
+		int[] brake_times_per_day = (int[]) map.get("brake_times_per_day");
+		int[] speedup_times_per_day = (int[]) map.get("speedup_times_per_day");
+		int[] driving_minutes_per_day = (int[]) map.get("driving_minutes_per_day");
+		String[] average_oilspend_per_day = (String[]) map.get("average_oilspend_per_day");
+		String[] average_speed_per_day = (String[]) map.get("average_speed_per_day");
+		String result = "";
+		result = this.makingStringSeperatedByComma(result, distance_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, oilspend_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, brake_times_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, speedup_times_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, driving_minutes_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, average_oilspend_per_day);
+		System.out.println(result);
+		result = this.makingStringSeperatedByComma(result, average_speed_per_day);
+		System.out.println(result);
+		result = result.substring(0,result.lastIndexOf("@"));
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		try {
+//			JSONObject jsonObject = new JSONObject(); 
+//			jsonObject.put("success", "true");
+//			jsonObject.put("result", result);
+//			PrintWriter pw = null;
+//			pw=response.getWriter();
+//			pw.print(jsonObject.toString());
+//			pw.flush();
+//			pw.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
 	
+	private String makingStringSeperatedByComma(String originalStr, String[] addStr){
+		for(int i=0;i<addStr.length;i++){
+			originalStr += addStr[i] + ",";
+		}
+		if(originalStr.indexOf(",")>-1){
+			originalStr = originalStr.substring(0,originalStr.lastIndexOf(","));
+		}
+		originalStr += "@";
+		return originalStr;
+	}
+	private String makingStringSeperatedByComma(String originalStr, int[] addStr){
+		for(int i=0;i<addStr.length;i++){
+			originalStr += addStr[i] + ",";
+		}
+		if(originalStr.indexOf(",")>-1){
+			originalStr = originalStr.substring(0,originalStr.lastIndexOf(","));
+		}
+		originalStr += "@";
+		return originalStr;
+	}
 }

@@ -271,27 +271,6 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		return this.strForDiv;
 	}
 	public void sentByXML(String str) throws FileNotFoundException, IOException{
-		//		Element root = new Element("obdxml");
-		//		Document Doc = new Document(root);
-		//		String[] characters = str.split("@");
-		//		for(int i=0;i<characters.length;i++){
-		//			Element elements = new Element("obd");
-		//			elements.setAttribute("id", "" + i);
-		//			String innerCharacters[] = characters[i].split(";");
-		//			if(innerCharacters.length>=3){
-		//				elements.addContent(new Element("name").setText(innerCharacters[0]));
-		//				elements.addContent(new Element("value").setText(innerCharacters[1]));
-		//				elements.addContent(new Element("extra").setText(innerCharacters[2]));
-		//			}
-		//			else{
-		//				elements.addContent(new Element("name").setText("Nil"));
-		//				elements.addContent(new Element("value").setText("Nil"));
-		//				elements.addContent(new Element("extra").setText("Nil"));
-		//			}
-		//			root.addContent(elements);  
-		//		}
-		//		XMLOutputter XMLOut = new XMLOutputter();  
-		//		XMLOut.output(Doc, new FileOutputStream("e://obd_to_apk.xml")); 
 		String[] characters = str.split("@");
 		JPushClientExample jpush = new JPushClientExample();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -301,19 +280,26 @@ public class UploadOBDInfo extends ODBProtocolParser implements ODBProtocol{
 		ProtocolPropertiesUtil p = new ProtocolPropertiesUtil();
 		String operationId = p.getIdByProtocol(classname);
 		String obdMessage = "";
+		String pas[] = new String[5];
 		for(int i=0;i<characters.length;i++){
-			String character_sep[] = characters[i].split(";"); 
+			String character_sep[] = characters[i].split(";");
 			if(character_sep.length>=3){
 				if(character_sep[0].equals("Obd速度"))
-					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+					pas[0] = character_sep[1];
 				if(character_sep[0].equals("电池电压"))
-					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+					pas[1] = character_sep[1];
 				if(character_sep[0].equals("发动机转速"))
-					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+					pas[2] = character_sep[1];
 				if(character_sep[0].equals("发动机冷却液温度"))
-					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+					pas[3] = character_sep[1];
+				if(character_sep[0].equals("进气歧管绝对压力"))
+					pas[4] = character_sep[1];
 			}
 		}
+		for(int i=0;i<pas.length;i++){
+			obdMessage += pas[i] + ";";
+		}
+		obdMessage = obdMessage.substring(0,obdMessage.lastIndexOf(";"));
 		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", obdMessage, this.getId());
 
 	}

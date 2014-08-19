@@ -1,5 +1,6 @@
 package com.fix.obd.web.service.impl;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -313,7 +314,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			day = day.length()==1?"0"+day:day;
 			String today_date = year+month+day;
 			List<TravelInfo> info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,6)='" + today_date + "'");
-			
+
 			int today_distance = 0;
 			double today_total_oil= 0.00;
 			int today_total_time= 0;
@@ -354,25 +355,25 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 						if(speed>today_max_speed)
 							today_max_speed = speed;
 					}
-					
+
 					if(infoStr.indexOf("急刹车次数")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("急刹车次数"));
 						temp = temp.split(";")[1];
 						today_brake_times += Integer.parseInt(temp);
 					}
-					
+
 					if(infoStr.indexOf("紧急刹车次数")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("紧急刹车次数"));
 						temp = temp.split(";")[1];
 						today_emer_brake_times += Integer.parseInt(temp);
 					}
-					
+
 					if(infoStr.indexOf("急加速次数")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("急加速次数"));
 						temp = temp.split(";")[1];
 						today_speedup_times += Integer.parseInt(temp);
 					}
-					
+
 					if(infoStr.indexOf("紧急加速次数")>-1){
 						String temp = infoStr.substring(infoStr.indexOf("紧急加速次数"));
 						temp = temp.split(";")[1];
@@ -420,7 +421,7 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 	public List<TravelInfo> getTravelInfoBetweenTime(String terminalId,
 			String from_time_point, String to_time_point) {
 		// TODO Auto-generated method stub
-			List<TravelInfo> info_list = new ArrayList<TravelInfo>();
+		List<TravelInfo> info_list = new ArrayList<TravelInfo>();
 		try {
 			info_list = travelInfoDao.findByHQL("from TravelInfo where tid = '" + terminalId + "' and SUBSTR(info,27,12)<='" + to_time_point + "' and SUBSTR(info,27,12)>='" + from_time_point + "'");
 			for(int i=0;i<info_list.size()-1;i++){
@@ -437,7 +438,142 @@ public class TravelInfoServiceImpl implements TravelInfoService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return info_list;
+	}
+
+	@Override
+	public Map getTravelInfoMapByDateForMobileStatistics(String terminalId,
+			String datestr) {
+		// TODO Auto-generated method stub
+		HashMap map = new HashMap();
+		try {
+			Calendar now = Calendar.getInstance();
+			SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat df_ed = new SimpleDateFormat("yyMMddHHmmss");
+			Date date = df.parse(datestr);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			String startdate;
+			String enddate;
+			int days;
+			if(calendar.get(Calendar.YEAR)==now.get(Calendar.YEAR)&&calendar.get(Calendar.MONTH)==now.get(Calendar.MONTH)){
+				Calendar start_calendar = calendar;
+				start_calendar.set(Calendar.DAY_OF_MONTH, 1);
+				startdate = df.format(start_calendar.getTime());
+				enddate = datestr;
+				days = now.get(Calendar.DAY_OF_MONTH);
+			}
+			else{
+				Calendar start_calendar = calendar;
+				start_calendar.set(Calendar.DAY_OF_MONTH, 1);
+				startdate = df.format(start_calendar.getTime());
+				Calendar end_calendar = calendar;
+				end_calendar.set(Calendar.DAY_OF_MONTH, end_calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				enddate = df.format(end_calendar.getTime());
+				days = end_calendar.get(Calendar.DAY_OF_MONTH);
+			}
+
+			Date date_count = df.parse(startdate);
+			Calendar calendar_count = Calendar.getInstance();
+			calendar_count.setTime(date_count);
+			int[] distance_per_day = new int[days];
+			String[] oilspend_per_day = new String[days];
+			int[] oilspend_per_day_int = new int[days];
+			int[] brake_times_per_day = new int[days];
+			int[] speedup_times_per_day = new int[days];
+			int[] driving_minutes_per_day = new int[days];
+			String[] average_oilspend_per_day = new String[days];
+			for(int i=0;i<average_oilspend_per_day.length;i++)
+				average_oilspend_per_day[i] = "0";
+			String[] average_speed_per_day = new String[days];
+			for(int i=0;i<average_speed_per_day.length;i++)
+				average_speed_per_day[i] = "0";
+			for(int i=1;i<=days;i++){
+				calendar_count.set(calendar.DAY_OF_MONTH,i);
+				Calendar calendar_start = calendar_count;
+				calendar_start.set(Calendar.HOUR_OF_DAY, 0);
+				calendar_start.set(Calendar.MINUTE,0);
+				calendar_start.set(Calendar.SECOND, 0);
+				String date_count_start = df_ed.format(calendar_start.getTime());
+				Calendar calendar_end = calendar_count;
+				calendar_end.set(Calendar.HOUR, 23);
+				calendar_end.set(Calendar.MINUTE,59);
+				calendar_end.set(Calendar.SECOND, 59);
+				String date_count_end = df_ed.format(calendar_end.getTime());
+				
+				List<TravelInfo> list = this.getTravelInfoBetweenTime(terminalId, date_count_start, date_count_end);
+				System.out.println(list.size());
+				System.out.println(date_count_start + "   " + date_count_end);
+				for(int j=0;j<list.size();j++){
+					String infoStr = list.get(j).getInfo();
+
+					//获取在时间段内每一天的所有驾驶总距离
+					if(infoStr.indexOf("距离")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("距离"));
+						temp = temp.split(";")[1];
+						distance_per_day[i-1] += Integer.parseInt(temp);
+					}
+
+					//获取在时间段内每一天的所有驾驶总油耗
+					if(infoStr.indexOf("总油耗")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("总油耗"));
+						temp = temp.split(";")[1];
+						oilspend_per_day_int[i-1] += Integer.parseInt(temp);
+					}
+
+					//获取在时间段内每一天的所有驾驶总急刹车次数
+					if(infoStr.indexOf("急刹车次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("急刹车次数"));
+						temp = temp.split(";")[1];
+						brake_times_per_day[i-1] += Integer.parseInt(temp);
+					}
+
+					//获取在时间段内每一天的所有驾驶总急加速次数
+					if(infoStr.indexOf("急加速次数")>-1){
+						String temp = infoStr.substring(infoStr.indexOf("急加速次数"));
+						temp = temp.split(";")[1];
+						speedup_times_per_day[i-1] += Integer.parseInt(temp);
+					}
+
+					//获取在时间段内每一天的所有驾驶总时间（min）
+					String start_date_str = infoStr.split("@")[1].split(";")[1];
+					String end_date_str = infoStr.split("@")[0].split(";")[1];
+					String start_date_format_str = start_date_str.substring(0,2) + "-" + start_date_str.substring(2,4) + "-" + start_date_str.substring(4,6) + " " + start_date_str.substring(6,8) + ":" + start_date_str.substring(8,10) + ":" + start_date_str.substring(10,12);
+					String end_date_format_str = end_date_str.substring(0,2) + "-" + end_date_str.substring(2,4) + "-" + end_date_str.substring(4,6) + " " + end_date_str.substring(6,8) + ":" + end_date_str.substring(8,10) + ":" + end_date_str.substring(10,12);
+					SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+					Date start_date = sdf.parse(start_date_format_str);
+					Date end_date = sdf.parse(end_date_format_str);
+					long s = end_date.getTime() - start_date.getTime();
+					driving_minutes_per_day[i-1] += s/60000;
+				}
+
+
+				DecimalFormat    df2   = new DecimalFormat("######0.00");   
+				//获取在时间段内每一天的平均油耗
+				if(distance_per_day[i-1]>0)
+					average_oilspend_per_day[i-1] =df2.format(((double)oilspend_per_day_int[i-1])/((double)distance_per_day[i-1]));
+				
+				//获取在时间段内每一天的平均速度
+				if(driving_minutes_per_day[i-1]>0)
+					average_speed_per_day[i-1] = df2.format(((double)distance_per_day[i-1])/((double)driving_minutes_per_day[i-1])*60.00);
+				
+				oilspend_per_day[i-1] = df2.format(((double)oilspend_per_day_int[i-1]) * 0.01);
+			}
+			map.put("distance_per_day", distance_per_day);
+			map.put("oilspend_per_day",oilspend_per_day);
+			map.put("brake_times_per_day", brake_times_per_day);
+			map.put("speedup_times_per_day", speedup_times_per_day);
+			map.put("average_oilspend_per_day", average_oilspend_per_day);
+			map.put("average_speed_per_day", average_speed_per_day);
+			map.put("driving_minutes_per_day", driving_minutes_per_day);
+			return map;
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

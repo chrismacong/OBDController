@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-13
-			10:26 V1.1.5.0</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-19
+			09:36 V1.1.5.3</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,9 +371,19 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.5.0</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.3</div>
 				<h1>近期版本更新说明</h1>
 				<br />
+				<h2>1.1.5.3</h2>
+				<div>为手机端添加了获取以日为单位的月统计数据的接口（测试完成）</div>
+				<br />
+				<h2>1.1.5.2</h2>
+				<div>为手机端添加了获取以日为单位的月统计数据的接口（测试阶段）</div>
+				<br/>
+				<h2>1.1.5.1</h2>
+				<div>在推送的OBD信息中恢复了进气歧管绝对压力数值</div>
+				<div>在收到汽车启动时里程的参数应答信息时，向手机端推送里程信息</div>
+				<br/>
 				<h2>1.1.5.0</h2>
 				<div>增加了手机端请求设备信息的接口</div>
 				<div>新增0015协议，用来区分服务端请求后回复的故障码信息和终端主动推送的故障码信息</div>
@@ -383,15 +393,6 @@
 				<h2>1.1.4.20</h2>
 				<div>在手机端登录时提供了车辆的车牌号信息</div>
 				<div>这将使1.1.4的最后一个版本</div>
-				<br/>
-				<h2>1.1.4.19</h2>
-				<div>恢复了ThreadMap中只记录ip不记录port的修改</div>
-				<br/>
-				<h2>1.1.4.18</h2>
-				<div>恢复了对转义问题的修改</div>
-				<br/>
-				<h2>1.1.4.17</h2>
-				<div>修改socket的超时时间为10分钟，再试</div>
 				<br/>
 			</div>
 		</div>

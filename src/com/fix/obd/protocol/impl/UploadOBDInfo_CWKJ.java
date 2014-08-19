@@ -310,6 +310,8 @@ public class UploadOBDInfo_CWKJ extends ODBProtocolParser implements ODBProtocol
 					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
 				if(character_sep[0].equals("发动机冷却液温度"))
 					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
+				if(character_sep[0].equals("进气歧管绝对压力"))
+					obdMessage += character_sep[0] + character_sep[1] + "(" + character_sep[2] + ")" + ";";
 			}
 		}
 		jpush.sendMessageToRandomSendNo(operationId + "(" + now + ")", obdMessage, this.getId());

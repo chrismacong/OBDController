@@ -16,4 +16,5 @@ public interface TravelInfoService {
 	public Map getBrakesAndSpeedUpsByTravel(String terminalId);
 	public TodayTravelReport getTodayTravelReport(String terminalId);
 	public List<TravelInfo> getTravelInfoBetweenTime(String terminalId, String from_time_point, String to_time_point);
+	public Map getTravelInfoMapByDateForMobileStatistics(String terminalId, String datestr);
 }
