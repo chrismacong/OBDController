@@ -435,6 +435,36 @@ public class YY_LogControl {
 			e.printStackTrace();
 		}
 	}
+	//url:.../login/mobilechangepwd.html
+	@RequestMapping(value = "/mobilechangepwd", method = RequestMethod.POST)
+	public void mobileChangePwd(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		String email = request.getParameter("email");
+		String password = request.getParameter("pwd");
+		String newpassword = request.getParameter("newpwd");
+		password = MD5Util.MD5(password);
+		newpassword = MD5Util.MD5(newpassword);
+		String result = "";
+		
+		if(loginService.askCheckUser(email,password)){
+			if(password.equals(newpassword))
+				result = "1"; //与原密码相同 
+			else{
+				boolean b = editPasswordService.askEditPassword(email, newpassword);
+				if(b)
+					result = "3"; //成功
+				else
+					result = "2"; //系统繁忙
+			}
+		}else{
+			result = "0"; //用户名密码验证错误
+		}
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@RequestMapping(value = "/login_check_by_tel", method = RequestMethod.GET)
 	public void loginByTel(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		try {

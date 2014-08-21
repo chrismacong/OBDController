@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-19
-			15:20 V1.1.5.5</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-21
+			14:35 V1.1.5.6</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,11 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.5.5</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.6</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.5.6</h2>
+				<div>为手机端提供了更精简的修改密码服务接口</div>
 				<br />
 				<h2>1.1.5.5</h2>
 				<div>修复了之前修改造成的时间-速度统计图显示错误的bug</div>
@@ -386,10 +389,6 @@
 				<br />
 				<h2>1.1.5.2</h2>
 				<div>为手机端添加了获取以日为单位的月统计数据的接口（测试阶段）</div>
-				<br/>
-				<h2>1.1.5.1</h2>
-				<div>在推送的OBD信息中恢复了进气歧管绝对压力数值</div>
-				<div>在收到汽车启动时里程的参数应答信息时，向手机端推送里程信息</div>
 				<br/>
 			</div>
 		</div>
