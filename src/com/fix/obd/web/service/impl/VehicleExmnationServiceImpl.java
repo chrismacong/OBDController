@@ -63,7 +63,13 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 		int COUNT_NOTICE = 0;
 		VehicleExmnationReport vehicleExmnationReport = new VehicleExmnationReport();
 		DTCDefect dtc_defect = this.getDTCDefect(terminalId);
-		String defect_info = dtc_defect.getInfo();
+		String defect_info;
+		if(dtc_defect == null){
+			defect_info = "";
+		}
+		else{
+			defect_info = dtc_defect.getInfo();
+		}
 		ArrayList<FaultCodeIterator> list = this.getFaultCodeIteratorList(defect_info);
 		String vehicle_errors = "";
 		for(int i=0;i<list.size();i++){
@@ -110,7 +116,8 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 		System.out.println(main_solution);
 		vehicleExmnationReport.setVehicle_exm_score(SCORE);
 		vehicleExmnationReport.setVehicle_exm_main_solution(main_solution);
-		vehicle_errors = vehicle_errors.substring(0,vehicle_errors.lastIndexOf("@@@"));
+		if(vehicle_errors.lastIndexOf("@@@")>=0)
+			vehicle_errors = vehicle_errors.substring(0,vehicle_errors.lastIndexOf("@@@"));
 		System.out.println(vehicle_errors);
 		vehicleExmnationReport.setVehicle_errors(vehicle_errors);
 		//vehicleExmnationReport.setTotal_exm_num();
@@ -171,7 +178,7 @@ public class VehicleExmnationServiceImpl implements VehicleExmnationService{
 		// TODO Auto-generated method stub
 		ArrayList<FaultCodeIterator> result_list = new ArrayList<FaultCodeIterator>();
 		if(info==null||"".equals(info))
-			return null;
+			return result_list;
 		String[] indexes = info.split(",");
 		for(int i=0;i<indexes.length;i++){
 			String index = indexes[i];

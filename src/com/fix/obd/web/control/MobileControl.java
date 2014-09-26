@@ -72,17 +72,16 @@ public class MobileControl {
 		String result = "";
 		boolean hasData = (boolean) map.get("hasData");
 		boolean isActual = (boolean) map.get("isActual");
-		if(!hasData){
+		DTCDefect dtc = (DTCDefect) map.get("dtc");
+		if(!hasData||dtc==null){
 			result += "0;0";
 		}
 		else if(isActual){
 			result += "1;2;";
-			DTCDefect dtc = (DTCDefect) map.get("dtc");
 			result += dtc.getDate() + ";" + dtc.getInfo();
 		}
 		else{
 			result += "1;1;";
-			DTCDefect dtc = (DTCDefect) map.get("dtc");
 			result += dtc.getDate() + ";" + dtc.getInfo();
 		}
 		try {

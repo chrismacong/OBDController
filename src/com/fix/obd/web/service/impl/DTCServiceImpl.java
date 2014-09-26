@@ -249,6 +249,9 @@ public class DTCServiceImpl implements DTCService{
 					map.put("dtc", dtc);
 					System.out.println(dtc.getInfo());
 				}
+				else{
+					map.put("dtc", dtc);
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

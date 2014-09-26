@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-08-21
-			14:35 V1.1.5.6</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-09-26
+			11:36 V1.1.5.8</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,15 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.5.6</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.8</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.5.8</h2>
+				<div>修复了手机端接收到0108数据后停止工作的问题</div>
+				<div>修复了在新设备从未成功体检情况下返回值的空指针问题</div>
+				<br />
+				<h2>1.1.5.7</h2>
+				<div>修复了由于车辆终端从未提交故障码造成的NullPointer异常</div>
 				<br />
 				<h2>1.1.5.6</h2>
 				<div>为手机端提供了更精简的修改密码服务接口</div>
@@ -384,12 +391,6 @@
 				<h2>1.1.5.4</h2>
 				<div>修改了习惯分析中时间戳的比较方式，改用截取info中的开始时间进行比较</div>
 				<br />
-				<h2>1.1.5.3</h2>
-				<div>为手机端添加了获取以日为单位的月统计数据的接口（测试完成）</div>
-				<br />
-				<h2>1.1.5.2</h2>
-				<div>为手机端添加了获取以日为单位的月统计数据的接口（测试阶段）</div>
-				<br/>
 			</div>
 		</div>
 	</div>
