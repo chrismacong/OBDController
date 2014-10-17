@@ -100,7 +100,7 @@ public class UploadOBDInfo_CWKJ extends ODBProtocolParser implements ODBProtocol
 			String handler = reader.getElementHandler(index);
 			String introduction = reader.getElementIntroduction(index);
 
-			if(length > 0){
+			if(length > 0&&message.length()>effIndex){
 				System.out.println(message.length()+"--"+effIndex+"--"+length*2);
 				String effString = message.substring(effIndex , effIndex+length*2);
 				effIndex += length*2;

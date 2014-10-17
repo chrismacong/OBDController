@@ -259,4 +259,11 @@
 		<introduction>里程</introduction>
 		<extra></extra>
 	</Parameter>
+	<Parameter id="37">
+		<name>瞬时油耗</name>
+		<length>2</length>
+		<decode>DecimalByteDecoder</decode>
+		<introduction>里程</introduction>
+		<extra></extra>
+	</Parameter>
 </ODBTable>

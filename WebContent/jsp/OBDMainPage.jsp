@@ -353,8 +353,8 @@
 	</div>
 	<div region="south" split="true"
 		style="height: 30px; background: #D2E0F2;">
-		<div class="footer">By chrismacong. DeployTimeStamp: 2014-09-26
-			11:36 V1.1.5.8</div>
+		<div class="footer">By chrismacong. DeployTimeStamp: 2014-10-17
+			10:50 V1.1.5.9</div>
 	</div>
 	<div region="west" hide="true" split="true" title="导航菜单"
 		style="width: 240px;" id="west">
@@ -371,8 +371,12 @@
 			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
 				<h1>Welcome to using The OBD Support System</h1>
-				<div>欢迎使用OBD在线支持系统 版本号1.1.5.8</div>
+				<div>欢迎使用OBD在线支持系统 版本号1.1.5.9</div>
 				<h1>近期版本更新说明</h1>
+				<br />
+				<h2>1.1.5.9</h2>
+				<div>缩小了日志界面的字体大小</div>
+				<div>在0108协议末尾添加了两字节的“瞬时油耗”数据解析，注意需要在标志位中将第37位置1才有效</div>
 				<br />
 				<h2>1.1.5.8</h2>
 				<div>修复了手机端接收到0108数据后停止工作的问题</div>
