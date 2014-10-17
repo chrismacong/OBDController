@@ -263,7 +263,7 @@
 		<name>瞬时油耗</name>
 		<length>2</length>
 		<decode>DecimalByteDecoder</decode>
-		<introduction>里程</introduction>
+		<introduction>百公里升</introduction>
 		<extra></extra>
 	</Parameter>
 </ODBTable>
