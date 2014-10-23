@@ -7,4 +7,5 @@ public interface YY_LoginService {
 	public String getCarNumberByEmail(String email);
 	public boolean askCheckUserByTel(String tel,String password);
 	public String getEmail(String tel);
+	public String getBusinessIdByEmail(String email);
 }

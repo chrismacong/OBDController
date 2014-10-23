@@ -6,11 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-
-import com.fix.obd.tcp.thread.UploadTerminalDataTask;
-import com.fix.obd.util.ThreadMap;
+import com.fix.obd.web.dao.BusinessDao;
 import com.fix.obd.web.dao.YY_UserDao;
-import com.fix.obd.web.model.OBDTerminalInfo;
+import com.fix.obd.web.model.Business;
 import com.fix.obd.web.model.YY_User;
 import com.fix.obd.web.service.YY_LoginService;
 
@@ -26,6 +24,17 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 	public void setUserDao(YY_UserDao userDao) {
 		this.userDao = userDao;
 	}
+	@Resource
+	private BusinessDao businessDao;
+	
+	public BusinessDao getBusinessDao() {
+		return businessDao;
+	}
+
+	public void setBusinessDao(BusinessDao businessDao) {
+		this.businessDao = businessDao;
+	}
+
 	@Override
 	public boolean askCheckUser(String email, String password) {
 		// TODO Auto-generated method stub
@@ -98,6 +107,26 @@ public class YY_LoginServiceImpl implements YY_LoginService{
 				return user_list.get(0).getCarnumber();
 			else
 				return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String getBusinessIdByEmail(String email) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> user_list = userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0){
+				YY_User user =  user_list.get(0);
+				List<Business> business_list = businessDao.findByHQL("from Business where uid = " + user.getId());
+				if(business_list.size()>0){
+					return business_list.get(0).getBid() + "";
+				}
+			}
+			return null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -73,9 +73,43 @@ public class YY_RegisterControl {
 		
  	}
 	
+	@RequestMapping(value = "/check_business_register", method = RequestMethod.GET)
+	public void business_register(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String user_tel = request.getParameter("user_tel");
+			String bName = request.getParameter("bName");
+			bName=new String(bName.getBytes("ISO8859-1"),"UTF-8");
+			String address = request.getParameter("address");
+			address=new String(address.getBytes("ISO8859-1"),"UTF-8");
+			String latitude = request.getParameter("latitude");
+			String longitute = request.getParameter("longitute");
+			String tel = request.getParameter("tel");
+			String baktel = request.getParameter("baktel");
+			String introduction = request.getParameter("introduction");
+			introduction=new String(introduction.getBytes("ISO8859-1"),"UTF-8");
+			String bmemberInfo = request.getParameter("bmemberInfo");
+			bmemberInfo=new String(bmemberInfo.getBytes("ISO8859-1"),"UTF-8");
+			String bphotoPath = "Nil";
+			String responseContext = "false";
+			if(registerService.askRegisterBusinessUser(email, password, user_tel, bName, 
+					address, longitute, latitude, tel, baktel, introduction, bmemberInfo, bphotoPath))
+				responseContext = "true";
+			out.println(responseContext);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@RequestMapping(value = "/check_email", method = RequestMethod.GET)
 	public void checkEmail(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
-		System.out.println("in checkEmail");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String email = request.getParameter("email");
@@ -90,12 +124,27 @@ public class YY_RegisterControl {
 	
 	@RequestMapping(value = "/check_tel", method = RequestMethod.GET)
 	public void checkTel(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
-		System.out.println("in checkTel");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String tel = request.getParameter("tel");
 		String responseContext = "true";
 		if(!registerService.askRegisterTel(tel)){
+			responseContext = "false";
+		}
+		System.out.println("responseContext:"+responseContext);
+		out.println(responseContext);
+		out.flush();
+		out.close();
+	}
+	
+	@RequestMapping(value = "/check_bname", method = RequestMethod.GET)
+	public void checkBname(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String bname = request.getParameter("bname");
+		bname=new String(bname.getBytes("ISO8859-1"),"UTF-8");
+		String responseContext = "true";
+		if(!registerService.askBusinessRegisterByName(bname)){
 			responseContext = "false";
 		}
 		System.out.println("responseContext:"+responseContext);

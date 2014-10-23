@@ -89,7 +89,7 @@ public class YY_LogControl {
 		} //if
 		if(email.equals("")||rolename.equals("")){
 			return new ModelAndView("YY_LoginPage");
-		}else if(rolename.equals("manager")||rolename.equals("member")){
+		}else if(rolename.equals("manager")||rolename.equals("member")||rolename.equals("business")){
 			System.out.println("^^^^^^^^^^^^^" + email);
 			session.setAttribute("email", email);
 
@@ -112,6 +112,10 @@ public class YY_LogControl {
 			}else if(rolename.equals("member")){
 				session.setAttribute("rolename", "loggedmember");
 				return new ModelAndView(new RedirectView("/OBDController/personal.html"));
+			}else if(rolename.equals("business")){
+				session.setAttribute("rolename", "business");
+				session.setAttribute("bid", loginService.getBusinessIdByEmail(email));
+				return new ModelAndView(new RedirectView("/OBDController/business.html"));
 			}
 
 
@@ -261,6 +265,15 @@ public class YY_LogControl {
 
 						return;
 
+					}else if(rolename.equals("business")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "business");
+						session.setAttribute("rolename", "business");
+						session.setAttribute("email", email);
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						return;
 					}
 				}catch(NullPointerException e){
 
@@ -505,7 +518,6 @@ public class YY_LogControl {
 						pw.print(jsonObject.toString());
 						pw.flush();
 						pw.close();
-						System.out.println("444444");
 						return;
 
 					}else if(rolename.equals("member")){
@@ -515,10 +527,18 @@ public class YY_LogControl {
 						pw.print(jsonObject.toString());
 						pw.flush();
 						pw.close();
-						System.out.println("333333");
 
 						return;
 
+					}else if(rolename.equals("business")){
+						jsonObject.put("success", "true");
+						jsonObject.put("rolename", "business");
+						session.setAttribute("rolename", "business");
+						session.setAttribute("email", email);
+						pw.print(jsonObject.toString());
+						pw.flush();
+						pw.close();
+						return;
 					}
 				}catch(NullPointerException e){
 

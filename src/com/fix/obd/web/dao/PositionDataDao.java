@@ -2,7 +2,6 @@ package com.fix.obd.web.dao;
 
 import java.util.List;
 
-import com.fix.obd.web.model.OBDLogs;
 import com.fix.obd.web.model.PositionData;
 
 public interface PositionDataDao {

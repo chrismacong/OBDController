@@ -230,6 +230,8 @@ function loginCheck_Tel() {
 								window.location.href = "${pageContext.request.contextPath}/main.html";
 							} else if (data.rolename == "member") {
 								window.location.href = "${pageContext.request.contextPath}/personal.html";
+							} else if (data.rolename == "business") {
+								window.location.href = "${pageContext.request.contextPath}/business.html";
 							}
 						}
 					},
@@ -325,6 +327,8 @@ function loginCheck_Tel() {
 										window.location.href = "${pageContext.request.contextPath}/main.html";
 									} else if (data.rolename == "member") {
 										window.location.href = "${pageContext.request.contextPath}/personal.html";
+									} else if (data.rolename == "business") {
+										window.location.href = "${pageContext.request.contextPath}/business.html";
 									}
 								}
 							},
