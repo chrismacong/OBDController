@@ -1,0 +1,434 @@
+package com.fix.obd.web.service.impl;
+
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+import com.fix.obd.util.FaultCodeXMLUtil;
+import com.fix.obd.web.dao.BusinessDao;
+import com.fix.obd.web.dao.DTCDefectDao;
+import com.fix.obd.web.dao.PositionDataDao;
+import com.fix.obd.web.dao.RescueProcessDao;
+import com.fix.obd.web.dao.RescueProcessHistoryDao;
+import com.fix.obd.web.dao.SOSMessageDao;
+import com.fix.obd.web.dao.YY_UserDao;
+import com.fix.obd.web.model.Business;
+import com.fix.obd.web.model.DTCDefect;
+import com.fix.obd.web.model.PositionData;
+import com.fix.obd.web.model.RescueProcess;
+import com.fix.obd.web.model.RescueProcessHistory;
+import com.fix.obd.web.model.SOSMessage;
+import com.fix.obd.web.model.YY_User;
+import com.fix.obd.web.model.util.FaultCodeIterator;
+import com.fix.obd.web.service.SOSMobileService;
+import com.fix.obd.web.util.GeoFilter;
+@Component
+public class SOSMobileServiceImpl implements SOSMobileService{
+	@Resource
+	private BusinessDao businessDao;
+	public BusinessDao getBusinessDao() {
+		return businessDao;
+	}
+
+	public void setBusinessDao(BusinessDao businessDao) {
+		this.businessDao = businessDao;
+	}
+	@Resource 
+	private SOSMessageDao sosMessageDao;
+
+	public SOSMessageDao getSosMessageDao() {
+		return sosMessageDao;
+	}
+
+	public void setSosMessageDao(SOSMessageDao sosMessageDao) {
+		this.sosMessageDao = sosMessageDao;
+	}
+	@Resource 
+	private YY_UserDao yy_userDao;
+
+
+	public YY_UserDao getYy_userDao() {
+		return yy_userDao;
+	}
+
+	public void setYy_userDao(YY_UserDao yy_userDao) {
+		this.yy_userDao = yy_userDao;
+	}
+	@Resource 
+	private RescueProcessDao rescueProcessDao;
+
+	public RescueProcessDao getRescueProcessDao() {
+		return rescueProcessDao;
+	}
+
+	public void setRescueProcessDao(RescueProcessDao rescueProcessDao) {
+		this.rescueProcessDao = rescueProcessDao;
+	}
+	@Resource
+	private RescueProcessHistoryDao rescueProcessHistoryDao;
+
+
+	public RescueProcessHistoryDao getRescueProcessHistoryDao() {
+		return rescueProcessHistoryDao;
+	}
+
+	public void setRescueProcessHistoryDao(
+			RescueProcessHistoryDao rescueProcessHistoryDao) {
+		this.rescueProcessHistoryDao = rescueProcessHistoryDao;
+	}
+	@Resource
+	private PositionDataDao positionDataDao;
+
+	public PositionDataDao getPositionDataDao() {
+		return positionDataDao;
+	}
+
+	public void setPositionDataDao(PositionDataDao positionDataDao) {
+		this.positionDataDao = positionDataDao;
+	}
+	@Resource
+	private DTCDefectDao dtcDefectDao;
+
+
+	public DTCDefectDao getDtcDefectDao() {
+		return dtcDefectDao;
+	}
+
+	public void setDtcDefectDao(DTCDefectDao dtcDefectDao) {
+		this.dtcDefectDao = dtcDefectDao;
+	}
+
+	@Override
+	public Map publishNativeSOSMessage(String email, String info) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		try {
+			List<YY_User> user_list = yy_userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0){
+				YY_User user = user_list.get(0);
+				String terminalId = user.getObdnumber();
+				List<PositionData> position_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' order by date desc");
+				if(position_list.size()<=0){
+					map.put("result", "1");
+					//1表示没有GPS数据，需要确认是否安插了OBD设备
+					return map;
+				}
+				String position_latest_time = position_list.get(0).getDate();
+				SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				Date d1 = new Date();
+				Date d2 = df.parse(position_latest_time);
+				Properties p = new Properties();
+				InputStream is=this.getClass().getResourceAsStream("/system.properties"); 
+				p.load(is);  
+				is.close();
+				final int EFFECTIVE_MINUTES = Integer.parseInt(p.getProperty("user_sosmessage_is_effective_time_minutes"));
+				if((d1.getTime()-d2.getTime())/(1000*60)>EFFECTIVE_MINUTES){
+					map.put("result", "2");
+					//2表示时间溢出，GPS数据无效，需要延时获取
+					return map;
+				}
+				String point_latitude = position_list.get(0).getInfo().substring(position_list.get(0).getInfo().lastIndexOf("纬度:"));
+				point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+				point_latitude = point_latitude.split(":")[1];
+				String point_longitude = position_list.get(0).getInfo().substring(position_list.get(0).getInfo().lastIndexOf("经度:"));
+				point_longitude = point_longitude.substring(0,point_longitude.indexOf(";"));
+				point_longitude = point_longitude.split(":")[1];
+
+				point_latitude = GeoFilter.geoFormat(point_latitude);
+				point_longitude = GeoFilter.geoFormat(point_longitude);
+				if("00.000000".equals(point_latitude)||"000.00000".equals(point_longitude)){
+					map.put("result", "3");
+					//3表示GPS数据无效，用户需保持汽车发动等待数据接收
+					return map;
+				}
+				SOSMessage sosMessage = new SOSMessage();
+				sosMessage.setYy_user(user);
+				sosMessage.setObd_err("Nil");
+				sosMessage.setObd_err_description("Nil");
+				List<DTCDefect> dtc_list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + terminalId + "' order by date desc");
+				if(dtc_list.size()>0){
+					DTCDefect dtcDefect = dtc_list.get(0);
+					sosMessage.setObd_err(dtcDefect.getInfo());
+					String[] indexes = dtcDefect.getInfo().split(",");
+					String obd_dtc_defect_description = "";
+					for(int i=0;i<indexes.length;i++){
+						String index = indexes[i];
+						FaultCodeXMLUtil f = new FaultCodeXMLUtil();
+						ArrayList<FaultCodeIterator> list = f.parseByIndex(index);
+						if(list.size()>0){
+							for(int j=0;j<list.size();j++)
+								obd_dtc_defect_description += list.get(j).getFaultDetail() + ";";
+						}
+						else
+							obd_dtc_defect_description += "未识别的故障码;";
+					}
+					if(obd_dtc_defect_description.lastIndexOf(";")>0){
+						obd_dtc_defect_description = obd_dtc_defect_description.substring(0,obd_dtc_defect_description.lastIndexOf(";"));
+					}
+					sosMessage.setObd_err_description(obd_dtc_defect_description);
+				}
+				sosMessage.setDate(df.format(d1));
+				sosMessage.setInfo(info);
+				sosMessage.setType("native");
+				sosMessage.setLatitude(point_latitude.replaceAll("\\.", ""));
+				sosMessage.setLongitude(point_longitude.replaceAll("\\.", ""));
+				int mid = sosMessageDao.addSOSMessage(sosMessage);
+
+				List<Business> business_list = businessDao.findByHQL("from Business");
+				List<Double> distance_list = new ArrayList<Double>();
+				for(int i=0;i<business_list.size();i++){
+					Business b = business_list.get(i);
+					String lat_str = b.getLatitude().substring(0,2) + "." + b.getLatitude().substring(2);
+					String lng_str = b.getLongitute().substring(0,3) + "." + b.getLongitute().substring(3);
+					distance_list.add(GeoFilter.GetDistance(Double.parseDouble(lat_str), Double.parseDouble(lng_str), Double.parseDouble(point_latitude), Double.parseDouble(point_longitude)));
+				}
+
+				for(int i=0;i<distance_list.size();i++){
+					for(int j=i+1;j<distance_list.size();j++){
+						if(distance_list.get(i)>distance_list.get(j)){
+							double temp_d = distance_list.get(i);
+							distance_list.set(i, distance_list.get(j));
+							distance_list.set(j, temp_d);
+
+							Business temp_B = business_list.get(i);
+							business_list.set(i,business_list.get(j));
+							business_list.set(j, temp_B);
+						}
+					}
+				}
+
+				final int BROADCAST_RADIUS = Integer.parseInt(p.getProperty("sosmessage_broadrast_radius_kilometers"));
+				final int BROADCAST_MIN_AMOUNT = Integer.parseInt(p.getProperty("sosmessage_broadrast_min_business_amount"));
+				if(distance_list.size()>BROADCAST_MIN_AMOUNT){
+					for(int i=0;i<distance_list.size();i++){
+						if(distance_list.get(i)>BROADCAST_RADIUS){
+							distance_list.remove(i);
+							business_list.remove(i);
+							i--;
+						}
+					}
+				}
+				for(int i=0;i<business_list.size();i++){
+					RescueProcess rp = new RescueProcess();
+					rp.setBusiness(business_list.get(i));
+					rp.setSosmessage(sosMessage);
+					rp.setStatus("broadcast");
+					rescueProcessDao.addRescueProcess(rp);
+					RescueProcessHistory rph = new RescueProcessHistory();
+					rph.setDate(df.format(d1));
+					rph.setRescueProcess(rp);
+					rph.setStatus("broadcast");
+					rescueProcessHistoryDao.addRescueProcessHistory(rph);
+				}
+				map.put("result", "4");
+				map.put("mid", mid);
+				return map;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("result", "0");
+		//0表示通讯失败或无用户
+		return map;
+	}
+
+	@Override
+	public Map publishMemberSOSMessage(String email, String bid,
+			String info) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		try {
+			List<YY_User> user_list = yy_userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0){
+				YY_User user = user_list.get(0);
+				String terminalId = user.getObdnumber();
+				List<PositionData> position_list = positionDataDao.findByHQL("from PositionData where tid = '" + terminalId + "' order by date desc");
+				if(position_list.size()<=0){
+					map.put("result", "1");
+					//1表示没有GPS数据，需要确认是否安插了OBD设备
+					return map;
+				}
+				String position_latest_time = position_list.get(0).getDate();
+				SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				Date d1 = new Date();
+				Date d2 = df.parse(position_latest_time);
+				Properties p = new Properties();
+				InputStream is=this.getClass().getResourceAsStream("/system.properties"); 
+				p.load(is);  
+				is.close();
+				final int EFFECTIVE_MINUTES = Integer.parseInt(p.getProperty("user_sosmessage_is_effective_time_minutes"));
+				if((d1.getTime()-d2.getTime())/(1000*60)>EFFECTIVE_MINUTES){
+					map.put("result", "2");
+					//2表示时间溢出，GPS数据无效，需要延时获取
+					return map;
+				}
+				String point_latitude = position_list.get(0).getInfo().substring(position_list.get(0).getInfo().lastIndexOf("纬度:"));
+				point_latitude = point_latitude.substring(0,point_latitude.indexOf(";"));
+				point_latitude = point_latitude.split(":")[1];
+				String point_longitude = position_list.get(0).getInfo().substring(position_list.get(0).getInfo().lastIndexOf("经度:"));
+				point_longitude = point_longitude.substring(0,point_longitude.indexOf(";"));
+				point_longitude = point_longitude.split(":")[1];
+
+				point_latitude = GeoFilter.geoFormat(point_latitude);
+				point_longitude = GeoFilter.geoFormat(point_longitude);
+				if("00.000000".equals(point_latitude)||"000.00000".equals(point_longitude)){
+					map.put("result", "3");
+					//3表示GPS数据无效，用户需保持汽车发动等待数据接收
+					return map;
+				}
+				SOSMessage sosMessage = new SOSMessage();
+				sosMessage.setYy_user(user);
+				sosMessage.setObd_err("Nil");
+				sosMessage.setObd_err_description("Nil");
+				List<DTCDefect> dtc_list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + terminalId + "' order by date desc");
+				if(dtc_list.size()>0){
+					DTCDefect dtcDefect = dtc_list.get(0);
+					sosMessage.setObd_err(dtcDefect.getInfo());
+					String[] indexes = dtcDefect.getInfo().split(",");
+					String obd_dtc_defect_description = "";
+					for(int i=0;i<indexes.length;i++){
+						String index = indexes[i];
+						FaultCodeXMLUtil f = new FaultCodeXMLUtil();
+						ArrayList<FaultCodeIterator> list = f.parseByIndex(index);
+						if(list.size()>0){
+							for(int j=0;j<list.size();j++)
+								obd_dtc_defect_description += list.get(j).getFaultDetail() + ";";
+						}
+						else
+							obd_dtc_defect_description += "未识别的故障码;";
+					}
+					if(obd_dtc_defect_description.lastIndexOf(";")>0){
+						obd_dtc_defect_description = obd_dtc_defect_description.substring(0,obd_dtc_defect_description.lastIndexOf(";"));
+					}
+					sosMessage.setObd_err_description(obd_dtc_defect_description);
+				}
+				sosMessage.setDate(df.format(d1));
+				sosMessage.setInfo(info);
+				sosMessage.setType("native");
+				sosMessage.setLatitude(point_latitude.replaceAll("\\.", ""));
+				sosMessage.setLongitude(point_longitude.replaceAll("\\.", ""));
+				int mid = sosMessageDao.addSOSMessage(sosMessage);
+
+				List<Business> business_list = businessDao.findByHQL("from Business where bid = " + bid);
+				if(business_list.size()==0){
+					map.put("result", "4");
+					//4表示维修厂用户已被注销
+					return map;
+				}
+				RescueProcess rp = new RescueProcess();
+				rp.setBusiness(business_list.get(0));
+				rp.setSosmessage(sosMessage);
+				rp.setStatus("deal");
+				rescueProcessDao.addRescueProcess(rp);
+				RescueProcessHistory rph = new RescueProcessHistory();
+				rph.setDate(df.format(d1));
+				rph.setRescueProcess(rp);
+				rph.setStatus("deal");
+				rescueProcessHistoryDao.addRescueProcessHistory(rph);
+				map.put("result", "5"); //成功
+				map.put("mid", mid);
+				map.put("rid",rp.getRid());
+				return map;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("result", "0");
+		//0表示通讯失败或无用户
+		return map;
+	}
+
+	@Override
+	public Map nativeUserChooseBusiness(String mid, String bid) {
+		// TODO Auto-generated method stub
+		Map map = new HashMap();
+		try {
+			List<RescueProcess> rp_list = rescueProcessDao.findByHQL("from RescueProcess where mid = " + mid + "and bid = " + bid);
+			if(rp_list.size()>0){
+				RescueProcess rp = rp_list.get(0);
+				if(rp.getStatus().equals("failed")){
+					map.put("result", "1");//维修厂已弃单
+					return map;
+				}
+				rp.setStatus("deal");
+				rescueProcessDao.updateRescueProcess(rp);
+				RescueProcessHistory rph = new RescueProcessHistory();
+				SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				Date date = new Date();
+				rph.setDate(df.format(date));
+				rph.setRescueProcess(rp);
+				rph.setStatus("deal");
+				rescueProcessHistoryDao.addRescueProcessHistory(rph);
+				map.put("result", "2"); //deal
+				map.put("rid",rp.getRid());
+				return map;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("result", "0"); //获取失败
+		return map;
+	}
+
+	@Override
+	public boolean confirmCompleted(String rid) {
+		// TODO Auto-generated method stub
+		try {
+			List<RescueProcess> rp_list = rescueProcessDao.findByHQL("from RescueProcess where rid = " + rid);
+			if(rp_list.size()>0){
+				RescueProcess rp = rp_list.get(0);
+				rp.setStatus("completed");
+				rescueProcessDao.updateRescueProcess(rp);
+				RescueProcessHistory rph = new RescueProcessHistory();
+				SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				Date date = new Date();
+				rph.setDate(df.format(date));
+				rph.setRescueProcess(rp);
+				rph.setStatus("completed");
+				rescueProcessHistoryDao.addRescueProcessHistory(rph);
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean confirmFailed(String mid) {
+		// TODO Auto-generated method stub
+		try {
+			List<RescueProcess> rp_list = rescueProcessDao.findByHQL("from RescueProcess where mid = " + mid);
+			for(RescueProcess rp:rp_list){
+				rp.setStatus("failed");
+				rescueProcessDao.updateRescueProcess(rp);
+				RescueProcessHistory rph = new RescueProcessHistory();
+				SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+				Date date = new Date();
+				rph.setDate(df.format(date));
+				rph.setRescueProcess(rp);
+				rph.setStatus("failed");
+				rescueProcessHistoryDao.addRescueProcessHistory(rph);
+			}
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+}

@@ -1,0 +1,104 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#call_table{
+	position:absolute;
+	top:80px;
+	left:50px;
+}
+.other_input{
+	width:300px;
+	font-size:15px;
+}
+#call_button{
+	position:absolute;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+	top:220px;
+	left:450px;
+}
+#waiting{
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:50%;
+	left:50%;
+	background:url(../images/loader-small.gif) no-repeat;
+}
+#listen_table{
+	position:absolute;
+	top:280px;
+	left:50px;
+}
+#listen_button{
+	position:absolute;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+	top:370px;
+	left:450px;
+}
+#reboot_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:430px;
+	left:50px;
+}
+#installposition_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:430px;
+	left:200px;
+}
+#clearblind_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:430px;
+	left:350px;
+}
+#arm_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:490px;
+	left:50px;
+}
+#disarm_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:490px;
+	left:200px;
+}
+#restore_button{
+	position:absolute;
+	width:120px;
+	height:40px;
+	background-color: #dce9f9;
+	top:490px;
+	left:350px;
+}
+#send_agps{
+	position:absolute;
+	width:150px;
+	top:430px;
+	left:500px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#check_agps{
+	position:absolute;
+	width:200px;
+	top:490px;
+	left:500px;
+	height:40px;
+	background-color: #dce9f9;
+}

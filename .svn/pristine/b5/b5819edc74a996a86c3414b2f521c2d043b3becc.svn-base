@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#refresh_button{
+	position:absolute;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+	top:20px;
+	left:450px;
+}
+#waiting{
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:50%;
+	left:50%;
+	background:url(../images/loader-small.gif) no-repeat;
+}
+#get_dtc_status_button{
+	position:absolute;
+	width:150px;
+	height:40px;
+	background-color: #dce9f9;
+	top:120px;
+	left:100px;
+}
+#dtc_status_div{
+	position:absolute;
+	top:130px;
+	left:550px;
+}
+#dtc_status_date_div{
+	position:absolute;
+	top:130px;
+	left:350px;
+}
+#get_obd_defect_button{
+	position:absolute;
+	width:150px;
+	height:40px;
+	background-color:#dce9f9;
+	top:190px;
+	left:100px;
+}
+#obd_defect_div{	
+	position:absolute;
+	top:200px;
+	left:550px;
+}
+#obd_defect_date_div{
+	position:absolute;
+	top:200px;
+	left:350px;
+}
+#clear_dtc_status_button{
+	position:absolute;
+	width:150px;
+	height:40px;
+	background-color:#dce9f9;
+	top:260px;
+	left:100px;
+}
+#analysis_dtc_status{
+	position:absolute;
+	width:150px;
+	height:40px;
+	background-color:#dce9f9;
+	top:260px;
+	left:400px;
+}
+#detailBlock {
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border: 1px solid #536376;
+	-webkit-box-shadow: rgba(0, 0, 0, .6) 0px 2px 12px;
+	-moz-box-shadow: rgba(0, 0, 0, .6) 0px 2px 12px;;
+	padding: 14px 22px;
+	display: none;
+	background: white;
+	font-size:16px;
+}
+#detail_table{
+	font-size:15px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+}
+.block_close_btn {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete.png) no-repeat center;
+	cursor:pointer;
+}
+.block_close_btn:hover {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete_hover.png) no-repeat center;
+	cursor:pointer;
+}

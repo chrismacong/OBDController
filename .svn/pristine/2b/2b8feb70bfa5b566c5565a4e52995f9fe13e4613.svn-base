@@ -1,0 +1,19 @@
+package com.fix.obd.web.dao;
+
+import java.util.List;
+
+import com.fix.obd.web.model.SOSMessage;
+
+public interface SOSMessageDao {
+	public List<SOSMessage> getAllSOSMessage();
+
+	public void addSOSMessage(SOSMessage sosMessage);
+
+	public void removeAllSOSMessage();
+
+	public void deleteSOSMessage(SOSMessage sosMessage);
+
+	public void updateSOSMessage(SOSMessage sosMessage);
+
+	public List<SOSMessage> findByHQL(String hql) throws Exception;
+}

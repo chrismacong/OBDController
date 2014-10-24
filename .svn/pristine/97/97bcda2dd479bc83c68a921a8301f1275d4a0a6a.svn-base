@@ -1,0 +1,11 @@
+package com.fix.obd.web.service;
+
+import java.util.Map;
+
+public interface SOSMobileService {
+	public Map publishNativeSOSMessage(String email, String info);//返回值包含mid
+	public Map publishMemberSOSMessage(String email, String bid, String info);//返回值包括mid，rid
+	public Map nativeUserChooseBusiness(String mid, String bid);//返回值包含rid
+	public boolean confirmCompleted(String rid);
+	public boolean confirmFailed(String mid);
+}

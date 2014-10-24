@@ -1,0 +1,169 @@
+@CHARSET "UTF-8";
+*{font-size:15px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#subtitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:120px;
+	height:20px;
+	font-size:18px;
+}
+#terminalTitle{
+	margin-left:auto;
+	margin-right:auto;
+	width:230px;
+	height:12px;
+	font-size:15px;
+}
+#container{
+	position:relative;
+	top:30px;
+	border:5px solid blue;
+}
+#travel_exm_table{
+	position:absolute;
+	top:50px;
+	left:650px;
+}
+table{
+	width:50%;
+}
+.healthy_title{
+	font-size:18px;
+	color:green;
+}
+#healthy{
+	position:absolute;
+	top:490px;
+	left:30px;
+}
+#healthy_container{
+	position:absolute;
+	top:520px;
+	left:15px;
+}
+#hour_btn{
+	position:absolute;
+	top:540px;
+	left:650px;
+	height:80px;
+	width:80px;
+	background: url(../images/hour.png) top left no-repeat;
+	cursor:pointer;
+}
+#hour_btn:hover{
+	position:absolute;
+	top:540px;
+	left:650px;
+	height:80px;
+	width:80px;
+	background: url(../images/hour_hover.png) top left no-repeat;
+	cursor:pointer;
+}
+#speed_hour_btn{
+	position:absolute;
+	top:540px;
+	left:750px;
+	height:80px;
+	width:80px;
+	background: url(../images/speed_hour.png) top left no-repeat;
+	cursor:pointer;
+}
+#speed_hour_btn:hover{
+	position:absolute;
+	top:540px;
+	left:750px;
+	height:80px;
+	width:80px;
+	background: url(../images/speed_hour_hover.png) top left no-repeat;
+	cursor:pointer;
+}
+#brake_hour_btn{
+	position:absolute;
+	top:540px;
+	left:850px;
+	height:80px;
+	width:80px;
+	background: url(../images/brake_hour.png) top left no-repeat;
+	cursor:pointer;
+}
+#brake_hour_btn:hover{
+	position:absolute;
+	top:540px;
+	left:850px;
+	height:80px;
+	width:80px;
+	background: url(../images/brake_hour_hover.png) top left no-repeat;
+	cursor:pointer;
+}
+#speedup_hour_btn{
+	position:absolute;
+	top:540px;
+	left:950px;
+	height:80px;
+	width:80px;
+	background: url(../images/speedup_hour.png) top left no-repeat;
+	cursor:pointer;
+}
+#speedup_hour_btn:hover{
+	position:absolute;
+	top:540px;
+	left:950px;
+	height:80px;
+	width:80px;
+	background: url(../images/speedup_hour_hover.png) top left no-repeat;
+	cursor:pointer;
+}
+#speedplan_btn{
+	position:absolute;
+	top:540px;
+	left:1050px;
+	height:80px;
+	width:80px;
+	background: url(../images/speedplan.png) top left no-repeat;
+	cursor:pointer;
+}
+#speedplan_btn:hover{
+	position:absolute;
+	top:540px;
+	left:1050px;
+	height:80px;
+	width:80px;
+	background: url(../images/speedplan.png) top left no-repeat;
+	cursor:pointer;
+}
+#hotspot_btn{
+	position:absolute;
+	top:540px;
+	left:1150px;
+	height:80px;
+	width:80px;
+	background: url(../images/hotspot.png) top left no-repeat;
+	cursor:pointer;
+}
+#hotspot_btn{
+	position:absolute;
+	top:540px;
+	left:1150px;
+	height:80px;
+	width:80px;
+	background: url(../images/hotspot.png) top left no-repeat;
+	cursor:pointer;
+}
+.block_close_btn {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete.png) no-repeat center;
+	cursor:pointer;
+}
+.block_close_btn:hover {
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:-16px;
+	top:-16px;
+	background:url(../images/delete_hover.png) no-repeat center;
+	cursor:pointer;
+}

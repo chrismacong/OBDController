@@ -1,0 +1,144 @@
+package com.fix.obd.web.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
+import com.fix.obd.web.dao.BusinessDao;
+import com.fix.obd.web.dao.DTCDefectDao;
+import com.fix.obd.web.dao.PositionDataDao;
+import com.fix.obd.web.dao.RescueProcessDao;
+import com.fix.obd.web.dao.RescueProcessHistoryDao;
+import com.fix.obd.web.dao.SOSMessageDao;
+import com.fix.obd.web.dao.YY_UserDao;
+import com.fix.obd.web.model.DTCDefect;
+import com.fix.obd.web.model.YY_User;
+import com.fix.obd.web.service.SOSMobileService;
+@Component
+public class SOSMobileServiceImpl implements SOSMobileService{
+	@Resource
+	private BusinessDao businessDao;
+	public BusinessDao getBusinessDao() {
+		return businessDao;
+	}
+
+	public void setBusinessDao(BusinessDao businessDao) {
+		this.businessDao = businessDao;
+	}
+	@Resource 
+	private SOSMessageDao sosMessageDao;
+	
+	public SOSMessageDao getSosMessageDao() {
+		return sosMessageDao;
+	}
+
+	public void setSosMessageDao(SOSMessageDao sosMessageDao) {
+		this.sosMessageDao = sosMessageDao;
+	}
+	@Resource 
+	private YY_UserDao yy_userDao;
+	
+
+	public YY_UserDao getYy_userDao() {
+		return yy_userDao;
+	}
+
+	public void setYy_userDao(YY_UserDao yy_userDao) {
+		this.yy_userDao = yy_userDao;
+	}
+	@Resource 
+	private RescueProcessDao rescueProcessDao;
+
+	public RescueProcessDao getRescueProcessDao() {
+		return rescueProcessDao;
+	}
+
+	public void setRescueProcessDao(RescueProcessDao rescueProcessDao) {
+		this.rescueProcessDao = rescueProcessDao;
+	}
+	@Resource
+	private RescueProcessHistoryDao rescueProcessHistoryDao;
+	
+
+	public RescueProcessHistoryDao getRescueProcessHistoryDao() {
+		return rescueProcessHistoryDao;
+	}
+
+	public void setRescueProcessHistoryDao(
+			RescueProcessHistoryDao rescueProcessHistoryDao) {
+		this.rescueProcessHistoryDao = rescueProcessHistoryDao;
+	}
+	@Resource
+	private PositionDataDao positionDataDao;
+
+	public PositionDataDao getPositionDataDao() {
+		return positionDataDao;
+	}
+
+	public void setPositionDataDao(PositionDataDao positionDataDao) {
+		this.positionDataDao = positionDataDao;
+	}
+	@Resource
+	private DTCDefectDao dtcDefectDao;
+	
+
+	public DTCDefectDao getDtcDefectDao() {
+		return dtcDefectDao;
+	}
+
+	public void setDtcDefectDao(DTCDefectDao dtcDefectDao) {
+		this.dtcDefectDao = dtcDefectDao;
+	}
+
+	@Override
+	public Map publishNativeSOSMessage(String email, String date, String info,
+			String type) {
+		// TODO Auto-generated method stub
+		try {
+			List<YY_User> user_list = yy_userDao.findByHQL("from YY_User where email = '" + email + "'");
+			if(user_list.size()>0){
+				YY_User user = user_list.get(0);
+				int uid = user.getId();
+				String terminalId = user.getObdnumber();
+				List<DTCDefect> dtc_list = dtcDefectDao.findByHQL("from DTCDefect where tid = '" + terminalId + "' order by date desc");
+				if(dtc_list.size()>0){
+					DTCDefect dtcDefect = dtc_list.get(0);
+					
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Map publishMemberSOSMessage(String email, String bid, String date,
+			String info, String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map nativeUserChooseBusiness(String email, String bid, String date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean confirmCompleted(String cid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean confirmFailed(String cid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

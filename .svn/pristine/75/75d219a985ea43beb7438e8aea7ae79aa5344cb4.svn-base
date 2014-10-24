@@ -1,0 +1,146 @@
+@CHARSET "UTF-8";
+*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+#position_info_table{
+	font-size:15px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+	position:absolute;
+	top:30px;
+	left:50px;
+	width:500px;
+}
+#alert_table{
+	font-size:14px;
+	font-family:Tahoma,Verdana,微软雅黑,新宋体;
+	position:absolute;
+	top:90px;
+	left:570px;
+	width:350px;
+}
+.alert_table_tr{
+	height:24px;	
+}
+.alert_img{
+	width:20px;
+	height:20px;
+}
+#refresh_button{
+	position:absolute;
+	left:630px;
+	top:20px;
+	width:100px;
+	height:40px;
+	background-color: #dce9f9;
+}
+#OBD_date_div{
+	position:absolute;
+	top:5px;
+	left:70px;
+}
+#speed_graph{
+	position:absolute;
+	top:300px;
+	left:590px;
+	width:90px;
+	height:90px;
+	background:url(../images/speed_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#speed_graph:hover{
+	position:absolute;
+	top:300px;
+	left:590px;
+	width:90px;
+	height:90px;
+	background:url(../images/speed_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#temperature_graph{
+	position:absolute;
+	top:300px;
+	left:710px;
+	width:90px;
+	height:90px;
+	background:url(../images/temperature_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#temperature_graph:hover{
+	position:absolute;
+	top:300px;
+	left:710px;
+	width:90px;
+	height:90px;
+	background:url(../images/temperature_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#pressure_graph{
+	position:absolute;
+	top:300px;
+	left:830px;
+	width:90px;
+	height:90px;
+	background:url(../images/pressure_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#pressure_graph:hover{
+	position:absolute;
+	top:300px;
+	left:830px;
+	width:90px;
+	height:90px;
+	background:url(../images/pressure_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#location_graph{
+	position:absolute;
+	top:400px;
+	left:590px;
+	width:90px;
+	height:90px;
+	background:url(../images/location_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#location_graph:hover{
+	position:absolute;
+	top:400px;
+	left:590px;
+	width:90px;
+	height:90px;
+	background:url(../images/location_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#dash_graph{
+	position:absolute;
+	top:400px;
+	left:710px;
+	width:90px;
+	height:90px;
+	background:url(../images/dash_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#dash_graph:hover{
+	position:absolute;
+	top:400px;
+	left:710px;
+	width:90px;
+	height:90px;
+	background:url(../images/dash_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}
+#travel_exm_graph{
+	position:absolute;
+	top:400px;
+	left:830px;
+	width:90px;
+	height:90px;
+	background:url(../images/travel_exm_logo.png) no-repeat center center;
+	cursor:pointer;
+}
+#travel_exm_graph:hover{
+	position:absolute;
+	top:400px;
+	left:830px;
+	width:90px;
+	height:90px;
+	background:url(../images/travel_exm_logo_hover.png) no-repeat center center;
+	cursor:pointer;
+}

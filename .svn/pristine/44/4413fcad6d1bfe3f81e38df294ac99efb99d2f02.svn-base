@@ -1,0 +1,12 @@
+package com.fix.obd.web.service;
+
+import java.util.List;
+
+import com.fix.obd.web.model.SOSMessage;
+
+public interface SOSBusinessService {
+	public List<SOSMessage> getBroadcastSOSMessage(String bid);
+	public boolean giveUpBroadcastSOSMessage(String cid);
+	public boolean grabBroadcastSOSMessage(String cid);
+	public List<SOSMessage> getDealSOSMesssage(String bid);
+}
