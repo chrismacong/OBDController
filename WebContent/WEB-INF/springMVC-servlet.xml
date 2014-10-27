@@ -50,6 +50,9 @@
 				<value>com.fix.obd.web.model.SOSMessage</value>
 				<value>com.fix.obd.web.model.RescueProcess</value>
 				<value>com.fix.obd.web.model.RescueProcessHistory</value>
+				<value>com.fix.obd.web.model.AlertNotice</value>
+				<value>com.fix.obd.web.model.MemberNotice</value>
+				<value>com.fix.obd.web.model.SystemNotice</value>
 				
 			</list>
 		</property>

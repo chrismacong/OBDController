@@ -179,8 +179,12 @@ public class SOSMobileServiceImpl implements SOSMobileService{
 				sosMessage.setDate(df.format(d1));
 				sosMessage.setInfo(info);
 				sosMessage.setType("native");
-				sosMessage.setLatitude(point_latitude.replaceAll("\\.", ""));
-				sosMessage.setLongitude(point_longitude.replaceAll("\\.", ""));
+				String lat_for = point_latitude.replaceAll("\\.", "");
+				lat_for = lat_for.length()>8?lat_for.substring(0,8):lat_for;
+				String lng_for = point_longitude.replaceAll("\\.", "");
+				lng_for = lng_for.length()>8?lng_for.substring(0,8):lng_for;
+				sosMessage.setLatitude(lat_for);
+				sosMessage.setLongitude(lng_for);
 				int mid = sosMessageDao.addSOSMessage(sosMessage);
 
 				List<Business> business_list = businessDao.findByHQL("from Business");
@@ -315,8 +319,12 @@ public class SOSMobileServiceImpl implements SOSMobileService{
 				sosMessage.setDate(df.format(d1));
 				sosMessage.setInfo(info);
 				sosMessage.setType("member");
-				sosMessage.setLatitude(point_latitude.replaceAll("\\.", ""));
-				sosMessage.setLongitude(point_longitude.replaceAll("\\.", ""));
+				String lat_for = point_latitude.replaceAll("\\.", "");
+				lat_for = lat_for.length()>8?lat_for.substring(0,8):lat_for;
+				String lng_for = point_longitude.replaceAll("\\.", "");
+				lng_for = lng_for.length()>8?lng_for.substring(0,8):lng_for;
+				sosMessage.setLatitude(lat_for);
+				sosMessage.setLongitude(lng_for);
 				int mid = sosMessageDao.addSOSMessage(sosMessage);
 
 				List<Business> business_list = businessDao.findByHQL("from Business where bid = " + bid);
