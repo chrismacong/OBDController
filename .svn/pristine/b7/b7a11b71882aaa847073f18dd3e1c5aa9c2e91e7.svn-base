@@ -370,17 +370,6 @@ public class SOSMobileServiceImpl implements SOSMobileService{
 				rph.setRescueProcess(rp);
 				rph.setStatus("deal");
 				rescueProcessHistoryDao.addRescueProcessHistory(rph);
-				
-				List<RescueProcess> other_list = rescueProcessDao.findByHQL("from RescueProcess where mid = " + mid + "and bid <> " + bid);
-				for(RescueProcess other_rp : other_list){
-					other_rp.setStatus("failed");
-					rescueProcessDao.updateRescueProcess(other_rp);
-					RescueProcessHistory other_rph = new RescueProcessHistory();
-					other_rph.setDate(df.format(date));
-					other_rph.setRescueProcess(rp);
-					other_rph.setStatus("failed");
-					rescueProcessHistoryDao.addRescueProcessHistory(other_rph);
-				}
 				map.put("result", "2"); //deal
 				map.put("rid",rp.getRid());
 				return map;
